@@ -1,0 +1,26 @@
+
+.home {
+  background: url(./assets/homepage-background.webp) no-repeat;
+  background-size: cover;
+  background-position: center;
+  min-height: 85vh;
+}
+
+
+
+
+@media screen and (max-width: 768px) {
+  .home {
+    min-height: 130vh;
+  }
+}
+
+
+@media screen and (max-width: 576px) {
+  .home {
+    min-height: 130vh;
+  }
+  
+}
+
+
