@@ -67,7 +67,7 @@ const Header = () => {
 
   return (
     <div
-      className={`w-full sm:min-h-[80px] min-h-12 transition-opacity  top-0 left-0 z-[9999] ${
+      className={`w-full px-12 shadow-sm sm:min-h-[80px] min-h-12 transition-opacity  top-0 left-0 z-[9999] ${
         active
           ? "bg-white text-black fixed dark:bg-black dark:text-white shadow-lg"
           : "text-black dark:text-white"

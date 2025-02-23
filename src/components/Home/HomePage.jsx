@@ -21,6 +21,19 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
+import { Check, ChevronsUpDown } from "lucide-react";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
+import Navigation from "../Navbar/Navigation";
+import SpecialOffer from "../Section/SpecialOffer";
+import HotDeals from "../Section/HotDeals";
+
 const frameworks = [
   {
     value: "next.js",
@@ -67,18 +80,7 @@ const countryName = [
   },
 ];
 
-import { Check, ChevronsUpDown } from "lucide-react";
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from "@/components/ui/command";
-import Navigation from "../Navbar/Navigation";
-import SpecialOffer from "../Section/SpecialOffer";
-import HotDeals from "../Section/HotDeals";
+
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -222,7 +224,7 @@ const HomePage = () => {
   return (
     <>
       <div
-        className={`w-full sm:min-h-[80px] min-h-12 transition-opacity fixed top-0 left-0 z-[9999] ${
+        className={`w-full px-12 sm:min-h-[80px] min-h-12 transition-opacity fixed top-0 left-0 z-[9999] ${
           active
             ? "bg-white text-black dark:bg-black dark:text-white shadow-lg"
             : " dark:text-white"

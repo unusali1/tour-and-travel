@@ -6,6 +6,7 @@ import Header from './components/Navbar/Header'
 import HotelList from './pages/HotelList'
 import Footter from './components/Section/Footter'
 import VisaDetails from './pages/VisaDetails'
+import HotelDetails from './pages/HotelDetails'
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
       <Route path="/about" element={<About />} />
       <Route path="/hotel/list" element={<HotelList />} />
       <Route path="/visa/country=" element={<VisaDetails />} />
+      <Route path="/hotelDetails/:id" element={<HotelDetails />} />
     </Routes>
     <Footter />
      
