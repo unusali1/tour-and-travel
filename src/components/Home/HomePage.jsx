@@ -33,29 +33,7 @@ import {
 import Navigation from "../Navbar/Navigation";
 import SpecialOffer from "../Section/SpecialOffer";
 import HotDeals from "../Section/HotDeals";
-
-const frameworks = [
-  {
-    value: "next.js",
-    label: "Next.js",
-  },
-  {
-    value: "sveltekit",
-    label: "SvelteKit",
-  },
-  {
-    value: "nuxt.js",
-    label: "Nuxt.js",
-  },
-  {
-    value: "remix",
-    label: "Remix",
-  },
-  {
-    value: "astro",
-    label: "Astro",
-  },
-];
+import { hotelArea } from "@/assets/data/HotelData";
 
 const countryName = [
   {
@@ -79,8 +57,6 @@ const countryName = [
     label: "Singapore",
   },
 ];
-
-
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -395,7 +371,7 @@ const HomePage = () => {
                         <PopoverTrigger asChild>
                           <Button
                             variant="outline"
-                            className="flex flex-col dark:bg-gray-800 text-left items-start sm:w-[240px] w-full font-normal py-10 border border-gray-400"
+                            className="flex flex-col text-left items-start sm:w-[240px] w-full font-normal py-10 border border-gray-400"
                           >
                             <label className="text-[12px] text-blue-500">
                               CITY/HOTEL/RESORT/AREA
@@ -403,8 +379,8 @@ const HomePage = () => {
                             <span>
                               <p>
                                 {value
-                                  ? frameworks.find(
-                                      (framework) => framework.value === value
+                                  ? hotelArea.find(
+                                      (hotel) => hotel.value === value
                                     )?.label
                                   : "Select Destination..."}
                               </p>
@@ -420,10 +396,10 @@ const HomePage = () => {
                             <CommandList>
                               <CommandEmpty>No Destination found.</CommandEmpty>
                               <CommandGroup>
-                                {frameworks.map((framework) => (
+                                {hotelArea.map((hotel) => (
                                   <CommandItem
-                                    key={framework.value}
-                                    value={framework.value}
+                                    key={hotel.value}
+                                    value={hotel.value}
                                     onSelect={(currentValue) => {
                                       setValue(
                                         currentValue === value
@@ -433,11 +409,26 @@ const HomePage = () => {
                                       setOpen(false);
                                     }}
                                   >
-                                    {framework.label}
+                                    <span className="flex space-x-1">
+                                      <Icon
+                                        icon="mdi:location"
+                                        className="font-bold text-4xl text-black mt-2"
+                                      />
+                                      <span>
+                                        <p className="font-semibold ">
+                                          {" "}
+                                          {hotel.label}
+                                        </p>
+                                        <p className="text-[12px] text-gray-400">
+                                          {hotel.country}
+                                        </p>
+                                      </span>
+                                    </span>
+
                                     <Check
                                       className={cn(
                                         "ml-auto",
-                                        value === framework.value
+                                        value === hotel.value
                                           ? "opacity-100"
                                           : "opacity-0"
                                       )}
@@ -459,9 +450,9 @@ const HomePage = () => {
                         <PopoverTrigger asChild>
                           <Button
                             id="date"
-                            variant="outline"
+                            variant={"ghost"}
                             className={cn(
-                              "flex flex-col dark:bg-gray-800 text-left items-start sm:w-[240px] w-full font-normal py-10 border border-gray-400",
+                              "flex flex-col text-left items-start sm:w-[240px] w-full font-normal py-10 border border-gray-400",
                               !date && "text-muted-foreground"
                             )}
                           >
@@ -502,10 +493,10 @@ const HomePage = () => {
                     <div className="mt-2 sm:mt-0 flex flex-col  p-2 rounded-md sm:ml-4">
                       <Button
                         id="date"
-                        variant="outline"
+                        variant={"ghost"}
                         onClick={() => setIsPopoverOpen(!isPopoverOpen)}
                         className={cn(
-                          "flex  dark:bg-gray-800 flex-col items-start text-left sm:w-[240px] w-full font-normal py-10 border border-gray-400",
+                          "flex flex-col items-start text-left sm:w-[240px] w-full font-normal py-10 border border-gray-400",
                           !date && "text-muted-foreground"
                         )}
                       >
@@ -533,7 +524,7 @@ const HomePage = () => {
                         <PopoverTrigger asChild>
                           <Button
                             variant="outline"
-                            className="flex  dark:bg-gray-800 flex-col text-left items-start sm:w-[240px] w-full font-normal py-10 border border-gray-400 rounded-lg"
+                            className="flex flex-col text-left items-start sm:w-[240px] w-full font-normal py-10 border border-gray-400 rounded-lg"
                           >
                             <label className="text-[12px] text-blue-500 ">
                               ROOMS & GUESTS
@@ -667,8 +658,8 @@ const HomePage = () => {
                             <span>
                               <p>
                                 {value
-                                  ? frameworks.find(
-                                      (framework) => framework.value === value
+                                  ? hotelArea.find(
+                                      (hotel) => hotel.value === value
                                     )?.label
                                   : "Select Destination..."}
                               </p>
@@ -678,16 +669,16 @@ const HomePage = () => {
                             </span>
                           </Button>
                         </PopoverTrigger>
-                        <PopoverContent className="w-[200px] p-0">
+                        <PopoverContent className="w-[240px] p-0">
                           <Command>
                             <CommandInput placeholder="Search Destination..." />
                             <CommandList>
                               <CommandEmpty>No Destination found.</CommandEmpty>
                               <CommandGroup>
-                                {frameworks.map((framework) => (
+                                {hotelArea.map((hotel) => (
                                   <CommandItem
-                                    key={framework.value}
-                                    value={framework.value}
+                                    key={hotel.value}
+                                    value={hotel.value}
                                     onSelect={(currentValue) => {
                                       setValue(
                                         currentValue === value
@@ -697,11 +688,26 @@ const HomePage = () => {
                                       setOpen(false);
                                     }}
                                   >
-                                    {framework.label}
+                                    <span className="flex space-x-1">
+                                      <Icon
+                                        icon="mdi:location"
+                                        className="font-bold text-4xl text-black mt-2"
+                                      />
+                                      <span>
+                                        <p className="font-semibold ">
+                                          {" "}
+                                          {hotel.label}
+                                        </p>
+                                        <p className="text-[12px] text-gray-400">
+                                          {hotel.country}
+                                        </p>
+                                      </span>
+                                    </span>
+
                                     <Check
                                       className={cn(
                                         "ml-auto",
-                                        value === framework.value
+                                        value === hotel.value
                                           ? "opacity-100"
                                           : "opacity-0"
                                       )}
@@ -931,8 +937,8 @@ const HomePage = () => {
                             <span>
                               <p>
                                 {value
-                                  ? frameworks.find(
-                                      (framework) => framework.value === value
+                                  ? hotelArea.find(
+                                      (hotel) => hotel.value === value
                                     )?.label
                                   : "Select Destination..."}
                               </p>
@@ -942,16 +948,16 @@ const HomePage = () => {
                             </span>
                           </Button>
                         </PopoverTrigger>
-                        <PopoverContent className="w-[200px] p-0">
+                        <PopoverContent className="w-[240px] p-0">
                           <Command>
                             <CommandInput placeholder="Search Destination..." />
                             <CommandList>
                               <CommandEmpty>No Destination found.</CommandEmpty>
                               <CommandGroup>
-                                {frameworks.map((framework) => (
+                                {hotelArea.map((hotel) => (
                                   <CommandItem
-                                    key={framework.value}
-                                    value={framework.value}
+                                    key={hotel.value}
+                                    value={hotel.value}
                                     onSelect={(currentValue) => {
                                       setValue(
                                         currentValue === value
@@ -961,11 +967,26 @@ const HomePage = () => {
                                       setOpen(false);
                                     }}
                                   >
-                                    {framework.label}
+                                    <span className="flex space-x-1">
+                                      <Icon
+                                        icon="mdi:location"
+                                        className="font-bold text-4xl text-black mt-2"
+                                      />
+                                      <span>
+                                        <p className="font-semibold ">
+                                          {" "}
+                                          {hotel.label}
+                                        </p>
+                                        <p className="text-[12px] text-gray-400">
+                                          {hotel.country}
+                                        </p>
+                                      </span>
+                                    </span>
+
                                     <Check
                                       className={cn(
                                         "ml-auto",
-                                        value === framework.value
+                                        value === hotel.value
                                           ? "opacity-100"
                                           : "opacity-0"
                                       )}

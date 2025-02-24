@@ -258,3 +258,32 @@ export const hotelLists = [
     },
     
   ];
+
+
+  export const hotelArea = [
+    {
+      value: "Cox's Bazar",
+      label: "Cox's Bazar",
+      country:"Bangladesh"
+    },
+    {
+      value: "Sylhet",
+      label: "Sylhet",
+      country:"Bangladesh"
+    },
+    {
+      value: "Sreemangal",
+      label: "Sreemangal",
+      country:"Bangladesh"
+    },
+    {
+      value: "Gazipur",
+      label: "Gazipur",
+      country:"Bangladesh"
+    },
+    {
+      value: "Chittagong",
+      label: "Chittagong",
+      country:"Bangladesh"
+    },
+  ];

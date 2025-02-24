@@ -7,7 +7,7 @@ import { Separator } from "@/components/ui/separator";
 import { Checkbox } from "@/components/ui/checkbox";
 
 import { Input } from "@/components/ui/input";
-import { hotelLists } from "@/assets/data/HotelData";
+import { hotelArea, hotelLists } from "@/assets/data/HotelData";
 
 import { addDays, format } from "date-fns";
 import { cn } from "@/lib/utils";
@@ -149,9 +149,8 @@ export default function HotelList() {
                     <span>
                       <p>
                         {value
-                          ? frameworks.find(
-                              (framework) => framework.value === value
-                            )?.label
+                          ? hotelArea.find((hotel) => hotel.value === value)
+                              ?.label
                           : "Select Destination..."}
                       </p>
                       <p className="flex text-[12px] text-gray-400">
@@ -166,10 +165,10 @@ export default function HotelList() {
                     <CommandList>
                       <CommandEmpty>No Destination found.</CommandEmpty>
                       <CommandGroup>
-                        {frameworks.map((framework) => (
+                        {hotelArea.map((hotel) => (
                           <CommandItem
-                            key={framework.value}
-                            value={framework.value}
+                            key={hotel.value}
+                            value={hotel.value}
                             onSelect={(currentValue) => {
                               setValue(
                                 currentValue === value ? "" : currentValue
@@ -177,11 +176,22 @@ export default function HotelList() {
                               setOpen(false);
                             }}
                           >
-                            {framework.label}
+                            <span className="flex space-x-1">
+                              <Icon
+                                icon="mdi:location"
+                                className="font-bold text-4xl text-black mt-2"
+                              />
+                              <span>
+                                <p className="font-semibold "> {hotel.label}</p>
+                                <p className="text-[12px] text-gray-400">
+                                  {hotel.country}
+                                </p>
+                              </span>
+                            </span>
                             <Check
                               className={cn(
                                 "ml-auto",
-                                value === framework.value
+                                value === hotel.value
                                   ? "opacity-100"
                                   : "opacity-0"
                               )}
