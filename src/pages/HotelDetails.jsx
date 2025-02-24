@@ -401,6 +401,17 @@ const HotelDetails = () => {
         className="flex items-center justify-center"
       >
         <AlertDialogContent className="max-w-6xl max-h-screen bg-white rounded-2xl shadow-2xl p-6">
+        <AlertDialogFooter>
+            <Button
+              className="px-6 py-2 bg-gray-300 text-white font-semibold rounded-lg"
+              onClick={() => setDialogOpen(false)}
+            >
+             <Icon
+                        icon="mingcute:close-fill"
+                        className="font-bold text-xl text-blue-800 "
+                      />
+            </Button>
+          </AlertDialogFooter>
           <div className="max-w-5xl">
             <Swiper
               spaceBetween={20}
@@ -434,14 +445,7 @@ const HotelDetails = () => {
               ))}
             </Swiper>
           </div>
-          <AlertDialogFooter>
-            <Button
-              className="px-6 py-2 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600 transition"
-              onClick={() => setDialogOpen(false)}
-            >
-              Close
-            </Button>
-          </AlertDialogFooter>
+          
         </AlertDialogContent>
       </AlertDialog>
     </>

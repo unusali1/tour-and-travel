@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/select";
 
 const Header = () => {
+  const navigate = useNavigate();
   const [active, setactive] = useState(false);
   const [openn, setOpenn] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState("BDT");
@@ -67,7 +68,7 @@ const Header = () => {
 
   return (
     <div
-      className={`w-full px-12 shadow-sm sm:min-h-[80px] min-h-12 transition-opacity  top-0 left-0 z-[9999] ${
+      className={`w-full  px-12 shadow-sm sm:min-h-[80px] min-h-12 transition-opacity  top-0 left-0 z-[9999] ${
         active
           ? "bg-white text-black fixed dark:bg-black dark:text-white shadow-lg"
           : "text-black dark:text-white"
@@ -75,11 +76,12 @@ const Header = () => {
     >
       <div className="hidden md:w-[90%] mx-auto md:flex items-center justify-between mt-4">
         <div>
-          <Link href={"/"}>
-            <div className="text-2xl font-extrabold text-blue-700">
-              Gozayaan
-            </div>
-          </Link>
+          <div
+            className="text-2xl font-extrabold text-blue-700"
+            onClick={() => navigate("/")}
+          >
+            Gozayaan
+          </div>
         </div>
         <div className="flex">
           <Navigation activeItem={0} />
@@ -107,7 +109,10 @@ const Header = () => {
 
           <div className="flex relative">
             <div className="flex items-center p-2 ">
-              <Button className="bg-blue-700 text-white px-6 py-2 rounded-lg">
+              <Button
+                className="bg-blue-700 text-white px-6 py-2 rounded-lg"
+                onClick={() => navigate("/auth")}
+              >
                 Sign In
               </Button>
             </div>

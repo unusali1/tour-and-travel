@@ -200,7 +200,7 @@ const HomePage = () => {
   return (
     <>
       <div
-        className={`w-full px-12 sm:min-h-[80px] min-h-12 transition-opacity fixed top-0 left-0 z-[9999] ${
+        className={`w-full sm:px-12 px-4 sm:min-h-[80px] min-h-12 transition-opacity fixed top-0 left-0 z-[9999] overflow-hidden ${
           active
             ? "bg-white text-black dark:bg-black dark:text-white shadow-lg"
             : " dark:text-white"
@@ -250,7 +250,10 @@ const HomePage = () => {
 
             <div className=" flex relative">
               <div className="flex items-center p-2 ">
-                <Button className="bg-blue-700 text-white px-6 py-2 rounded-lg">
+                <Button
+                 className="bg-blue-700 text-white px-6 py-2 rounded-lg"
+                 onClick={()=>navigate("/auth")}
+                 >
                   Sign In
                 </Button>
               </div>
@@ -278,8 +281,8 @@ const HomePage = () => {
         </div>
 
         {/* for mobile screen */}
-        <div className="w-full md:hidden flex items-center justify-between -top-2 overflow-hidden">
-          <div className="mt-2 ml-2">
+        <div className="md:hidden flex  justify-between overflow-hidden">
+          <div className="mt-2 ">
             <Link href="/">
               <h1>
                 <Link href={"/"}>
@@ -290,7 +293,7 @@ const HomePage = () => {
               </h1>
             </Link>
           </div>
-          <div className="mr-4 mt-2">
+          <div className="mt-2">
             <Icon
               onClick={() => setOpenn(!openn)}
               icon="ic:round-menu"
@@ -1225,7 +1228,7 @@ const HomePage = () => {
                             </span>
                           </Button>
                         </PopoverTrigger>
-                        <PopoverContent className="w-[400px] p-0">
+                        <PopoverContent className="w-[500px] p-0">
                           <Command>
                             <CommandInput placeholder="Search Destination..." />
                             <CommandList>
