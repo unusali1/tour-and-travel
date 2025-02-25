@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/alert-dialog";
 
 import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 
 const HotelDetails = () => {
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -22,7 +23,7 @@ const HotelDetails = () => {
   return (
     <>
       {dialogOpen ? null : <Header />}
-      <div className="bg-gray-100 dark:bg-background text-gray-900">
+      <div className="bg-gray-100 dark:bg-background text-gray-900 pb-16">
         {hotelLists.slice(0, 1).map((hotel, index) => (
           <div className="container mx-auto p-4">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
@@ -56,12 +57,12 @@ const HotelDetails = () => {
                 </Swiper>
               </div>
 
-              <div className="flex md:col-span-2 ">
-                <div className="flex flex-col space-y-2 mt-4 h-[50vh]">
+              <div className="flex md:col-span-2 sm:flex-row flex-col">
+                <div className="flex sm:flex-col sm:space-x-0 space-x-2 flex-row sm:space-y-2 sm:mt-4 mt-1 sm:h-[50vh] h-[10vh]">
                   {hotel.images.map((item, index) => (
                     <div
                       key={index}
-                      className="w-36 h-36 overflow-hidden rounded-lg shadow-md hover:scale-105 transition-all duration-300"
+                      className="sm:w-36 sm:h-36 w-20 h-20 overflow-hidden rounded-lg shadow-md hover:scale-105 transition-all duration-300"
                     >
                       <img
                         src={item}
@@ -159,14 +160,14 @@ const HotelDetails = () => {
 
             {/* Room Details Section */}
             <h2 className="text-2xl font-semibold mt-8">Room Details</h2>
-            <div className="flex justify-between gap-8 mt-4">
-              <div className="w-2/3">
-                <div
-                  key={index}
-                  className="flex flex-col md:flex-row bg-white dark:bg-gray-800 rounded-2xl shadow-md p-6 gap-6"
-                >
-                  <div className="md:w-1/3">
-                    {rooms.slice(0, 1).map((room, index) => (
+            <div className="flex flex-col sm:flex-row justify-between gap-8 mt-4">
+              <div className="sm:w-2/3 w-full">
+                {rooms.slice(0, 1).map((room, index) => (
+                  <div
+                    key={index}
+                    className="flex flex-col md:flex-row bg-white dark:bg-gray-800 rounded-2xl shadow-md p-6 gap-6"
+                  >
+                    <div className="md:w-96">
                       <div key={index}>
                         <Swiper
                           spaceBetween={20}
@@ -197,7 +198,7 @@ const HotelDetails = () => {
                               key={index}
                               src={item}
                               alt="Hotel"
-                              className="w-20 h-16 rounded-xl object-cover shadow-lg transition-transform duration-300 hover:scale-105"
+                              className="sm:w-36 sm:h-20 w-24 h-20 rounded-xl object-cover shadow-lg transition-transform duration-300 hover:scale-105"
                             />
                           ))}
                         </div>
@@ -222,25 +223,123 @@ const HotelDetails = () => {
                         <p className="text-lg font-bold text-yellow-600 mt-2">
                           BDT 10,000 / night
                         </p>
-                        <button className="bg-yellow-500 hover:bg-yellow-600 text-white px-8 py-3 rounded-2xl mt-4 transition-transform transform hover:scale-105">
-                          Add Room
-                        </button>
-                      </div>
-                    ))}
-                  </div>
 
-                  <div className="md:w-2/3 bg-gray-100 dark:bg-gray-700 rounded-2xl p-4 flex flex-col justify-center items-center text-center">
-                    <p className="text-lg font-medium text-gray-800 dark:text-white">
-                      Additional Info
-                    </p>
-                    <h1 className="text-xl font-semibold text-gray-900 dark:text-yellow-400 mt-2">
-                      Details Section
-                    </h1>
+                        <p className="text-blue-900 dark:text-gray-400 text-sm underline">
+                          View Room Details
+                        </p>
+                        <p className="text-red-600 dark:text-gray-400 mt-4">
+                          Hurry Up! Only 5 Rooms Left
+                        </p>
+                        <div className="flex space-x-2 mt-2">
+                          {room.facilities[0]?.bedroomFacilities
+                            ?.slice(0, 3)
+                            .map((item, index) => (
+                              <span key={index} className="flex">
+                                <Icon
+                                  icon="mdi:success"
+                                  className="font-bold text-xl text-gray-400 dark:text-gray-300 "
+                                />
+                                <p className="text-sm text-gray-400 dark:text-gray-300">
+                                  {item}
+                                </p>
+                              </span>
+                            ))}
+                        </div>
+
+                        <p className="text-blue-900 dark:text-gray-400 text-sm underline mt-2">
+                          Show All
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="md:w-2/3 rounded-2xl p-4 flex space-x-3">
+                      <Separator
+                        orientation="vertical"
+                        className="dark:bg-gray-600"
+                      />
+                      <div className="flex justify-end space-x-6">
+                        <div className="">
+                          <p className="text-sm text-gray-800 bg-gray-200 w-fit px-2 py-1 rounded-lg">
+                            option 1
+                          </p>
+                          <span className="flex py-1">
+                            <p className="font-semibold text-gray-400">
+                              Refundable{" "}
+                            </p>
+                            <Icon
+                              icon="akar-icons:info-fill"
+                              className="font-bold text-xl text-gray-400 dark:text-gray-500"
+                            />
+                          </span>
+
+                          <span className="flex py-1">
+                            <Icon
+                              icon="mdi:people"
+                              className="font-bold text-xl text-gray-400 dark:text-gray-500"
+                            />
+                            <p className="text-[12px] text-gray-400">
+                              4 Adults, 2 Children
+                            </p>
+                          </span>
+
+                          <span className="flex py-1">
+                            <Icon
+                              icon="ri:restaurant-2-fill"
+                              className="font-bold text-xl text-gray-400 dark:text-gray-500"
+                            />
+                            <p className="text-[12px] text-gray-400 ">
+                              Breakfast Included
+                            </p>
+                          </span>
+                          <p className="text-[12px] text-gray-400 py-1">
+                            Complimentary buffet breakfast with airport transfer
+                            - Refundable
+                          </p>
+                          <span className="flex py-1">
+                            <Icon
+                              icon="ph:dot-fill"
+                              className="font-bold text-xl text-gray-400 dark:text-gray-500"
+                            />
+                            <p className="text-[12px] text-gray-400">
+                              Free cancellation before 00:01 on Mon, 24 Feb 2025
+                            </p>
+                          </span>
+                        </div>
+
+                        <div>
+                          <p className="text-sm text-white dark:text-white bg-[#FD7E13] w-fit px-2 py-1 rounded-lg">
+                            47% off
+                          </p>
+                          <p className="text-[12px] text-gray-400 py-1">
+                            *Extra 5% discount for bKash Payment
+                          </p>
+                          <p className="py-1 text-[#3A4856] dark:text-primary">
+                            Starts form
+                          </p>
+                          <del className="text-[12px] text-gray-400 py-1">
+                            BDT 19,763
+                          </del>
+                          <p className="py-1 font-bold text-[#3A4856] dark:text-primary">
+                            BDT 10,364
+                          </p>
+                          <p className="text-[12px] text-gray-400 py-1">
+                            + BDT 2,746 Taxes & Fees for 1 Night
+                          </p>
+
+                          <Button
+                            variant="destructive"
+                            className="text-sm mt-4 transition-transform transform hover:scale-105"
+                          >
+                            Add Room
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </div>
+                ))}
               </div>
 
-              <div className="w-1/3 bg-white dark:bg-gray-800 rounded-md p-6 ">
+              <div className="sm:w-1/3 w-full bg-white dark:bg-gray-800 rounded-md p-6 ">
                 <h2 className="text-2xl font-semibold mb-4">Booking Summary</h2>
                 <div className="space-y-2">
                   <div className="flex justify-between text-sm">
@@ -401,15 +500,15 @@ const HotelDetails = () => {
         className="flex items-center justify-center"
       >
         <AlertDialogContent className="max-w-6xl max-h-screen bg-white rounded-2xl shadow-2xl p-6">
-        <AlertDialogFooter>
+          <AlertDialogFooter>
             <Button
               className="px-6 py-2 bg-gray-300 text-white font-semibold rounded-lg"
               onClick={() => setDialogOpen(false)}
             >
-             <Icon
-                        icon="mingcute:close-fill"
-                        className="font-bold text-xl text-blue-800 "
-                      />
+              <Icon
+                icon="mingcute:close-fill"
+                className="font-bold text-xl text-blue-800 "
+              />
             </Button>
           </AlertDialogFooter>
           <div className="max-w-5xl">
@@ -445,7 +544,6 @@ const HotelDetails = () => {
               ))}
             </Swiper>
           </div>
-          
         </AlertDialogContent>
       </AlertDialog>
     </>

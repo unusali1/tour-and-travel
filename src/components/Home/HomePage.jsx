@@ -190,7 +190,7 @@ const HomePage = () => {
       activeTab === "Appartment"
     ) {
       navigate(
-        `/hotel/list?checkin=${date.from}0&checkout=${date.to}&location=dhaka&rooms=${totalTravelers?.rooms}&adult=${totalTravelers?.total}&sort=price`
+        `/hotel/list?checkin=${date.from}0&checkout=${date.to}&location=${value}&rooms=${totalTravelers?.rooms}&adult=${totalTravelers?.adult}&child=${totalTravelers.child}&totalGuset=${totalTravelers.total}&sort=price`
       );
     } else {
       navigate(`/visa/country=${country}`);
