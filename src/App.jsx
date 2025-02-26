@@ -8,6 +8,7 @@ import Footter from './components/Section/Footter'
 import VisaDetails from './pages/VisaDetails'
 import HotelDetails from './pages/HotelDetails'
 import AuthPage from './pages/AuthPage'
+import BookingPage from './pages/BookingPage'
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
       <Route path="/hotel/list" element={<HotelList />} />
       <Route path="/visa/country=" element={<VisaDetails />} />
       <Route path="/hotelDetails/:id" element={<HotelDetails />} />
+      <Route path="/hotel/booking" element={<BookingPage />} />
     </Routes>
     <Footter />
      

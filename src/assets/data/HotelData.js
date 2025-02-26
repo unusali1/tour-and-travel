@@ -201,6 +201,78 @@ export const hotelLists = [
       extraBed:1,
       roomType:"Suite",
       smoking:"Non-Smoking Room",
+      price:"BDT 10,364",
+      roomCharacteristics:"Executive Deluxe",
+      roomView:"City View",
+      images:[
+        room1,
+        room2,
+        room3,
+        room4
+      ],
+      facilities: [
+        {
+            bedroomFacilities:[
+             "Air Conditioning",
+             "In-Room Safe",
+             "Fan",
+             "Blankets",
+             "Closet",
+             "Curtain",
+             "Extra Bedding",
+             "Connecting Rooms",
+            ],
+            bathroomFacilities:[
+                "Toiletries",
+                "Towels",
+                "Hot Water",
+                "Hairdryer",
+                "Bathroom"
+            ],
+            others:[
+               "220V Socket",
+               "Electric Kettle",
+               "Free Newspaper",
+               "Housekeeping",
+               "Linens",
+               "Non-Smoking",
+               "Slippers",
+               "Wheelchair Friendly",
+               "Living Room",
+               "Sofa"
+            ],
+            foodDrink:[
+             "Coffee/Tea Maker",
+             "Free Bottled Water",
+             "Mini Fridge",
+            ],
+            mediaTechnology:[
+                "Internet",
+                "Television Content",
+                "Telephone",
+                "TV",
+                "Wi-Fi"
+            ],
+        }
+      ], 
+      
+    },
+
+    { 
+      id:2,
+      name: "Master Suite",
+      size: " King",
+      person:[
+        {
+            adult:2,
+            child:2,
+            maxRoomCapacity:4
+        }
+      ],
+      refundPolicy:"Refundable",
+      extraBed:1,
+      roomType:"Suite",
+      smoking:"Non-Smoking Room",
       roomCharacteristics:"Executive Deluxe",
       roomView:"City View",
       images:[

@@ -16,9 +16,32 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { useNavigate } from "react-router-dom";
 
 const HotelDetails = () => {
+  const navigate = useNavigate();
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [cart, setCart] = useState({
+    hotelName: "",
+    price: "",
+  });
+
+  const handleAddToCart = (name, price) => {
+    console.log("name:", name);
+    console.log("price:", price);
+    console.log("clicked");
+    setCart({
+      hotelName: name,
+      price: price,
+    });
+  };
+
+  const removeCart = () => {
+    setCart({
+      hotelName: "",
+      price: "",
+    });
+  };
 
   return (
     <>
@@ -161,8 +184,8 @@ const HotelDetails = () => {
             {/* Room Details Section */}
             <h2 className="text-2xl font-semibold mt-8">Room Details</h2>
             <div className="flex flex-col sm:flex-row justify-between gap-8 mt-4">
-              <div className="sm:w-2/3 w-full">
-                {rooms.slice(0, 1).map((room, index) => (
+              <div className="sm:w-2/3 w-full flex flex-col space-y-4">
+                {rooms.slice(0, 2).map((room, index) => (
                   <div
                     key={index}
                     className="flex flex-col md:flex-row bg-white dark:bg-gray-800 rounded-2xl shadow-md p-6 gap-6"
@@ -329,6 +352,9 @@ const HotelDetails = () => {
                           <Button
                             variant="destructive"
                             className="text-sm mt-4 transition-transform transform hover:scale-105"
+                            onClick={() =>
+                              handleAddToCart(room.name, room.price)
+                            }
                           >
                             Add Room
                           </Button>
@@ -339,27 +365,39 @@ const HotelDetails = () => {
                 ))}
               </div>
 
-              <div className="sm:w-1/3 w-full bg-white dark:bg-gray-800 rounded-md p-6 ">
-                <h2 className="text-2xl font-semibold mb-4">Booking Summary</h2>
-                <div className="space-y-2">
-                  <div className="flex justify-between text-sm">
-                    <span>Check-in:</span>
-                    <span>20th Oct 2025</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span>Check-out:</span>
-                    <span>25th Oct 2025</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span>Total Nights:</span>
-                    <span>5</span>
-                  </div>
-                  <div className="flex justify-between text-lg font-bold mt-4">
-                    <span>Total Price:</span>
-                    <span>BDT 50,000</span>
-                  </div>
+              <div className="sm:w-1/3 border h-96 w-full bg-[#EBF3FE] dark:bg-gray-800 rounded-md relative">
+                <h2 className="text-2xl absolute top-0 font-semibold bg-[#00026E] text-white rounded-t-md p-2 w-full ">
+                  Booking Summary
+                </h2>
+                <div className="ml-12 mr-12 mt-12 ">
+                  {cart.hotelName && cart.price ? (
+                    <div className=" bg-white dark:bg-slate-600 mt-20 p-8 rounded-md">
+                      <div className="flex justify-between text-lg font-bold dark:text-white">
+                        <span>{cart?.hotelName}</span>
+                        <span>
+                          <Icon
+                            icon="mingcute:close-fill"
+                            className="font-bold text-xl text-black dark:text-white"
+                            onClick={() => removeCart()}
+                          />
+                        </span>
+                      </div>
+                      <div className="flex justify-between text-lg font-bold mt-4  dark:text-white">
+                        <span>Total Price:</span>
+                        <span>{cart?.price}</span>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="flex items-center justify-center h-52 text-center">
+                      <p>Add Rooms to Continue</p>
+                    </div>
+                  )}
                 </div>
-                <button className="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-xl w-full mt-6 transition">
+
+                <button 
+                className="bg-green-500 absolute bottom-4 left-1/2 transform -translate-x-1/2 hover:bg-green-600 text-white px-6 py-2 rounded-md w-2/3 flex justify-center items-center mt-6 transition"
+                onClick={()=>navigate("/hotel/booking")}
+                >
                   Proceed to Checkout
                 </button>
               </div>

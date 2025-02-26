@@ -49,10 +49,10 @@ export default function HotelList() {
     const handleResize = () => {
       if (window.innerWidth < 768) {
         setIsSmallScreen(true);
-        setShowSection(false); // Hide section by default on small screens
+        setShowSection(false); 
       } else {
         setIsSmallScreen(false);
-        setShowSection(true); // Show section by default on big screens
+        setShowSection(true); 
       }
     };
 
@@ -200,7 +200,7 @@ export default function HotelList() {
                       variant="outline"
                       className="flex flex-col dark:bg-gray-800 text-left items-start sm:w-[240px] w-full font-normal py-10 border border-gray-400"
                     >
-                      <label className="text-[12px] text-blue-500">
+                      <label className="text-[12px] text-blue-500  dark:text-white">
                         CITY/HOTEL/RESORT/AREA
                       </label>
                       <span>
@@ -216,7 +216,7 @@ export default function HotelList() {
                       </span>
                     </Button>
                   </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0">
+                  <PopoverContent className="w-[240px] p-0">
                     <Command>
                       <CommandInput placeholder="Search Destination..." />
                       <CommandList>
@@ -236,7 +236,7 @@ export default function HotelList() {
                               <span className="flex space-x-1">
                                 <Icon
                                   icon="mdi:location"
-                                  className="font-bold text-4xl text-black mt-2"
+                                  className="font-bold text-4xl text-black mt-2 dark:text-white"
                                 />
                                 <span>
                                   <p className="font-semibold ">
@@ -276,7 +276,7 @@ export default function HotelList() {
                         !date && "text-muted-foreground"
                       )}
                     >
-                      <label className="text-[12px] text-blue-500">
+                      <label className="text-[12px] text-blue-500  dark:text-white">
                         CHECK IN
                       </label>
 
@@ -295,7 +295,7 @@ export default function HotelList() {
                     </Button>
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-0" align="start">
-                    <p className="text-center p-4">Select check-in date</p>
+                    <p className="text-center p-4">Select check-in & check-out date</p>
                     <Calendar
                       initialFocus
                       mode="range"
@@ -318,7 +318,7 @@ export default function HotelList() {
                     !date && "text-muted-foreground"
                   )}
                 >
-                  <label className="text-[12px] text-blue-500">CHECK OUT</label>
+                  <label className="text-[12px] text-blue-500  dark:text-white">CHECK OUT</label>
 
                   {date?.to ? (
                     <span>
@@ -340,16 +340,16 @@ export default function HotelList() {
                       variant="outline"
                       className="flex  dark:bg-gray-800 flex-col text-left items-start sm:w-[240px] w-full font-normal py-10 border border-gray-400 rounded-lg"
                     >
-                      <label className="text-[12px] text-blue-500 ">
+                      <label className="text-[12px] text-blue-500  dark:text-white">
                         ROOMS & GUESTS
                       </label>
                       <span>
                         <p>
-                          <span className="text-blue-900 font-bold ">
+                          <span className="text-blue-900 font-bold  dark:text-gray-200">
                             {totalTravelers.rooms}
                           </span>{" "}
                           Rooms,
-                          <span className="text-blue-900 font-bold ">
+                          <span className="text-blue-900 font-bold dark:text-gray-200 ">
                             {totalTravelers.total}
                           </span>{" "}
                           Guests
@@ -361,7 +361,7 @@ export default function HotelList() {
                   <PopoverContent className="w-80">
                     <div className="flex ml-4 justify-between">
                       <div>
-                        <h4 className="font-bold text-blue-800">Rooms</h4>
+                        <h4 className="font-bold text-blue-800  dark:text-gray-200">Rooms</h4>
                         <p className="text-[12px]">{`${totalTravelers.total} Guests`}</p>
                       </div>
                       <div className="flex ml-10">
@@ -450,262 +450,10 @@ export default function HotelList() {
           </div>
         )}
 
-        {/* <div className="hidden sm:block dark:bg-background bg-gray-100 sm:min-w-fit min-w-full">
-          <div className="flex sm:mt-0 mt-8 sm:mb-8 justify-between px-24 pt-5 flex-col sm:flex-row">
-            <div className="sm:mt-0 flex flex-col rounded-md sm:ml-4">
-              <Popover open={open} onOpenChange={setOpen}>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant="outline"
-                    className="flex flex-col dark:bg-gray-800 text-left items-start sm:w-[240px] w-full font-normal py-10 border border-gray-400"
-                  >
-                    <label className="text-[12px] text-blue-500">
-                      CITY/HOTEL/RESORT/AREA
-                    </label>
-                    <span>
-                      <p>
-                        {value
-                          ? hotelArea.find((hotel) => hotel.value === value)
-                              ?.label
-                          : "Select Destination..."}
-                      </p>
-                      <p className="flex text-[12px] text-gray-400">
-                        Bangladesh
-                      </p>
-                    </span>
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-[240px] p-0">
-                  <Command>
-                    <CommandInput placeholder="Search Destination..." />
-                    <CommandList>
-                      <CommandEmpty>No Destination found.</CommandEmpty>
-                      <CommandGroup>
-                        {hotelArea.map((hotel) => (
-                          <CommandItem
-                            key={hotel.value}
-                            value={hotel.value}
-                            onSelect={(currentValue) => {
-                              setValue(
-                                currentValue === value ? "" : currentValue
-                              );
-                              setOpen(false);
-                            }}
-                          >
-                            <span className="flex space-x-1">
-                              <Icon
-                                icon="mdi:location"
-                                className="font-bold text-4xl text-black mt-2"
-                              />
-                              <span>
-                                <p className="font-semibold "> {hotel.label}</p>
-                                <p className="text-[12px] text-gray-400">
-                                  {hotel.country}
-                                </p>
-                              </span>
-                            </span>
-                            <Check
-                              className={cn(
-                                "ml-auto",
-                                value === hotel.value
-                                  ? "opacity-100"
-                                  : "opacity-0"
-                              )}
-                            />
-                          </CommandItem>
-                        ))}
-                      </CommandGroup>
-                    </CommandList>
-                  </Command>
-                </PopoverContent>
-              </Popover>
-            </div>
+        
 
-            <div className="sm:mt-0 flex flex-col rounded-md sm:ml-4">
-              <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
-                <PopoverTrigger asChild>
-                  <Button
-                    id="date"
-                    variant="outline"
-                    className={cn(
-                      "flex flex-col dark:bg-gray-800 text-left items-start sm:w-[240px] w-full font-normal py-10 border border-gray-400",
-                      !date && "text-muted-foreground"
-                    )}
-                  >
-                    <label className="text-[12px] text-blue-500">
-                      CHECK IN
-                    </label>
-
-                    {date?.from ? (
-                      <span>
-                        <p className="flex">{format(date.from, "LLL dd, y")}</p>
-                        <p className="flex text-[12px] text-gray-400">
-                          {date.fromDayName}
-                        </p>
-                      </span>
-                    ) : (
-                      <span>Pick a date</span>
-                    )}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
-                  <p className="text-center p-4">Select check-in date</p>
-                  <Calendar
-                    initialFocus
-                    mode="range"
-                    defaultMonth={date?.from}
-                    selected={date}
-                    onSelect={handleSelect}
-                    numberOfMonths={2}
-                  />
-                </PopoverContent>
-              </Popover>
-            </div>
-
-            <div className="sm:mt-0 flex flex-col rounded-md sm:ml-4">
-              <Button
-                id="date"
-                variant="outline"
-                onClick={() => setIsPopoverOpen(!isPopoverOpen)}
-                className={cn(
-                  "flex  dark:bg-gray-800 flex-col items-start text-left sm:w-[240px] w-full font-normal py-10 border border-gray-400",
-                  !date && "text-muted-foreground"
-                )}
-              >
-                <label className="text-[12px] text-blue-500">CHECK OUT</label>
-
-                {date?.to ? (
-                  <span>
-                    <p className="flex">{format(date.to, "LLL dd, y")}</p>
-                    <p className="flex text-[12px] text-gray-400">
-                      {date.toDayName}
-                    </p>
-                  </span>
-                ) : (
-                  <span>Pick a date</span>
-                )}
-              </Button>
-            </div>
-
-            <div className="sm:mt-0 flex flex-col rounded-md sm:ml-4">
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant="outline"
-                    className="flex  dark:bg-gray-800 flex-col text-left items-start sm:w-[240px] w-full font-normal py-10 border border-gray-400 rounded-lg"
-                  >
-                    <label className="text-[12px] text-blue-500 ">
-                      ROOMS & GUESTS
-                    </label>
-                    <span>
-                      <p>
-                        <span className="text-blue-900 font-bold ">
-                          {totalTravelers.rooms}
-                        </span>{" "}
-                        Rooms,
-                        <span className="text-blue-900 font-bold ">
-                          {totalTravelers.total}
-                        </span>{" "}
-                        Guests
-                      </p>
-                      <p className="text-[12px] text-gray-400">{`${totalTravelers.adult} adults & ${totalTravelers.child} childs`}</p>
-                    </span>
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-80">
-                  <div className="flex ml-4 justify-between">
-                    <div>
-                      <h4 className="font-bold text-blue-800">Rooms</h4>
-                      <p className="text-[12px]">{`${totalTravelers.total} Guests`}</p>
-                    </div>
-                    <div className="flex ml-10">
-                      <Button
-                        className=" border border-gray-200 rounded-full"
-                        onClick={() => handleRommsCountChange("decrease")}
-                        variant="oulined"
-                      >
-                        -
-                      </Button>
-                      <p className="ml-4 mt-2">{roomsCount}</p>
-                      <Button
-                        className="ml-4 border border-gray-200 rounded-full"
-                        onClick={() => handleRommsCountChange("increase")}
-                        variant="oulined"
-                      >
-                        +
-                      </Button>
-                    </div>
-                  </div>
-
-                  <Separator className="my-4" />
-                  <div className="flex ml-4 justify-between">
-                    <div>
-                      <h4 className="font-bold">Adult</h4>
-                      <p className="text-[12px]">12 years +</p>
-                    </div>
-                    <div className="flex ml-10">
-                      <Button
-                        className=" border border-gray-200 rounded-full"
-                        onClick={() => handleAdultCountChange("decrease")}
-                        variant="oulined"
-                      >
-                        -
-                      </Button>
-                      <p className="ml-4 mt-2">{adultCount}</p>
-                      <Button
-                        className="ml-4 border border-gray-200 rounded-full"
-                        onClick={() => handleAdultCountChange("increase")}
-                        variant="oulined"
-                      >
-                        +
-                      </Button>
-                    </div>
-                  </div>
-                  <Separator className="my-4" />
-
-                  <div className="flex ml-4 justify-between">
-                    <div>
-                      <h4 className="font-bold">Children</h4>
-                      <p className="text-[12px]">Under 12 years</p>
-                    </div>
-                    <div className="flex ml-10">
-                      <Button
-                        className=" border border-gray-200 rounded-full"
-                        onClick={() => handleChildCountChange("decrease")}
-                        variant="oulined"
-                      >
-                        -
-                      </Button>
-                      <p className="ml-4 mt-2">{childCount}</p>
-                      <Button
-                        className="ml-4 border border-gray-200 rounded-full"
-                        onClick={() => handleChildCountChange("increase")}
-                        variant="oulined"
-                      >
-                        +
-                      </Button>
-                    </div>
-                  </div>
-                  <Separator className="my-4" />
-
-                  <div className="mt-4 flex justify-end">
-                    <Button color="primary">OK</Button>
-                  </div>
-                </PopoverContent>
-              </Popover>
-            </div>
-
-            <div className="flex justify-center shadow-sm h-20">
-              <button className="bg-yellow-400 hover:bg-yellow-500 text-[#00026E] dark:text-primary dark:bg-gray-800  font-bold px-4 rounded-lg w-full">
-                Modify
-                <br /> Search
-              </button>
-            </div>
-          </div>
-        </div> */}
-
-        <div className="bg-gray-100 grid grid-cols-12 gap-4 pt-5  dark:bg-background px-24 pb-24">
-          <aside className="col-span-3 bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md">
+        <div className="bg-gray-100 grid grid-cols-12 sm:gap-4 pt-5  dark:bg-background sm:px-24 px-4 pb-24">
+          <aside className="hidden sm:block col-span-3 bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md">
             <div className="mt-4 flex justify-between">
               <h3 className="font-semibold">Filters</h3>
               <Button variant="ghost" className="text-sm">
@@ -779,7 +527,7 @@ export default function HotelList() {
           </aside>
 
           {/* Main Content */}
-          <section className="col-span-9 space-y-4">
+          <section className="col-span-12 sm:col-span-9 space-y-4">
             <div className="flex justify-between items-center">
               <h2 className="text-xl font-semibold">9 properties found</h2>
               <select className="border p-2 rounded-md dark:bg-gray-800">
@@ -788,13 +536,13 @@ export default function HotelList() {
               </select>
             </div>
             {hotelLists.map((hotel, index) => (
-              <Card key={index} className="flex p-4 relative dark:bg-gray-800">
-                <CardContent className="flex justify-between gap-4 w-full ">
+              <Card key={index} className="flex sm:p-4 py-4 px-2 relative dark:bg-gray-800">
+                <CardContent className="flex justify-between sm:flex-row flex-col gap-4 w-full ">
                   <div className="relative">
                     <img
                       src={hotel.images[0]}
                       alt={hotel.name}
-                      className="rounded-lg h-56 w-64 object-cover"
+                      className="rounded-lg smn:h-56 h-full sm:w-64 w-full object-cover"
                     />
 
                     <button className="absolute bottom-2 left-2 p-1.5 rounded-md bg-white hover:bg-white/20">
@@ -827,9 +575,8 @@ export default function HotelList() {
 
                   <div>
                     <h3 className="text-lg font-semibold">{hotel.name}</h3>
-
-                    <div className="flex space-x-2 mt-2">
-                      <span className="flex border p-1 rounded-md">
+                    <div className="flex sm:space-x-2 space-x-0 mt-2 flex-col sm:flex-row">
+                      <span className="flex border p-1 rounded-md  w-fit">
                         <Icon
                           icon="material-symbols-light:star-rounded"
                           className="font-bold text-xl text-[#FCCD00] "
@@ -839,7 +586,7 @@ export default function HotelList() {
                         </p>
                       </span>
 
-                      <span className="flex p-1">
+                      <span className="flex p-1 sm:mt-0 mt-2">
                         <Icon
                           icon="mdi:location"
                           className="font-bold text-xl text-blue-950 dark:text-white "
@@ -853,7 +600,7 @@ export default function HotelList() {
                     <p className="text-red-500 text-sm border border-red-500 rounded-3xl max-w-fit px-2 py-1 mt-3">
                       {hotel.roomsRemaining} Room Remaining
                     </p>
-                    <div className="flex space-x-2 mt-4">
+                    <div className="flex sm:space-x-2 space-x-0 mt-4">
                       {hotel.facilities[0]?.general
                         ?.slice(0, 3)
                         .map((item, index) => (
@@ -862,14 +609,14 @@ export default function HotelList() {
                               icon="mdi:success"
                               className="font-bold text-xl text-gray-400 dark:text-gray-300 "
                             />
-                            <p className="text-sm text-gray-400 dark:text-gray-300">
+                            <p className="sm:text-sm text-[12px] text-gray-400 dark:text-gray-300">
                               {item}
                             </p>
                           </span>
                         ))}
                     </div>
                   </div>
-                  <div className="flex flex-col items-end space-y-1 mt-10">
+                  <div className="flex flex-col sm:items-end items-start space-y-1 sm:mt-10 mt-2">
                     <p className="bg-red-500 text-white rounded-2xl px-2 py-1 max-w-fit text-sm">
                       {hotel.discount} off
                     </p>
