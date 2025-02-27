@@ -235,20 +235,28 @@ const HomePage = () => {
                 }}
               >
                 <SelectTrigger
-                  className={`w-[100px] border-none  ${
-                    active
-                      ? isDarkMode
-                        ? "text-white"
-                        : "text-black"
-                      : "text-black"
-                  }`}
-                >
+                  className="w-[100px] border-none bg-gray-300 dark:bg-gray-700 shadow-none dark:text-white">
                   <SelectValue placeholder="Select Country" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
-                    <SelectItem value="BDT">BDT</SelectItem>
-                    <SelectItem value="USA">USA</SelectItem>
+                    <SelectItem value="BDT" >  
+                     <span className="flex space-x-2">
+                     <Icon
+                  icon="twemoji:flag-bangladesh"
+                  className="font-bold text-xl text-black dark:text-white "
+                /> 
+                <span className="font-bold">BDT</span>
+                     </span>
+                </SelectItem>
+                    <SelectItem value="USA">
+                    <span className="flex space-x-2">
+                     <Icon
+                  icon="la:flag-usa"
+                  className="font-bold text-xl text-black dark:text-white "
+                /> <span className="font-bold">USA</span>
+                     </span>
+                    </SelectItem>
                   </SelectGroup>
                 </SelectContent>
               </Select>
@@ -307,8 +315,65 @@ const HomePage = () => {
               </h1>
             </Link>
           </div>
-          <div className="flex space-x-2">
-            <div className="mt-1" onClick={handleClose}>
+          <div className="flex ">
+          <div className="mt-[2px]">
+              <Select
+                value={selectedCountry}
+                className="text-black bg-black border-none"
+                onValueChange={(value) => {
+                  setSelectedCountry(value);
+                }}
+              >
+                <SelectTrigger
+                  className="w-[100px] border-none shadow-none dark:text-white">
+                  <SelectValue placeholder="Select Country" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectItem value="BDT" >  
+                     <span className="flex space-x-2">
+                     <Icon
+                  icon="twemoji:flag-bangladesh"
+                  className="font-bold text-xl text-black dark:text-white "
+                /> 
+                <span >BDT</span>
+                     </span>
+                </SelectItem>
+                    <SelectItem value="USA">
+                    <span className="flex space-x-2">
+                     <Icon
+                  icon="la:flag-usa"
+                  className="font-bold text-xl text-black dark:text-white "
+                /> <span>USA</span>
+                     </span>
+                    </SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
+
+
+
+            <div>
+              <button
+                onClick={toggleDarkMode}
+                className="px-2 py-1  rounded-full mt-1"
+              >
+                {isDarkMode ? (
+                  <Icon
+                    icon="material-symbols-light:dark-mode-rounded"
+                    className="font-bold text-2xl text-white"
+                  />
+                ) : (
+                  <Icon
+                    icon="uil:sun"
+                    className="font-bold text-2xl text-black"
+                  />
+                )}
+              </button>
+            </div>
+
+             <div className="mt-1" onClick={handleClose}>
               {openn ? (
                 <Icon
                   onClick={() => setOpenn(!openn)}
@@ -322,25 +387,6 @@ const HomePage = () => {
                   className="font-bold text-3xl text-black dark:text-white"
                 />
               )}
-            </div>
-
-            <div>
-              <button
-                onClick={toggleDarkMode}
-                className="px-2  rounded-full mt-1"
-              >
-                {isDarkMode ? (
-                  <Icon
-                    icon="material-symbols-light:dark-mode-rounded"
-                    className="font-bold text-3xl text-white"
-                  />
-                ) : (
-                  <Icon
-                    icon="uil:sun"
-                    className="font-bold text-3xl text-black"
-                  />
-                )}
-              </button>
             </div>
           </div>
 
@@ -381,52 +427,99 @@ const HomePage = () => {
       <div>
         <div className="bg-blue-100 sm:min-h-96 min-h-96 flex items-center justify-center home">
           <div className="w-full sm:max-w-5xl relative flex justify-center sm:ml-0 sm:mr-0 ml-3 mr-3">
-            <div className="flex border-b pb-3 justify-center absolute -top-4 dark:bg-gray-600/50 backdrop-blur-md  bg-white/50  px-10 py-5 rounded-xl sm:w-2/3 w-80">
+            <div className="flex border-b pb-3 justify-center absolute -top-4 dark:bg-gray-600/70 backdrop-blur-md  bg-white/50  px-10 py-5 rounded-xl sm:w-2/3 w-80">
               <div className="flex gap-6">
                 <span
                   onClick={() => handleTabClick("Hotel")}
                   className={`cursor-pointer ${
                     activeTab === "Hotel"
-                      ? "text-blue-600 font-semibold border-b-2 border-yellow-400 pb-2"
-                      : "text-primary"
+                      ? "text-blue-600 dark:text-yellow-400 sm:font-semibold border-b-2 border-yellow-400 sm:pb-2 pb-1"
+                      : "text-primary sm:font-semibold"
                   }`}
                 >
-                  🏨 Hotel
+                 
+                 <span className="flex sm:space-x-2 sm:flex-row flex-col justify-center items-center">
+                  <Icon
+                  icon="fluent-emoji-flat:hotel"
+                  className="font-bold sm:text-xl text-lg text-black dark:text-white "
+                />  
+                <span className="sm:text-md text-[14px]">
+                Hotel
                 </span>
+                  </span>
+                </span>
+
+
+
                 <span
-                  onClick={() => handleTabClick("House Rent")}
+                   onClick={() => handleTabClick("House Rent")}
                   className={`cursor-pointer ${
                     activeTab === "House Rent"
-                      ? "text-blue-600 font-semibold border-b-2 border-yellow-400 pb-2"
-                      : "text-primary"
+                      ? "text-blue-600 dark:text-yellow-400 sm:font-semibold border-b-2 border-yellow-400 sm:pb-2 pb-1"
+                      : "text-primary sm:font-semibold"
                   }`}
                 >
-                  🏨 House Rent
+                 
+                 <span className="flex sm:space-x-2 sm:flex-row flex-col justify-center items-center">
+                  <Icon
+                  icon="fluent-emoji-flat:house"
+                  className="font-bold sm:text-xl text-lg text-black dark:text-white "
+                />  
+                <span className="sm:hidden text-[14px]">H.Rent</span>
+                <span className="hidden sm:block sm:text-md text-[14px]">House Rent</span>
+
+                  </span>
                 </span>
+
+
                 <span
-                  onClick={() => handleTabClick("Appartment")}
+                   onClick={() => handleTabClick("Appartment")}
                   className={`cursor-pointer ${
                     activeTab === "Appartment"
-                      ? "text-blue-600 font-semibold border-b-2 border-yellow-400 pb-2"
-                      : "text-primary"
+                      ? "text-blue-600 dark:text-yellow-400 sm:font-semibold border-b-2 border-yellow-400 sm:pb-2 pb-1"
+                      : "text-primary sm:font-semibold"
                   }`}
                 >
-                  🏨 Appartment
+                 
+                 <span className="flex sm:space-x-2 sm:flex-row flex-col justify-center items-center">
+                  <Icon
+                  icon="tdesign:houses-1-filled"
+                  className="font-bold sm:text-lg text-lg"
+                  style={{ color: 'rgb(255, 0, 0)' }}
+                />  
+                <span className="sm:text-md text-[14px]">
+                Appartment
                 </span>
+                  </span>
+                </span>
+                
+
                 <span
-                  onClick={() => handleTabClick("Visa")}
+                    onClick={() => handleTabClick("Visa")}
                   className={`cursor-pointer ${
                     activeTab === "Visa"
-                      ? "text-blue-600 font-semibold border-b-2 border-yellow-400 pb-2"
-                      : "text-primary"
+                      ? "text-blue-600 dark:text-yellow-400 sm:font-semibold border-b-2 border-yellow-400 sm:pb-2 pb-1"
+                      : "text-primary sm:font-semibold"
                   }`}
                 >
-                  🛂 Visa
+                 
+                 <span className="flex sm:space-x-2 sm:flex-row flex-col justify-center items-center">
+                  <Icon
+                  icon="mdi:passport"
+                  className="font-bold sm:text-xl text-lg"
+                  style={{ color: 'rgb(255, 0, 0)' }}
+                />  
+                <span className="sm:text-md text-[14px]">
+                Visa
                 </span>
+                  </span>
+                </span>
+
+
               </div>
             </div>
 
-            <div className="mt-4 dark:bg-gray-600/65  bg-white/65  overflow-visible sm:min-w-fit min-w-full p-6 rounded-2xl shadow-lg"      >
+            <div className="mt-4 dark:bg-gray-600/90 bg-white/90  overflow-visible sm:min-w-fit min-w-full sm:p-6  px-6 rounded-2xl shadow-lg">
               {activeTab === "Hotel" && (
                 <>
                   <div className="flex sm:mt-8 sm:mb-8 mt-14 mb-14 justify-between flex-col sm:flex-row">
