@@ -176,79 +176,77 @@ const Header = () => {
           </Link>
         </div>
         <div className="flex ">
-                  <div className="mt-[2px]">
-                      <Select
-                        value={selectedCountry}
-                        className="text-black bg-black border-none"
-                        onValueChange={(value) => {
-                          setSelectedCountry(value);
-                        }}
-                      >
-                        <SelectTrigger
-                          className="w-[100px] border-none shadow-none dark:text-white">
-                          <SelectValue placeholder="Select Country" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectGroup>
-                            <SelectItem value="BDT" >  
-                             <span className="flex space-x-2">
-                             <Icon
-                          icon="twemoji:flag-bangladesh"
-                          className="font-bold text-xl text-black dark:text-white "
-                        /> 
-                        <span >BDT</span>
-                             </span>
-                        </SelectItem>
-                            <SelectItem value="USA">
-                            <span className="flex space-x-2">
-                             <Icon
-                          icon="la:flag-usa"
-                          className="font-bold text-xl text-black dark:text-white "
-                        /> <span>USA</span>
-                             </span>
-                            </SelectItem>
-                          </SelectGroup>
-                        </SelectContent>
-                      </Select>
-                    </div>
-        
-        
-        
-                    <div>
-                      <button
-                        onClick={toggleDarkMode}
-                        className="px-2 py-1  rounded-full mt-1"
-                      >
-                        {isDarkMode ? (
-                          <Icon
-                            icon="material-symbols-light:dark-mode-rounded"
-                            className="font-bold text-2xl text-white"
-                          />
-                        ) : (
-                          <Icon
-                            icon="uil:sun"
-                            className="font-bold text-2xl text-black"
-                          />
-                        )}
-                      </button>
-                    </div>
-        
-                     <div className="mt-1" onClick={handleClose}>
-                      {openn ? (
-                        <Icon
-                          onClick={() => setOpenn(!openn)}
-                          icon="mingcute:close-fill"
-                          className="font-bold text-3xl text-black dark:text-white"
-                        />
-                      ) : (
-                        <Icon
-                          onClick={() => setOpenn(!openn)}
-                          icon="ion:menu"
-                          className="font-bold text-3xl text-black dark:text-white"
-                        />
-                      )}
-                    </div>
-                  </div>
+          <div className="mt-[2px]">
+            <Select
+              value={selectedCountry}
+              className="text-black bg-black border-none"
+              onValueChange={(value) => {
+                setSelectedCountry(value);
+              }}
+            >
+              <SelectTrigger className="w-[100px] border-none shadow-none dark:text-white">
+                <SelectValue placeholder="Select Country" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectItem value="BDT">
+                    <span className="flex space-x-2">
+                      <Icon
+                        icon="twemoji:flag-bangladesh"
+                        className="font-bold text-xl text-black dark:text-white "
+                      />
+                      <span>BDT</span>
+                    </span>
+                  </SelectItem>
+                  <SelectItem value="USA">
+                    <span className="flex space-x-2">
+                      <Icon
+                        icon="la:flag-usa"
+                        className="font-bold text-xl text-black dark:text-white "
+                      />{" "}
+                      <span>USA</span>
+                    </span>
+                  </SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div>
+            <button
+              onClick={toggleDarkMode}
+              className="px-2 py-1  rounded-full mt-1"
+            >
+              {isDarkMode ? (
+                <Icon
+                  icon="material-symbols-light:dark-mode-rounded"
+                  className="font-bold text-2xl text-white"
+                />
+              ) : (
+                <Icon
+                  icon="uil:sun"
+                  className="font-bold text-2xl text-black"
+                />
+              )}
+            </button>
+          </div>
+
+          <div className="mt-1" onClick={handleClose}>
+            {openn ? (
+              <Icon
+                onClick={() => setOpenn(!openn)}
+                icon="mingcute:close-fill"
+                className="font-bold text-3xl text-black dark:text-white"
+              />
+            ) : (
+              <Icon
+                onClick={() => setOpenn(!openn)}
+                icon="ion:menu"
+                className="font-bold text-3xl text-black dark:text-white"
+              />
+            )}
+          </div>
+        </div>
 
         {openn && (
           <div

@@ -8,27 +8,27 @@ const BookingPage = () => {
       <div className="bg-gray-100 dark:bg-background min-h-screen p-4 md:p-8">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2 bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8">
-            <h2 className="text-3xl font-bold mb-6">Review Your Booking</h2>
+            <h2 className="text-xl font-bold mb-2">Review Your Booking</h2>
             <div className="mb-6">
-              <h3 className="text-2xl font-semibold">
+              <h3 className="text-lg font-semibold">
                 Sea Pearl Beach Resort & Spa Cox's Bazar
               </h3>
-              <p className="text-gray-600">2 Guests | 1 Room</p>
+              <p className="text-gray-600 dark:text-gray-400">2 Guests | 1 Room</p>
 
-              <div className="flex justify-between my-4">
+              <div className="flex justify-between my-4 text-md">
                 <div>
-                  <p>
+                  <p >
                     Check In: <strong>14:00</strong>
                   </p>
-                  <p className="text-lg font-medium">27 Feb, 2025</p>
+                  <p className="font-medium">27 Feb, 2025</p>
                 </div>
                 <div>
                   <p>
                     Check Out: <strong>11:00</strong>
                   </p>
-                  <p className="text-lg font-medium">28 Feb, 2025</p>
+                  <p className="font-medium">28 Feb, 2025</p>
                 </div>
-                <p className="bg-blue-100 text-blue-600 px-4 py-1 rounded-lg">
+                <p className="bg-blue-100 text-blue-600 px-4 py-1 rounded-lg h-fit">
                   1 Night
                 </p>
               </div>

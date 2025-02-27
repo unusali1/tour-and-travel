@@ -234,28 +234,28 @@ const HomePage = () => {
                   setSelectedCountry(value);
                 }}
               >
-                <SelectTrigger
-                  className="w-[100px] border-none bg-gray-300 dark:bg-gray-700 shadow-none dark:text-white">
+                <SelectTrigger className="w-[100px] border-none bg-gray-300 dark:bg-gray-700 shadow-none dark:text-white">
                   <SelectValue placeholder="Select Country" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
-                    <SelectItem value="BDT" >  
-                     <span className="flex space-x-2">
-                     <Icon
-                  icon="twemoji:flag-bangladesh"
-                  className="font-bold text-xl text-black dark:text-white "
-                /> 
-                <span className="font-bold">BDT</span>
-                     </span>
-                </SelectItem>
+                    <SelectItem value="BDT">
+                      <span className="flex space-x-2">
+                        <Icon
+                          icon="twemoji:flag-bangladesh"
+                          className="font-bold text-xl text-black dark:text-white "
+                        />
+                        <span className="font-bold">BDT</span>
+                      </span>
+                    </SelectItem>
                     <SelectItem value="USA">
-                    <span className="flex space-x-2">
-                     <Icon
-                  icon="la:flag-usa"
-                  className="font-bold text-xl text-black dark:text-white "
-                /> <span className="font-bold">USA</span>
-                     </span>
+                      <span className="flex space-x-2">
+                        <Icon
+                          icon="la:flag-usa"
+                          className="font-bold text-xl text-black dark:text-white "
+                        />{" "}
+                        <span className="font-bold">USA</span>
+                      </span>
                     </SelectItem>
                   </SelectGroup>
                 </SelectContent>
@@ -316,7 +316,7 @@ const HomePage = () => {
             </Link>
           </div>
           <div className="flex ">
-          <div className="mt-[2px]">
+            <div className="mt-[2px]">
               <Select
                 value={selectedCountry}
                 className="text-black bg-black border-none"
@@ -324,35 +324,33 @@ const HomePage = () => {
                   setSelectedCountry(value);
                 }}
               >
-                <SelectTrigger
-                  className="w-[100px] border-none shadow-none dark:text-white">
+                <SelectTrigger className="w-[100px] border-none shadow-none dark:text-white">
                   <SelectValue placeholder="Select Country" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
-                    <SelectItem value="BDT" >  
-                     <span className="flex space-x-2">
-                     <Icon
-                  icon="twemoji:flag-bangladesh"
-                  className="font-bold text-xl text-black dark:text-white "
-                /> 
-                <span >BDT</span>
-                     </span>
-                </SelectItem>
+                    <SelectItem value="BDT">
+                      <span className="flex space-x-2">
+                        <Icon
+                          icon="twemoji:flag-bangladesh"
+                          className="font-bold text-xl text-black dark:text-white "
+                        />
+                        <span>BDT</span>
+                      </span>
+                    </SelectItem>
                     <SelectItem value="USA">
-                    <span className="flex space-x-2">
-                     <Icon
-                  icon="la:flag-usa"
-                  className="font-bold text-xl text-black dark:text-white "
-                /> <span>USA</span>
-                     </span>
+                      <span className="flex space-x-2">
+                        <Icon
+                          icon="la:flag-usa"
+                          className="font-bold text-xl text-black dark:text-white "
+                        />{" "}
+                        <span>USA</span>
+                      </span>
                     </SelectItem>
                   </SelectGroup>
                 </SelectContent>
               </Select>
             </div>
-
-
 
             <div>
               <button
@@ -373,7 +371,7 @@ const HomePage = () => {
               </button>
             </div>
 
-             <div className="mt-1" onClick={handleClose}>
+            <div className="mt-1" onClick={handleClose}>
               {openn ? (
                 <Icon
                   onClick={() => setOpenn(!openn)}
@@ -437,85 +435,70 @@ const HomePage = () => {
                       : "text-primary sm:font-semibold"
                   }`}
                 >
-                 
-                 <span className="flex sm:space-x-2 sm:flex-row flex-col justify-center items-center">
-                  <Icon
-                  icon="fluent-emoji-flat:hotel"
-                  className="font-bold sm:text-xl text-lg text-black dark:text-white "
-                />  
-                <span className="sm:text-md text-[14px]">
-                Hotel
-                </span>
+                  <span className="flex sm:space-x-2 sm:flex-row flex-col justify-center items-center">
+                    <Icon
+                      icon="fluent-emoji-flat:hotel"
+                      className="font-bold sm:text-xl text-lg text-black dark:text-white "
+                    />
+                    <span className="sm:text-md text-[14px]">Hotel</span>
                   </span>
                 </span>
 
-
-
                 <span
-                   onClick={() => handleTabClick("House Rent")}
+                  onClick={() => handleTabClick("House Rent")}
                   className={`cursor-pointer ${
                     activeTab === "House Rent"
                       ? "text-blue-600 dark:text-yellow-400 sm:font-semibold border-b-2 border-yellow-400 sm:pb-2 pb-1"
                       : "text-primary sm:font-semibold"
                   }`}
                 >
-                 
-                 <span className="flex sm:space-x-2 sm:flex-row flex-col justify-center items-center">
-                  <Icon
-                  icon="fluent-emoji-flat:house"
-                  className="font-bold sm:text-xl text-lg text-black dark:text-white "
-                />  
-                <span className="sm:hidden text-[14px]">H.Rent</span>
-                <span className="hidden sm:block sm:text-md text-[14px]">House Rent</span>
-
+                  <span className="flex sm:space-x-2 sm:flex-row flex-col justify-center items-center">
+                    <Icon
+                      icon="fluent-emoji-flat:house"
+                      className="font-bold sm:text-xl text-lg text-black dark:text-white "
+                    />
+                    <span className="sm:hidden text-[14px]">H.Rent</span>
+                    <span className="hidden sm:block sm:text-md text-[14px]">
+                      House Rent
+                    </span>
                   </span>
                 </span>
 
-
                 <span
-                   onClick={() => handleTabClick("Appartment")}
+                  onClick={() => handleTabClick("Appartment")}
                   className={`cursor-pointer ${
                     activeTab === "Appartment"
                       ? "text-blue-600 dark:text-yellow-400 sm:font-semibold border-b-2 border-yellow-400 sm:pb-2 pb-1"
                       : "text-primary sm:font-semibold"
                   }`}
                 >
-                 
-                 <span className="flex sm:space-x-2 sm:flex-row flex-col justify-center items-center">
-                  <Icon
-                  icon="tdesign:houses-1-filled"
-                  className="font-bold sm:text-lg text-lg"
-                  style={{ color: 'rgb(255, 0, 0)' }}
-                />  
-                <span className="sm:text-md text-[14px]">
-                Appartment
-                </span>
+                  <span className="flex sm:space-x-2 sm:flex-row flex-col justify-center items-center">
+                    <Icon
+                      icon="tdesign:houses-1-filled"
+                      className="font-bold sm:text-lg text-lg"
+                      style={{ color: "rgb(255, 0, 0)" }}
+                    />
+                    <span className="sm:text-md text-[14px]">Appartment</span>
                   </span>
                 </span>
-                
 
                 <span
-                    onClick={() => handleTabClick("Visa")}
+                  onClick={() => handleTabClick("Visa")}
                   className={`cursor-pointer ${
                     activeTab === "Visa"
                       ? "text-blue-600 dark:text-yellow-400 sm:font-semibold border-b-2 border-yellow-400 sm:pb-2 pb-1"
                       : "text-primary sm:font-semibold"
                   }`}
                 >
-                 
-                 <span className="flex sm:space-x-2 sm:flex-row flex-col justify-center items-center">
-                  <Icon
-                  icon="mdi:passport"
-                  className="font-bold sm:text-xl text-lg"
-                  style={{ color: 'rgb(255, 0, 0)' }}
-                />  
-                <span className="sm:text-md text-[14px]">
-                Visa
-                </span>
+                  <span className="flex sm:space-x-2 sm:flex-row flex-col justify-center items-center">
+                    <Icon
+                      icon="mdi:passport"
+                      className="font-bold sm:text-xl text-lg"
+                      style={{ color: "rgb(255, 0, 0)" }}
+                    />
+                    <span className="sm:text-md text-[14px]">Visa</span>
                   </span>
                 </span>
-
-
               </div>
             </div>
 
@@ -803,564 +786,564 @@ const HomePage = () => {
 
               {activeTab === "House Rent" && (
                 <>
-                <div className="flex sm:mt-8 sm:mb-8 mt-14 mb-14 justify-between flex-col sm:flex-row">
-                  <div className="mt-2 sm:mt-0 flex flex-col  p-2 rounded-md sm:ml-4">
-                    <Popover open={open} onOpenChange={setOpen}>
-                      <PopoverTrigger asChild>
-                        <Button
-                          variant={"ghost"}
-                          className="flex flex-col text-left items-start sm:w-[240px] w-full font-normal py-10 border border-gray-400"
-                        >
-                          <label className="text-[12px] text-blue-500  dark:text-white">
-                            CITY/HOTEL/RESORT/AREA
-                          </label>
-                          <span>
-                            <p>
-                              {value
-                                ? hotelArea.find(
-                                    (hotel) => hotel.value === value
-                                  )?.label
-                                : "Select Destination..."}
-                            </p>
-                            <p className="flex text-[12px] text-gray-400">
-                              Bangladesh
-                            </p>
-                          </span>
-                        </Button>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-[240px] p-0">
-                        <Command>
-                          <CommandInput placeholder="Search Destination..." />
-                          <CommandList>
-                            <CommandEmpty>No Destination found.</CommandEmpty>
-                            <CommandGroup>
-                              {hotelArea.map((hotel) => (
-                                <CommandItem
-                                  key={hotel.value}
-                                  value={hotel.value}
-                                  onSelect={(currentValue) => {
-                                    setValue(
-                                      currentValue === value
-                                        ? ""
-                                        : currentValue
-                                    );
-                                    setOpen(false);
-                                  }}
-                                >
-                                  <span className="flex space-x-1">
-                                    <Icon
-                                      icon="mdi:location"
-                                      className="font-bold text-4xl text-black dark:text-white mt-2"
-                                    />
-                                    <span>
-                                      <p className="font-semibold ">
-                                        {" "}
-                                        {hotel.label}
-                                      </p>
-                                      <p className="text-[12px] text-gray-400">
-                                        {hotel.country}
-                                      </p>
-                                    </span>
-                                  </span>
-
-                                  <Check
-                                    className={cn(
-                                      "ml-auto",
-                                      value === hotel.value
-                                        ? "opacity-100"
-                                        : "opacity-0"
-                                    )}
-                                  />
-                                </CommandItem>
-                              ))}
-                            </CommandGroup>
-                          </CommandList>
-                        </Command>
-                      </PopoverContent>
-                    </Popover>
-                  </div>
-
-                  <div className="mt-2 sm:mt-0 flex flex-col  p-2 rounded-md sm:ml-4">
-                    <Popover
-                      open={isPopoverOpen}
-                      onOpenChange={setIsPopoverOpen}
-                    >
-                      <PopoverTrigger asChild>
-                        <Button
-                          id="date"
-                          variant={"ghost"}
-                          className={cn(
-                            "flex flex-col text-left items-start sm:w-[240px] w-full font-normal py-10 border border-gray-400",
-                            !date && "text-muted-foreground"
-                          )}
-                        >
-                          <label className="text-[12px] text-blue-500  dark:text-white">
-                            CHECK IN
-                          </label>
-
-                          {date?.from ? (
+                  <div className="flex sm:mt-8 sm:mb-8 mt-14 mb-14 justify-between flex-col sm:flex-row">
+                    <div className="mt-2 sm:mt-0 flex flex-col  p-2 rounded-md sm:ml-4">
+                      <Popover open={open} onOpenChange={setOpen}>
+                        <PopoverTrigger asChild>
+                          <Button
+                            variant={"ghost"}
+                            className="flex flex-col text-left items-start sm:w-[240px] w-full font-normal py-10 border border-gray-400"
+                          >
+                            <label className="text-[12px] text-blue-500  dark:text-white">
+                              CITY/HOTEL/RESORT/AREA
+                            </label>
                             <span>
-                              <p className="flex">
-                                {format(date.from, "LLL dd, y")}
+                              <p>
+                                {value
+                                  ? hotelArea.find(
+                                      (hotel) => hotel.value === value
+                                    )?.label
+                                  : "Select Destination..."}
                               </p>
                               <p className="flex text-[12px] text-gray-400">
-                                {date.fromDayName}
+                                Bangladesh
                               </p>
                             </span>
-                          ) : (
-                            <span>Pick a date</span>
-                          )}
-                        </Button>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0" align="start">
-                        <p className="text-center p-4">
-                          Select check-in & check-out date
-                        </p>
-                        <Calendar
-                          initialFocus
-                          mode="range"
-                          defaultMonth={date?.from}
-                          selected={date}
-                          onSelect={handleSelect}
-                          numberOfMonths={2}
-                        />
-                      </PopoverContent>
-                    </Popover>
-                  </div>
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-[240px] p-0">
+                          <Command>
+                            <CommandInput placeholder="Search Destination..." />
+                            <CommandList>
+                              <CommandEmpty>No Destination found.</CommandEmpty>
+                              <CommandGroup>
+                                {hotelArea.map((hotel) => (
+                                  <CommandItem
+                                    key={hotel.value}
+                                    value={hotel.value}
+                                    onSelect={(currentValue) => {
+                                      setValue(
+                                        currentValue === value
+                                          ? ""
+                                          : currentValue
+                                      );
+                                      setOpen(false);
+                                    }}
+                                  >
+                                    <span className="flex space-x-1">
+                                      <Icon
+                                        icon="mdi:location"
+                                        className="font-bold text-4xl text-black dark:text-white mt-2"
+                                      />
+                                      <span>
+                                        <p className="font-semibold ">
+                                          {" "}
+                                          {hotel.label}
+                                        </p>
+                                        <p className="text-[12px] text-gray-400">
+                                          {hotel.country}
+                                        </p>
+                                      </span>
+                                    </span>
 
-                  <div className="mt-2 sm:mt-0 flex flex-col  p-2 rounded-md sm:ml-4">
-                    <Button
-                      id="date"
-                      variant={"ghost"}
-                      onClick={() => setIsPopoverOpen(!isPopoverOpen)}
-                      className={cn(
-                        "flex flex-col items-start text-left sm:w-[240px] w-full font-normal py-10 border border-gray-400",
-                        !date && "text-muted-foreground"
-                      )}
-                    >
-                      <label className="text-[12px] text-blue-500  dark:text-white">
-                        CHECK OUT
-                      </label>
+                                    <Check
+                                      className={cn(
+                                        "ml-auto",
+                                        value === hotel.value
+                                          ? "opacity-100"
+                                          : "opacity-0"
+                                      )}
+                                    />
+                                  </CommandItem>
+                                ))}
+                              </CommandGroup>
+                            </CommandList>
+                          </Command>
+                        </PopoverContent>
+                      </Popover>
+                    </div>
 
-                      {date?.to ? (
-                        <span>
-                          <p className="flex">
-                            {format(date.to, "LLL dd, y")}
+                    <div className="mt-2 sm:mt-0 flex flex-col  p-2 rounded-md sm:ml-4">
+                      <Popover
+                        open={isPopoverOpen}
+                        onOpenChange={setIsPopoverOpen}
+                      >
+                        <PopoverTrigger asChild>
+                          <Button
+                            id="date"
+                            variant={"ghost"}
+                            className={cn(
+                              "flex flex-col text-left items-start sm:w-[240px] w-full font-normal py-10 border border-gray-400",
+                              !date && "text-muted-foreground"
+                            )}
+                          >
+                            <label className="text-[12px] text-blue-500  dark:text-white">
+                              CHECK IN
+                            </label>
+
+                            {date?.from ? (
+                              <span>
+                                <p className="flex">
+                                  {format(date.from, "LLL dd, y")}
+                                </p>
+                                <p className="flex text-[12px] text-gray-400">
+                                  {date.fromDayName}
+                                </p>
+                              </span>
+                            ) : (
+                              <span>Pick a date</span>
+                            )}
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0" align="start">
+                          <p className="text-center p-4">
+                            Select check-in & check-out date
                           </p>
-                          <p className="flex text-[12px] text-gray-400">
-                            {date.toDayName}
-                          </p>
-                        </span>
-                      ) : (
-                        <span>Pick a date</span>
-                      )}
-                    </Button>
-                  </div>
+                          <Calendar
+                            initialFocus
+                            mode="range"
+                            defaultMonth={date?.from}
+                            selected={date}
+                            onSelect={handleSelect}
+                            numberOfMonths={2}
+                          />
+                        </PopoverContent>
+                      </Popover>
+                    </div>
 
-                  <div className=" mt-2 sm:mt-0 flex flex-col p-2 rounded-md sm:ml-4">
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <Button
-                          variant={"ghost"}
-                          className="flex flex-col text-left items-start sm:w-[240px] w-full font-normal py-10 border border-gray-400 rounded-lg"
-                        >
-                          <label className="text-[12px] text-blue-500  dark:text-white">
-                            ROOMS & GUESTS
-                          </label>
+                    <div className="mt-2 sm:mt-0 flex flex-col  p-2 rounded-md sm:ml-4">
+                      <Button
+                        id="date"
+                        variant={"ghost"}
+                        onClick={() => setIsPopoverOpen(!isPopoverOpen)}
+                        className={cn(
+                          "flex flex-col items-start text-left sm:w-[240px] w-full font-normal py-10 border border-gray-400",
+                          !date && "text-muted-foreground"
+                        )}
+                      >
+                        <label className="text-[12px] text-blue-500  dark:text-white">
+                          CHECK OUT
+                        </label>
+
+                        {date?.to ? (
                           <span>
-                            <p>
-                              <span className="text-blue-900 dark:text-gray-200 font-bold ">
-                                {totalTravelers.rooms}
-                              </span>{" "}
-                              Rooms,
-                              <span className="text-blue-900 dark:text-gray-200 font-bold ">
-                                {totalTravelers.total}
-                              </span>{" "}
-                              Guests
+                            <p className="flex">
+                              {format(date.to, "LLL dd, y")}
                             </p>
-                            <p className="text-[12px] text-gray-400">{`${totalTravelers.adult} adults & ${totalTravelers.child} childs`}</p>
+                            <p className="flex text-[12px] text-gray-400">
+                              {date.toDayName}
+                            </p>
                           </span>
-                        </Button>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-80">
-                        <div className="flex ml-4 justify-between">
-                          <div>
-                            <h4 className="font-bold text-blue-800  dark:text-gray-200">
-                              Rooms
-                            </h4>
-                            <p className="text-[12px]">{`${totalTravelers.total} Guests`}</p>
-                          </div>
-                          <div className="flex ml-10">
-                            <Button
-                              className=" border border-gray-200 rounded-full"
-                              onClick={() =>
-                                handleRommsCountChange("decrease")
-                              }
-                              variant="oulined"
-                            >
-                              -
-                            </Button>
-                            <p className="ml-4 mt-2">{roomsCount}</p>
-                            <Button
-                              className="ml-4 border border-gray-200 rounded-full"
-                              onClick={() =>
-                                handleRommsCountChange("increase")
-                              }
-                              variant="oulined"
-                            >
-                              +
-                            </Button>
-                          </div>
-                        </div>
+                        ) : (
+                          <span>Pick a date</span>
+                        )}
+                      </Button>
+                    </div>
 
-                        <Separator className="my-4" />
-                        <div className="flex ml-4 justify-between">
-                          <div>
-                            <h4 className="font-bold">Adult</h4>
-                            <p className="text-[12px]">12 years +</p>
+                    <div className=" mt-2 sm:mt-0 flex flex-col p-2 rounded-md sm:ml-4">
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <Button
+                            variant={"ghost"}
+                            className="flex flex-col text-left items-start sm:w-[240px] w-full font-normal py-10 border border-gray-400 rounded-lg"
+                          >
+                            <label className="text-[12px] text-blue-500  dark:text-white">
+                              ROOMS & GUESTS
+                            </label>
+                            <span>
+                              <p>
+                                <span className="text-blue-900 dark:text-gray-200 font-bold ">
+                                  {totalTravelers.rooms}
+                                </span>{" "}
+                                Rooms,
+                                <span className="text-blue-900 dark:text-gray-200 font-bold ">
+                                  {totalTravelers.total}
+                                </span>{" "}
+                                Guests
+                              </p>
+                              <p className="text-[12px] text-gray-400">{`${totalTravelers.adult} adults & ${totalTravelers.child} childs`}</p>
+                            </span>
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-80">
+                          <div className="flex ml-4 justify-between">
+                            <div>
+                              <h4 className="font-bold text-blue-800  dark:text-gray-200">
+                                Rooms
+                              </h4>
+                              <p className="text-[12px]">{`${totalTravelers.total} Guests`}</p>
+                            </div>
+                            <div className="flex ml-10">
+                              <Button
+                                className=" border border-gray-200 rounded-full"
+                                onClick={() =>
+                                  handleRommsCountChange("decrease")
+                                }
+                                variant="oulined"
+                              >
+                                -
+                              </Button>
+                              <p className="ml-4 mt-2">{roomsCount}</p>
+                              <Button
+                                className="ml-4 border border-gray-200 rounded-full"
+                                onClick={() =>
+                                  handleRommsCountChange("increase")
+                                }
+                                variant="oulined"
+                              >
+                                +
+                              </Button>
+                            </div>
                           </div>
-                          <div className="flex ml-10">
-                            <Button
-                              className=" border border-gray-200 rounded-full"
-                              onClick={() =>
-                                handleAdultCountChange("decrease")
-                              }
-                              variant="oulined"
-                            >
-                              -
-                            </Button>
-                            <p className="ml-4 mt-2">{adultCount}</p>
-                            <Button
-                              className="ml-4 border border-gray-200 rounded-full"
-                              onClick={() =>
-                                handleAdultCountChange("increase")
-                              }
-                              variant="oulined"
-                            >
-                              +
-                            </Button>
-                          </div>
-                        </div>
-                        <Separator className="my-4" />
 
-                        <div className="flex ml-4 justify-between">
-                          <div>
-                            <h4 className="font-bold">Children</h4>
-                            <p className="text-[12px]">Under 12 years</p>
+                          <Separator className="my-4" />
+                          <div className="flex ml-4 justify-between">
+                            <div>
+                              <h4 className="font-bold">Adult</h4>
+                              <p className="text-[12px]">12 years +</p>
+                            </div>
+                            <div className="flex ml-10">
+                              <Button
+                                className=" border border-gray-200 rounded-full"
+                                onClick={() =>
+                                  handleAdultCountChange("decrease")
+                                }
+                                variant="oulined"
+                              >
+                                -
+                              </Button>
+                              <p className="ml-4 mt-2">{adultCount}</p>
+                              <Button
+                                className="ml-4 border border-gray-200 rounded-full"
+                                onClick={() =>
+                                  handleAdultCountChange("increase")
+                                }
+                                variant="oulined"
+                              >
+                                +
+                              </Button>
+                            </div>
                           </div>
-                          <div className="flex ml-10">
-                            <Button
-                              className=" border border-gray-200 rounded-full"
-                              onClick={() =>
-                                handleChildCountChange("decrease")
-                              }
-                              variant="oulined"
-                            >
-                              -
-                            </Button>
-                            <p className="ml-4 mt-2">{childCount}</p>
-                            <Button
-                              className="ml-4 border border-gray-200 rounded-full"
-                              onClick={() =>
-                                handleChildCountChange("increase")
-                              }
-                              variant="oulined"
-                            >
-                              +
-                            </Button>
-                          </div>
-                        </div>
-                        <Separator className="my-4" />
+                          <Separator className="my-4" />
 
-                        <div className="mt-4 flex justify-end">
-                          <Button color="primary">OK</Button>
-                        </div>
-                      </PopoverContent>
-                    </Popover>
+                          <div className="flex ml-4 justify-between">
+                            <div>
+                              <h4 className="font-bold">Children</h4>
+                              <p className="text-[12px]">Under 12 years</p>
+                            </div>
+                            <div className="flex ml-10">
+                              <Button
+                                className=" border border-gray-200 rounded-full"
+                                onClick={() =>
+                                  handleChildCountChange("decrease")
+                                }
+                                variant="oulined"
+                              >
+                                -
+                              </Button>
+                              <p className="ml-4 mt-2">{childCount}</p>
+                              <Button
+                                className="ml-4 border border-gray-200 rounded-full"
+                                onClick={() =>
+                                  handleChildCountChange("increase")
+                                }
+                                variant="oulined"
+                              >
+                                +
+                              </Button>
+                            </div>
+                          </div>
+                          <Separator className="my-4" />
+
+                          <div className="mt-4 flex justify-end">
+                            <Button color="primary">OK</Button>
+                          </div>
+                        </PopoverContent>
+                      </Popover>
+                    </div>
                   </div>
-                </div>
-              </>
+                </>
               )}
 
               {activeTab === "Appartment" && (
                 <>
-                <div className="flex sm:mt-8 sm:mb-8 mt-14 mb-14 justify-between flex-col sm:flex-row">
-                  <div className="mt-2 sm:mt-0 flex flex-col  p-2 rounded-md sm:ml-4">
-                    <Popover open={open} onOpenChange={setOpen}>
-                      <PopoverTrigger asChild>
-                        <Button
-                          variant={"ghost"}
-                          className="flex flex-col text-left items-start sm:w-[240px] w-full font-normal py-10 border border-gray-400"
-                        >
-                          <label className="text-[12px] text-blue-500  dark:text-white">
-                            CITY/HOTEL/RESORT/AREA
-                          </label>
-                          <span>
-                            <p>
-                              {value
-                                ? hotelArea.find(
-                                    (hotel) => hotel.value === value
-                                  )?.label
-                                : "Select Destination..."}
-                            </p>
-                            <p className="flex text-[12px] text-gray-400">
-                              Bangladesh
-                            </p>
-                          </span>
-                        </Button>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-[240px] p-0">
-                        <Command>
-                          <CommandInput placeholder="Search Destination..." />
-                          <CommandList>
-                            <CommandEmpty>No Destination found.</CommandEmpty>
-                            <CommandGroup>
-                              {hotelArea.map((hotel) => (
-                                <CommandItem
-                                  key={hotel.value}
-                                  value={hotel.value}
-                                  onSelect={(currentValue) => {
-                                    setValue(
-                                      currentValue === value
-                                        ? ""
-                                        : currentValue
-                                    );
-                                    setOpen(false);
-                                  }}
-                                >
-                                  <span className="flex space-x-1">
-                                    <Icon
-                                      icon="mdi:location"
-                                      className="font-bold text-4xl text-black dark:text-white mt-2"
-                                    />
-                                    <span>
-                                      <p className="font-semibold ">
-                                        {" "}
-                                        {hotel.label}
-                                      </p>
-                                      <p className="text-[12px] text-gray-400">
-                                        {hotel.country}
-                                      </p>
-                                    </span>
-                                  </span>
-
-                                  <Check
-                                    className={cn(
-                                      "ml-auto",
-                                      value === hotel.value
-                                        ? "opacity-100"
-                                        : "opacity-0"
-                                    )}
-                                  />
-                                </CommandItem>
-                              ))}
-                            </CommandGroup>
-                          </CommandList>
-                        </Command>
-                      </PopoverContent>
-                    </Popover>
-                  </div>
-
-                  <div className="mt-2 sm:mt-0 flex flex-col  p-2 rounded-md sm:ml-4">
-                    <Popover
-                      open={isPopoverOpen}
-                      onOpenChange={setIsPopoverOpen}
-                    >
-                      <PopoverTrigger asChild>
-                        <Button
-                          id="date"
-                          variant={"ghost"}
-                          className={cn(
-                            "flex flex-col text-left items-start sm:w-[240px] w-full font-normal py-10 border border-gray-400",
-                            !date && "text-muted-foreground"
-                          )}
-                        >
-                          <label className="text-[12px] text-blue-500  dark:text-white">
-                            CHECK IN
-                          </label>
-
-                          {date?.from ? (
+                  <div className="flex sm:mt-8 sm:mb-8 mt-14 mb-14 justify-between flex-col sm:flex-row">
+                    <div className="mt-2 sm:mt-0 flex flex-col  p-2 rounded-md sm:ml-4">
+                      <Popover open={open} onOpenChange={setOpen}>
+                        <PopoverTrigger asChild>
+                          <Button
+                            variant={"ghost"}
+                            className="flex flex-col text-left items-start sm:w-[240px] w-full font-normal py-10 border border-gray-400"
+                          >
+                            <label className="text-[12px] text-blue-500  dark:text-white">
+                              CITY/HOTEL/RESORT/AREA
+                            </label>
                             <span>
-                              <p className="flex">
-                                {format(date.from, "LLL dd, y")}
+                              <p>
+                                {value
+                                  ? hotelArea.find(
+                                      (hotel) => hotel.value === value
+                                    )?.label
+                                  : "Select Destination..."}
                               </p>
                               <p className="flex text-[12px] text-gray-400">
-                                {date.fromDayName}
+                                Bangladesh
                               </p>
                             </span>
-                          ) : (
-                            <span>Pick a date</span>
-                          )}
-                        </Button>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0" align="start">
-                        <p className="text-center p-4">
-                          Select check-in & check-out date
-                        </p>
-                        <Calendar
-                          initialFocus
-                          mode="range"
-                          defaultMonth={date?.from}
-                          selected={date}
-                          onSelect={handleSelect}
-                          numberOfMonths={2}
-                        />
-                      </PopoverContent>
-                    </Popover>
-                  </div>
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-[240px] p-0">
+                          <Command>
+                            <CommandInput placeholder="Search Destination..." />
+                            <CommandList>
+                              <CommandEmpty>No Destination found.</CommandEmpty>
+                              <CommandGroup>
+                                {hotelArea.map((hotel) => (
+                                  <CommandItem
+                                    key={hotel.value}
+                                    value={hotel.value}
+                                    onSelect={(currentValue) => {
+                                      setValue(
+                                        currentValue === value
+                                          ? ""
+                                          : currentValue
+                                      );
+                                      setOpen(false);
+                                    }}
+                                  >
+                                    <span className="flex space-x-1">
+                                      <Icon
+                                        icon="mdi:location"
+                                        className="font-bold text-4xl text-black dark:text-white mt-2"
+                                      />
+                                      <span>
+                                        <p className="font-semibold ">
+                                          {" "}
+                                          {hotel.label}
+                                        </p>
+                                        <p className="text-[12px] text-gray-400">
+                                          {hotel.country}
+                                        </p>
+                                      </span>
+                                    </span>
 
-                  <div className="mt-2 sm:mt-0 flex flex-col  p-2 rounded-md sm:ml-4">
-                    <Button
-                      id="date"
-                      variant={"ghost"}
-                      onClick={() => setIsPopoverOpen(!isPopoverOpen)}
-                      className={cn(
-                        "flex flex-col items-start text-left sm:w-[240px] w-full font-normal py-10 border border-gray-400",
-                        !date && "text-muted-foreground"
-                      )}
-                    >
-                      <label className="text-[12px] text-blue-500  dark:text-white">
-                        CHECK OUT
-                      </label>
+                                    <Check
+                                      className={cn(
+                                        "ml-auto",
+                                        value === hotel.value
+                                          ? "opacity-100"
+                                          : "opacity-0"
+                                      )}
+                                    />
+                                  </CommandItem>
+                                ))}
+                              </CommandGroup>
+                            </CommandList>
+                          </Command>
+                        </PopoverContent>
+                      </Popover>
+                    </div>
 
-                      {date?.to ? (
-                        <span>
-                          <p className="flex">
-                            {format(date.to, "LLL dd, y")}
+                    <div className="mt-2 sm:mt-0 flex flex-col  p-2 rounded-md sm:ml-4">
+                      <Popover
+                        open={isPopoverOpen}
+                        onOpenChange={setIsPopoverOpen}
+                      >
+                        <PopoverTrigger asChild>
+                          <Button
+                            id="date"
+                            variant={"ghost"}
+                            className={cn(
+                              "flex flex-col text-left items-start sm:w-[240px] w-full font-normal py-10 border border-gray-400",
+                              !date && "text-muted-foreground"
+                            )}
+                          >
+                            <label className="text-[12px] text-blue-500  dark:text-white">
+                              CHECK IN
+                            </label>
+
+                            {date?.from ? (
+                              <span>
+                                <p className="flex">
+                                  {format(date.from, "LLL dd, y")}
+                                </p>
+                                <p className="flex text-[12px] text-gray-400">
+                                  {date.fromDayName}
+                                </p>
+                              </span>
+                            ) : (
+                              <span>Pick a date</span>
+                            )}
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0" align="start">
+                          <p className="text-center p-4">
+                            Select check-in & check-out date
                           </p>
-                          <p className="flex text-[12px] text-gray-400">
-                            {date.toDayName}
-                          </p>
-                        </span>
-                      ) : (
-                        <span>Pick a date</span>
-                      )}
-                    </Button>
-                  </div>
+                          <Calendar
+                            initialFocus
+                            mode="range"
+                            defaultMonth={date?.from}
+                            selected={date}
+                            onSelect={handleSelect}
+                            numberOfMonths={2}
+                          />
+                        </PopoverContent>
+                      </Popover>
+                    </div>
 
-                  <div className=" mt-2 sm:mt-0 flex flex-col p-2 rounded-md sm:ml-4">
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <Button
-                          variant={"ghost"}
-                          className="flex flex-col text-left items-start sm:w-[240px] w-full font-normal py-10 border border-gray-400 rounded-lg"
-                        >
-                          <label className="text-[12px] text-blue-500  dark:text-white">
-                            ROOMS & GUESTS
-                          </label>
+                    <div className="mt-2 sm:mt-0 flex flex-col  p-2 rounded-md sm:ml-4">
+                      <Button
+                        id="date"
+                        variant={"ghost"}
+                        onClick={() => setIsPopoverOpen(!isPopoverOpen)}
+                        className={cn(
+                          "flex flex-col items-start text-left sm:w-[240px] w-full font-normal py-10 border border-gray-400",
+                          !date && "text-muted-foreground"
+                        )}
+                      >
+                        <label className="text-[12px] text-blue-500  dark:text-white">
+                          CHECK OUT
+                        </label>
+
+                        {date?.to ? (
                           <span>
-                            <p>
-                              <span className="text-blue-900 dark:text-gray-200 font-bold ">
-                                {totalTravelers.rooms}
-                              </span>{" "}
-                              Rooms,
-                              <span className="text-blue-900 dark:text-gray-200 font-bold ">
-                                {totalTravelers.total}
-                              </span>{" "}
-                              Guests
+                            <p className="flex">
+                              {format(date.to, "LLL dd, y")}
                             </p>
-                            <p className="text-[12px] text-gray-400">{`${totalTravelers.adult} adults & ${totalTravelers.child} childs`}</p>
+                            <p className="flex text-[12px] text-gray-400">
+                              {date.toDayName}
+                            </p>
                           </span>
-                        </Button>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-80">
-                        <div className="flex ml-4 justify-between">
-                          <div>
-                            <h4 className="font-bold text-blue-800  dark:text-gray-200">
-                              Rooms
-                            </h4>
-                            <p className="text-[12px]">{`${totalTravelers.total} Guests`}</p>
-                          </div>
-                          <div className="flex ml-10">
-                            <Button
-                              className=" border border-gray-200 rounded-full"
-                              onClick={() =>
-                                handleRommsCountChange("decrease")
-                              }
-                              variant="oulined"
-                            >
-                              -
-                            </Button>
-                            <p className="ml-4 mt-2">{roomsCount}</p>
-                            <Button
-                              className="ml-4 border border-gray-200 rounded-full"
-                              onClick={() =>
-                                handleRommsCountChange("increase")
-                              }
-                              variant="oulined"
-                            >
-                              +
-                            </Button>
-                          </div>
-                        </div>
+                        ) : (
+                          <span>Pick a date</span>
+                        )}
+                      </Button>
+                    </div>
 
-                        <Separator className="my-4" />
-                        <div className="flex ml-4 justify-between">
-                          <div>
-                            <h4 className="font-bold">Adult</h4>
-                            <p className="text-[12px]">12 years +</p>
+                    <div className=" mt-2 sm:mt-0 flex flex-col p-2 rounded-md sm:ml-4">
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <Button
+                            variant={"ghost"}
+                            className="flex flex-col text-left items-start sm:w-[240px] w-full font-normal py-10 border border-gray-400 rounded-lg"
+                          >
+                            <label className="text-[12px] text-blue-500  dark:text-white">
+                              ROOMS & GUESTS
+                            </label>
+                            <span>
+                              <p>
+                                <span className="text-blue-900 dark:text-gray-200 font-bold ">
+                                  {totalTravelers.rooms}
+                                </span>{" "}
+                                Rooms,
+                                <span className="text-blue-900 dark:text-gray-200 font-bold ">
+                                  {totalTravelers.total}
+                                </span>{" "}
+                                Guests
+                              </p>
+                              <p className="text-[12px] text-gray-400">{`${totalTravelers.adult} adults & ${totalTravelers.child} childs`}</p>
+                            </span>
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-80">
+                          <div className="flex ml-4 justify-between">
+                            <div>
+                              <h4 className="font-bold text-blue-800  dark:text-gray-200">
+                                Rooms
+                              </h4>
+                              <p className="text-[12px]">{`${totalTravelers.total} Guests`}</p>
+                            </div>
+                            <div className="flex ml-10">
+                              <Button
+                                className=" border border-gray-200 rounded-full"
+                                onClick={() =>
+                                  handleRommsCountChange("decrease")
+                                }
+                                variant="oulined"
+                              >
+                                -
+                              </Button>
+                              <p className="ml-4 mt-2">{roomsCount}</p>
+                              <Button
+                                className="ml-4 border border-gray-200 rounded-full"
+                                onClick={() =>
+                                  handleRommsCountChange("increase")
+                                }
+                                variant="oulined"
+                              >
+                                +
+                              </Button>
+                            </div>
                           </div>
-                          <div className="flex ml-10">
-                            <Button
-                              className=" border border-gray-200 rounded-full"
-                              onClick={() =>
-                                handleAdultCountChange("decrease")
-                              }
-                              variant="oulined"
-                            >
-                              -
-                            </Button>
-                            <p className="ml-4 mt-2">{adultCount}</p>
-                            <Button
-                              className="ml-4 border border-gray-200 rounded-full"
-                              onClick={() =>
-                                handleAdultCountChange("increase")
-                              }
-                              variant="oulined"
-                            >
-                              +
-                            </Button>
-                          </div>
-                        </div>
-                        <Separator className="my-4" />
 
-                        <div className="flex ml-4 justify-between">
-                          <div>
-                            <h4 className="font-bold">Children</h4>
-                            <p className="text-[12px]">Under 12 years</p>
+                          <Separator className="my-4" />
+                          <div className="flex ml-4 justify-between">
+                            <div>
+                              <h4 className="font-bold">Adult</h4>
+                              <p className="text-[12px]">12 years +</p>
+                            </div>
+                            <div className="flex ml-10">
+                              <Button
+                                className=" border border-gray-200 rounded-full"
+                                onClick={() =>
+                                  handleAdultCountChange("decrease")
+                                }
+                                variant="oulined"
+                              >
+                                -
+                              </Button>
+                              <p className="ml-4 mt-2">{adultCount}</p>
+                              <Button
+                                className="ml-4 border border-gray-200 rounded-full"
+                                onClick={() =>
+                                  handleAdultCountChange("increase")
+                                }
+                                variant="oulined"
+                              >
+                                +
+                              </Button>
+                            </div>
                           </div>
-                          <div className="flex ml-10">
-                            <Button
-                              className=" border border-gray-200 rounded-full"
-                              onClick={() =>
-                                handleChildCountChange("decrease")
-                              }
-                              variant="oulined"
-                            >
-                              -
-                            </Button>
-                            <p className="ml-4 mt-2">{childCount}</p>
-                            <Button
-                              className="ml-4 border border-gray-200 rounded-full"
-                              onClick={() =>
-                                handleChildCountChange("increase")
-                              }
-                              variant="oulined"
-                            >
-                              +
-                            </Button>
-                          </div>
-                        </div>
-                        <Separator className="my-4" />
+                          <Separator className="my-4" />
 
-                        <div className="mt-4 flex justify-end">
-                          <Button color="primary">OK</Button>
-                        </div>
-                      </PopoverContent>
-                    </Popover>
+                          <div className="flex ml-4 justify-between">
+                            <div>
+                              <h4 className="font-bold">Children</h4>
+                              <p className="text-[12px]">Under 12 years</p>
+                            </div>
+                            <div className="flex ml-10">
+                              <Button
+                                className=" border border-gray-200 rounded-full"
+                                onClick={() =>
+                                  handleChildCountChange("decrease")
+                                }
+                                variant="oulined"
+                              >
+                                -
+                              </Button>
+                              <p className="ml-4 mt-2">{childCount}</p>
+                              <Button
+                                className="ml-4 border border-gray-200 rounded-full"
+                                onClick={() =>
+                                  handleChildCountChange("increase")
+                                }
+                                variant="oulined"
+                              >
+                                +
+                              </Button>
+                            </div>
+                          </div>
+                          <Separator className="my-4" />
+
+                          <div className="mt-4 flex justify-end">
+                            <Button color="primary">OK</Button>
+                          </div>
+                        </PopoverContent>
+                      </Popover>
+                    </div>
                   </div>
-                </div>
-              </>
+                </>
               )}
 
               {activeTab === "Visa" && (
@@ -1370,7 +1353,7 @@ const HomePage = () => {
                       <Popover open={open} onOpenChange={setOpen}>
                         <PopoverTrigger asChild>
                           <Button
-                          variant={"ghost"}
+                            variant={"ghost"}
                             className="flex flex-col text-left items-start sm:w-[500px] w-full font-normal py-10 border border-gray-400"
                           >
                             <label className="text-[12px] text-blue-500">
@@ -1427,7 +1410,7 @@ const HomePage = () => {
 
                     <div className=" mt-2 sm:mt-0 flex flex-col p-2 rounded-md sm:ml-4">
                       <Button
-                      variant={"ghost"}
+                        variant={"ghost"}
                         className="flex flex-col text-left items-start sm:w-[500px] w-full font-normal py-10 border border-gray-400 rounded-lg"
                       >
                         <label className="text-[12px] text-blue-500 ">
