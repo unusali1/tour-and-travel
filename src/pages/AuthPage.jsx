@@ -11,24 +11,53 @@ const AuthPage = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [phone, setPhone] = useState("");
+  const [errors, setErrors] = useState({});
+  const [showPassword, setShowPassword] = useState({
+    password: false,
+    confirmPassword: false,
+  });
+
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!email.trim()) newErrors.email = "Email is required";
+    if (isSignUp && !phone.trim()) newErrors.phone = "Phone number is required";
+    if (!password.trim()) newErrors.password = "Password is required";
+    if (isSignUp && password !== confirmPassword)
+      newErrors.confirmPassword = "Passwords do not match";
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!validateForm()) return;
+
     if (isSignUp) {
       const signUpData = {
+        name,
         email,
+        phone,
         password,
         confirmPassword,
-        phone
       };
       console.log("SignUp Data:", signUpData);
     } else {
       const signInData = {
         email,
-        password
+        password,
       };
       console.log("SignIn Data:", signInData);
     }
+  };
+
+  const togglePasswordVisibility = (field) => {
+    setShowPassword((prev) => ({
+      ...prev,
+      [field]: !prev[field],
+    }));
   };
 
   return (
@@ -42,7 +71,10 @@ const AuthPage = () => {
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div className="relative">
               <div className="absolute left-2.5 top-3.5 h-4 w-4 text-muted-foreground">
-                <Icon icon="mdi:email" className="font-bold text-2xl text-gray-400" />
+                <Icon
+                  icon="mdi:email"
+                  className="font-bold text-2xl text-gray-400"
+                />
               </div>
               <Input
                 id="email"
@@ -52,12 +84,16 @@ const AuthPage = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full rounded-lg bg-background px-12 py-6"
               />
+               {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
             </div>
 
             {isSignUp && (
               <div className="relative">
                 <div className="absolute left-2.5 top-3.5 h-4 w-4 text-muted-foreground">
-                  <Icon icon="mingcute:phone-fill" className="font-bold text-2xl text-gray-400" />
+                  <Icon
+                    icon="mingcute:phone-fill"
+                    className="font-bold text-2xl text-gray-400"
+                  />
                 </div>
                 <Input
                   id="phone"
@@ -67,36 +103,67 @@ const AuthPage = () => {
                   placeholder="Phone Number"
                   className="w-full rounded-lg bg-background px-12 py-6"
                 />
+                 {errors.phone && <p className="text-red-500 text-sm">{errors.phone}</p>}
               </div>
             )}
 
             <div className="relative">
               <div className="absolute left-2.5 top-3.5 h-4 w-4 text-muted-foreground">
-                <Icon icon="ri:lock-password-fill" className="font-bold text-2xl text-gray-400" />
+                <Icon
+                  icon="ri:lock-password-fill"
+                  className="font-bold text-2xl text-gray-400"
+                />
               </div>
               <Input
                 id="password"
-                type="password"
+                type={showPassword.password ? "text" : "password"}
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full rounded-lg bg-background px-12 py-6"
               />
+              <div className="absolute right-4 top-3.5 h-4 w-4 text-muted-foreground">
+                <Icon
+                  onClick={() => togglePasswordVisibility("password")}
+                  icon={
+                    showPassword.password ? "eva:eye-fill" : "eva:eye-off-fill"
+                  }
+                  className="font-bold text-2xl text-gray-400 cursor-pointer"
+                />
+              </div>
+              {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
             </div>
 
             {isSignUp && (
               <div className="relative">
                 <div className="absolute left-2.5 top-3.5 h-4 w-4 text-muted-foreground">
-                  <Icon icon="ri:lock-password-fill" className="font-bold text-2xl text-gray-400" />
+                  <Icon
+                    icon="ri:lock-password-fill"
+                    className="font-bold text-2xl text-gray-400"
+                  />
                 </div>
                 <Input
                   id="confirm-password"
-                  type="password"
+                  type={showPassword.confirmPassword ? "text" : "password"}
                   placeholder="Confirm Password"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   className="w-full rounded-lg bg-background px-12 py-6"
                 />
+                <div className="absolute right-4 top-3.5 h-4 w-4 text-muted-foreground">
+                  <Icon
+                    onClick={() => togglePasswordVisibility("confirmPassword")}
+                    icon={
+                      showPassword.confirmPassword
+                        ? "eva:eye-fill"
+                        : "eva:eye-off-fill"
+                    }
+                    className="font-bold text-2xl text-gray-400 cursor-pointer"
+                  />
+                </div>
+                {errors.confirmPassword && (
+                  <p className="text-red-500 text-sm">{errors.confirmPassword}</p>
+                )}
               </div>
             )}
 
@@ -120,7 +187,10 @@ const AuthPage = () => {
                 type="button"
                 className="flex space-x-3 justify-center w-full bg-white dark:bg-gray-600 text-gray-500 border p-3 rounded-lg font-semibold transition duration-300"
               >
-                <Icon icon="devicon:google" className="font-bold text-2xl text-gray-400" />
+                <Icon
+                  icon="devicon:google"
+                  className="font-bold text-2xl text-gray-400"
+                />
                 <p className="dark:text-white text-sm">Login With Google</p>
               </button>
             )}
