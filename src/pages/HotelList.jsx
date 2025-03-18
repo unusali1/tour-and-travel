@@ -10,6 +10,8 @@ import { hotelArea, hotelLists } from "@/assets/data/HotelData";
 import { addDays, format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { Calendar } from "@/components/ui/calendar";
+import { Skeleton } from "@/components/ui/skeleton";
+import hotel1 from "../assets/hotel1.jpg";
 import {
   Popover,
   PopoverContent,
@@ -26,6 +28,7 @@ import {
   CommandList,
 } from "@/components/ui/command";
 import { useEffect, useState } from "react";
+import { useGetHotelsQuery } from "@/redux/hotels/hotelsApi";
 
 export default function HotelList() {
   const navigate = useNavigate();
@@ -45,14 +48,16 @@ export default function HotelList() {
   const [isSmallScreen, setIsSmallScreen] = useState(false);
   const [showSection, setShowSection] = useState(true);
 
+  const { data: hotels, isLoading, isError, error } = useGetHotelsQuery();
+
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 768) {
         setIsSmallScreen(true);
-        setShowSection(false); 
+        setShowSection(false);
       } else {
         setIsSmallScreen(false);
-        setShowSection(true); 
+        setShowSection(true);
       }
     };
 
@@ -129,9 +134,148 @@ export default function HotelList() {
     });
   };
 
-  const handleSelectHotel = () => {
-    navigate(`/hotelDetails/${1}`);
+  const handleSelectHotel = (id) => {
+    navigate(`/hotelDetails/${id}`);
   };
+
+  let content = null;
+
+  if (isLoading) {
+    content = (
+      <div className="flex items-center space-x-4 w-full">
+        <Skeleton className="h-[125px] w-[350px] rounded-xl" />
+        <div>
+          <Skeleton className="h-12 w-[350px]" />
+          <Skeleton className="h-8 w-[350px] mt-2" />
+          <Skeleton className="h-6 w-[350px] mt-2" />
+        </div>
+      </div>
+    );
+  } else if (!isLoading && isError) {
+    content = (
+      <li className="m-2 text-center">
+        <p>error</p>
+      </li>
+    );
+  } else if (!isLoading && !isError && hotels?.length === 0) {
+    content = <li className="m-2 text-center">No hotel found!</li>;
+  } else if (!isLoading && !isError && hotels?.length > 0) {
+    content = hotels.map((hotel) => {
+      return (
+        <Card
+          key={hotel.id}
+          className="flex sm:p-4 py-4 px-2 relative dark:bg-gray-800"
+        >
+          <CardContent className="flex justify-between sm:flex-row flex-col gap-4 w-full ">
+            <div className="relative">
+              <img
+                // src={hotel?.thumbnail_image}
+                src={hotel1}
+                alt={hotel?.name}
+                className="rounded-lg smn:h-56 h-full sm:w-64 w-full object-cover"
+              />
+
+              <button className="absolute bottom-2 left-2 p-1.5 rounded-md bg-white hover:bg-white/20">
+                <Icon icon="mdi:heart-outline" className="font-bold text-sm" />
+              </button>
+
+              <button className="flex absolute bottom-2 right-2 p-1.5 rounded-md bg-white/40  hover:bg-white/20">
+                <Icon
+                  icon="mdi:bird"
+                  className="font-bold text-xl text-red-500 "
+                />
+                <p className="text-[12px] text-white font-semibold">
+                  Get Points
+                </p>
+              </button>
+            </div>
+
+            <button className="flex absolute top-8 left-2 p-1.5 rounded-md bg-[#EEF8FB] border border-blue-400">
+              <Icon
+                icon="flowbite:award-outline"
+                className="font-bold text-xl text-blue-950 "
+              />
+              <p className="text-[12px] text-[#00026E] font-semibold">
+                Top Selling
+              </p>
+            </button>
+
+            <div>
+              <h3 className="text-lg font-semibold">{hotel?.name}</h3>
+              <div className="flex sm:space-x-2 space-x-0 mt-2 flex-col sm:flex-row">
+                <span className="flex border p-1 rounded-md  w-fit">
+                  <Icon
+                    icon="material-symbols-light:star-rounded"
+                    className="font-bold text-xl text-[#FCCD00] "
+                  />
+                  <p className="text-sm text-gray-500 dark:text-gray-300">
+                    Star
+                  </p>
+                </span>
+
+                <span className="flex p-1 sm:mt-0 mt-2">
+                  <Icon
+                    icon="mdi:location"
+                    className="font-bold text-xl text-blue-950 dark:text-white "
+                  />
+                  <p className="text-sm text-gray-500 dark:text-gray-300">
+                    {hotel?.address} Cox bazar, Bangladesh
+                  </p>
+                </span>
+              </div>
+              <Button
+                className="bg-yellow-500 text-white mt-4"
+                onClick={() => handleSelectHotel(hotel?.id)}
+              >
+                Select
+              </Button>
+
+              {/* <p className="text-red-500 text-sm border border-red-500 rounded-3xl max-w-fit px-2 py-1 mt-3">
+                    {hotel.roomsRemaining} Room Remaining
+                  </p> */}
+              {/* <div className="flex sm:space-x-2 space-x-0 mt-4">
+                    {hotel.facilities[0]?.general
+                      ?.slice(0, 3)
+                      .map((item, index) => (
+                        <span key={index} className="flex">
+                          <Icon
+                            icon="mdi:success"
+                            className="font-bold text-xl text-gray-400 dark:text-gray-300 "
+                          />
+                          <p className="sm:text-sm text-[12px] text-gray-400 dark:text-gray-300">
+                            {item}
+                          </p>
+                        </span>
+                      ))}
+                  </div> */}
+            </div>
+            <div className="flex flex-col sm:items-end items-start space-y-1 sm:mt-10 mt-2">
+              {/* <p className="bg-red-500 text-white rounded-2xl px-2 py-1 max-w-fit text-sm">
+                    {hotel.discount} off
+                  </p> */}
+              {/* <p className="text-green-500 text-sm">
+                    Extra 5% discount for Bkash
+                  </p> */}
+              {/* <p className="text-gray-400 line-through">
+                    BDT {hotel.oldPrice}
+                  </p> */}
+              {/* <p className="text-lg font-bold">{hotel.newprice}</p> */}
+              {/* <p className="text-[12px] text-gray-400 ">
+                    for 1 night, per room
+                  </p> */}
+
+              {/* <Button
+                    className="bg-yellow-500 text-white"
+                    onClick={handleSelectHotel}
+                  >
+                    Select
+                  </Button> */}
+            </div>
+          </CardContent>
+        </Card>
+      );
+    });
+  }
 
   return (
     <>
@@ -169,7 +313,7 @@ export default function HotelList() {
           <div className="flex items-end">
             {isSmallScreen && (
               <Button onClick={() => setShowSection(!showSection)}>
-               {showSection ? (
+                {showSection ? (
                   <>
                     <Icon
                       icon="iconoir:cancel"
@@ -295,7 +439,9 @@ export default function HotelList() {
                     </Button>
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-0" align="start">
-                    <p className="text-center p-4">Select check-in & check-out date</p>
+                    <p className="text-center p-4">
+                      Select check-in & check-out date
+                    </p>
                     <Calendar
                       initialFocus
                       mode="range"
@@ -318,7 +464,9 @@ export default function HotelList() {
                     !date && "text-muted-foreground"
                   )}
                 >
-                  <label className="text-[12px] text-blue-500  dark:text-white">CHECK OUT</label>
+                  <label className="text-[12px] text-blue-500  dark:text-white">
+                    CHECK OUT
+                  </label>
 
                   {date?.to ? (
                     <span>
@@ -361,7 +509,9 @@ export default function HotelList() {
                   <PopoverContent className="w-80">
                     <div className="flex ml-4 justify-between">
                       <div>
-                        <h4 className="font-bold text-blue-800  dark:text-gray-200">Rooms</h4>
+                        <h4 className="font-bold text-blue-800  dark:text-gray-200">
+                          Rooms
+                        </h4>
                         <p className="text-[12px]">{`${totalTravelers.total} Guests`}</p>
                       </div>
                       <div className="flex ml-10">
@@ -450,8 +600,6 @@ export default function HotelList() {
           </div>
         )}
 
-        
-
         <div className="bg-gray-100 grid grid-cols-12 sm:gap-4 pt-5  dark:bg-background sm:px-24 px-4 pb-24">
           <aside className="hidden sm:block col-span-3 bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md">
             <div className="mt-4 flex justify-between">
@@ -535,7 +683,8 @@ export default function HotelList() {
                 <option>Price</option>
               </select>
             </div>
-            {hotelLists.map((hotel, index) => (
+            {content}
+            {/* {hotelLists.map((hotel, index) => (
               <Card key={index} className="flex sm:p-4 py-4 px-2 relative dark:bg-gray-800">
                 <CardContent className="flex justify-between sm:flex-row flex-col gap-4 w-full ">
                   <div className="relative">
@@ -640,7 +789,7 @@ export default function HotelList() {
                   </div>
                 </CardContent>
               </Card>
-            ))}
+            ))} */}
           </section>
         </div>
       </div>
