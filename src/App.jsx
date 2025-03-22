@@ -23,7 +23,7 @@ function App() {
       <Route path="/about" element={<About />} />
       <Route path="/hotel/list" element={<HotelList />} />
       <Route path="/visa/country=" element={<VisaDetails />} />
-      <Route path="/hotelDetails/:id" element={<HotelDetails />} />
+      <Route path="/hotelDetails/:slug" element={<HotelDetails />} />
       <Route path="/hotel/booking" element={<BookingPage />} />
     </Routes>
     <Footter />

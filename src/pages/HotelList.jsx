@@ -134,8 +134,8 @@ export default function HotelList() {
     });
   };
 
-  const handleSelectHotel = (id) => {
-    navigate(`/hotelDetails/${id}`);
+  const handleSelectHotel = (slug) => {
+    navigate(`/hotelDetails/${slug}`);
   };
 
   let content = null;
@@ -225,7 +225,7 @@ export default function HotelList() {
               </div>
               <Button
                 className="bg-yellow-500 text-white mt-4"
-                onClick={() => handleSelectHotel(hotel?.id)}
+                onClick={() => handleSelectHotel(hotel?.name)}
               >
                 Select
               </Button>

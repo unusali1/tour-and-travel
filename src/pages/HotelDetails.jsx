@@ -22,19 +22,30 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 const HotelDetails = () => {
   const navigate = useNavigate();
-  const { id } = useParams();
+  const { slug } = useParams();
   const [dialogOpen, setDialogOpen] = useState(false);
   const [cart, setCart] = useState({
     hotelName: "",
     price: "",
   });
 
+ 
+  const convertToSlug = (text) => {
+    return text
+      .toLowerCase()         
+      .replace(/\s+/g, '-')  
+      .replace(/[^a-z0-9-]/g, ''); 
+  };
+  
+  const convertedSlug = convertToSlug(slug);
+  console.log(convertedSlug);  
+
   const {
       data: hotelDetail,
       isLoading,
       isError,
       error,
-  } = useGetHotelDetailQuery(id);
+  } = useGetHotelDetailQuery(convertedSlug);
 
   console.log("hotelDetail:",hotelDetail);
 

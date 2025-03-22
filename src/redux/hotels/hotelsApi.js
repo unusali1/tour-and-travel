@@ -6,7 +6,7 @@ export const hotelsApi = apiSlice.injectEndpoints({
             query: () => `/hotels`,
         }),
         getHotelDetail:builder.query({
-            query:(id)=>`/rooms/${id}`
+            query:(slug)=>`/rooms/${slug}`
         })
     }),
 });
