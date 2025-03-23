@@ -138,7 +138,7 @@ const HotDeals = () => {
             </Swiper>
           </TabsContent>
           <TabsContent value="hotel">
-          <Swiper
+            <Swiper
               spaceBetween={20}
               slidesPerView={3}
               loop={true}

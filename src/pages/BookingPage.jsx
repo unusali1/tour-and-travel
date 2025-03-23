@@ -1,7 +1,39 @@
 import Header from "@/components/Navbar/Header";
 import React from "react";
+import { useNavigate,useParams, useSearchParams } from "react-router-dom";
 
 const BookingPage = () => {
+    const [searchParams] = useSearchParams();
+    const price = searchParams.get("price");
+    const check_in = searchParams.get("checkin")
+    const check_out = searchParams.get("checkout")
+    const tottalGuest = searchParams.get("guests")
+    const hotelName = searchParams.get("hotelName");
+    const roomName = searchParams.get("roomName");
+    const city_id = 9
+    const category_id = 2
+    const country_id =1
+    const capacity = 2
+
+    const checkInDate = check_in ? new Date(check_in) : null;
+    const checkOutDate = check_out ? new Date(check_out) : null;
+    
+    // Format time (e.g., "02:16 PM")
+    const formatTime = (date) =>
+      date?.toLocaleTimeString("en-US", {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: true,
+      }) || "N/A";
+    
+    // Format date (e.g., "27 Feb, 2025")
+    const formatDate = (date) =>
+      date?.toLocaleDateString("en-GB", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+      }) || "N/A";
+    
   return (
     <>
       <Header />
@@ -11,22 +43,22 @@ const BookingPage = () => {
             <h2 className="text-xl font-bold mb-2">Review Your Booking</h2>
             <div className="mb-6">
               <h3 className="text-lg font-semibold">
-                Sea Pearl Beach Resort & Spa Cox's Bazar
+                {hotelName} - {roomName} Room
               </h3>
-              <p className="text-gray-600 dark:text-gray-400">2 Guests | 1 Room</p>
+              <p className="text-gray-600 dark:text-gray-400">{tottalGuest} Guests</p>
 
               <div className="flex justify-between my-4 text-md">
                 <div>
                   <p >
-                    Check In: <strong>14:00</strong>
+                    Check In: <strong>{formatTime(checkInDate)}</strong>
                   </p>
-                  <p className="font-medium">27 Feb, 2025</p>
+                  <p className="font-medium">{formatDate(checkInDate)}</p>
                 </div>
                 <div>
                   <p>
-                    Check Out: <strong>11:00</strong>
+                    Check Out: <strong>{formatTime(checkOutDate)}</strong>
                   </p>
-                  <p className="font-medium">28 Feb, 2025</p>
+                  <p className="font-medium">{formatDate(checkOutDate)}</p>
                 </div>
                 <p className="bg-blue-100 text-blue-600 px-4 py-1 rounded-lg h-fit">
                   1 Night
@@ -49,7 +81,7 @@ const BookingPage = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {[1, 2].map((guest) => (
                 <div key={guest}>
-                  <p className="font-medium">Guest {guest} (Adult)</p>
+                  <p className="font-medium">Guest {tottalGuest} (Adult)</p>
                   <input
                     type="text"
                     placeholder="Given Name"
@@ -124,21 +156,21 @@ const BookingPage = () => {
 
           <div className="bg-white  dark:bg-gray-800 h-80 rounded-2xl shadow-lg p-8">
             <h3 className="text-2xl font-semibold mb-6">Fare Summary</h3>
-            <p>
+            {/* <p>
               Rack Rate: <span className="line-through">BDT 14,230</span>
             </p>
             <p>
               Hotel Offer: <span className="text-green-500">33%</span>{" "}
               <strong>BDT 4,832</strong>
+            </p> */}
+            <p>
+              Room Rate: <strong>{price}</strong>
             </p>
             <p>
-              Room Rate: <strong>BDT 9,398</strong>
-            </p>
-            <p>
-              Taxes & Fees: <strong>BDT 2,490</strong>
+              Taxes & Fees: <strong>BDT 0</strong>
             </p>
             <button className="bg-blue-600 text-white w-full py-4 rounded-lg mt-6 font-medium">
-              Pay Now BDT 11,888
+              Pay Now {price}
             </button>
           </div>
         </div>

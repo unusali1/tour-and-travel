@@ -95,7 +95,7 @@ const HomePage = () => {
 
   const localAuth = localStorage?.getItem("auth");
   const auth = JSON.parse(localAuth);
-  console.log("auth:", auth?.user);
+
 
   const [totalTravelers, setTotalTravelers] = useState({
     rooms: " ",
@@ -227,11 +227,10 @@ const HomePage = () => {
   return (
     <>
       <div
-        className={`w-full sm:px-12 px-4 sm:min-h-[80px] min-h-12 transition-opacity fixed top-0 left-0 z-[9999] overflow-hidden ${
-          active
+        className={`w-full sm:px-12 px-4 sm:min-h-[80px] min-h-12 transition-opacity fixed top-0 left-0 z-[9999] overflow-hidden ${active
             ? "bg-white text-black dark:bg-black dark:text-white shadow-lg"
             : " dark:text-white"
-        }`}
+          }`}
       >
         <div className="hidden md:w-[90%] mx-auto md:flex items-center justify-between mt-4">
           <div>
@@ -420,12 +419,12 @@ const HomePage = () => {
                 {isDarkMode ? (
                   <Icon
                     icon="material-symbols-light:dark-mode-rounded"
-                    className="font-bold text-2xl text-white"
+                    className="font-bold text-xl text-white"
                   />
                 ) : (
                   <Icon
                     icon="uil:sun"
-                    className="font-bold text-2xl text-black"
+                    className="font-bold text-xl text-black"
                   />
                 )}
               </button>
@@ -489,11 +488,10 @@ const HomePage = () => {
               <div className="flex gap-6">
                 <span
                   onClick={() => handleTabClick("Hotel")}
-                  className={`cursor-pointer ${
-                    activeTab === "Hotel"
+                  className={`cursor-pointer ${activeTab === "Hotel"
                       ? "text-blue-600 dark:text-yellow-400 sm:font-semibold border-b-2 border-yellow-400 sm:pb-2 pb-1"
                       : "text-primary sm:font-semibold"
-                  }`}
+                    }`}
                 >
                   <span className="flex sm:space-x-2 sm:flex-row flex-col justify-center items-center">
                     <Icon
@@ -506,11 +504,10 @@ const HomePage = () => {
 
                 <span
                   onClick={() => handleTabClick("House Rent")}
-                  className={`cursor-pointer ${
-                    activeTab === "House Rent"
+                  className={`cursor-pointer ${activeTab === "House Rent"
                       ? "text-blue-600 dark:text-yellow-400 sm:font-semibold border-b-2 border-yellow-400 sm:pb-2 pb-1"
                       : "text-primary sm:font-semibold"
-                  }`}
+                    }`}
                 >
                   <span className="flex sm:space-x-2 sm:flex-row flex-col justify-center items-center">
                     <Icon
@@ -526,11 +523,10 @@ const HomePage = () => {
 
                 <span
                   onClick={() => handleTabClick("Appartment")}
-                  className={`cursor-pointer ${
-                    activeTab === "Appartment"
+                  className={`cursor-pointer ${activeTab === "Appartment"
                       ? "text-blue-600 dark:text-yellow-400 sm:font-semibold border-b-2 border-yellow-400 sm:pb-2 pb-1"
                       : "text-primary sm:font-semibold"
-                  }`}
+                    }`}
                 >
                   <span className="flex sm:space-x-2 sm:flex-row flex-col justify-center items-center">
                     <Icon
@@ -544,11 +540,10 @@ const HomePage = () => {
 
                 <span
                   onClick={() => handleTabClick("Visa")}
-                  className={`cursor-pointer ${
-                    activeTab === "Visa"
+                  className={`cursor-pointer ${activeTab === "Visa"
                       ? "text-blue-600 dark:text-yellow-400 sm:font-semibold border-b-2 border-yellow-400 sm:pb-2 pb-1"
                       : "text-primary sm:font-semibold"
-                  }`}
+                    }`}
                 >
                   <span className="flex sm:space-x-2 sm:flex-row flex-col justify-center items-center">
                     <Icon
@@ -580,8 +575,8 @@ const HomePage = () => {
                               <p>
                                 {value
                                   ? hotelArea.find(
-                                      (hotel) => hotel.value === value
-                                    )?.label
+                                    (hotel) => hotel.value === value
+                                  )?.label
                                   : "Select Destination..."}
                               </p>
                               <p className="flex text-[12px] text-gray-400">
@@ -861,8 +856,8 @@ const HomePage = () => {
                               <p>
                                 {value
                                   ? hotelArea.find(
-                                      (hotel) => hotel.value === value
-                                    )?.label
+                                    (hotel) => hotel.value === value
+                                  )?.label
                                   : "Select Destination..."}
                               </p>
                               <p className="flex text-[12px] text-gray-400">
@@ -1142,8 +1137,8 @@ const HomePage = () => {
                               <p>
                                 {value
                                   ? hotelArea.find(
-                                      (hotel) => hotel.value === value
-                                    )?.label
+                                    (hotel) => hotel.value === value
+                                  )?.label
                                   : "Select Destination..."}
                               </p>
                               <p className="flex text-[12px] text-gray-400">
@@ -1423,9 +1418,9 @@ const HomePage = () => {
                               <p className="text-blue-900 font-semibold text-lg">
                                 {country
                                   ? countryName.find(
-                                      (countryName) =>
-                                        countryName.value === country
-                                    )?.label
+                                    (countryName) =>
+                                      countryName.value === country
+                                  )?.label
                                   : "Select Destination..."}
                               </p>
                             </span>

@@ -16,7 +16,7 @@ const Footter = () => {
               <p className="text-sm text-[#00026E] dark:text-white">
                 Stay, rent, or ride—your journey starts here! Book top hotels, find the perfect apartment, and unlock exclusive perks. Limited-time offer for new customers!
               </p>
-              
+
             </div>
 
             <div className="hidden dark:block">
@@ -24,7 +24,7 @@ const Footter = () => {
               <p className="text-sm text-[#00026E] dark:text-white font-semibold">
                 Stay, rent, or ride—your journey starts here! Book top hotels, find the perfect apartment, and unlock exclusive perks. Limited-time offer for new customers!
               </p>
-              
+
             </div>
 
             <div>
@@ -32,12 +32,12 @@ const Footter = () => {
               <ul className="space-y-2 text-sm text-[#00026E]  dark:text-white font-semibold">
                 <li>
                   <a href="#" className="hover:text-primary">
-                   Home
+                    Home
                   </a>
                 </li>
                 <li>
                   <a href="#" className="hover:text-primary">
-                   Terms & Condition
+                    Terms & Condition
                   </a>
                 </li>
                 <li>
@@ -52,7 +52,7 @@ const Footter = () => {
                 </li>
                 <li>
                   <a href="#" className="hover:text-primary">
-                   Emi Policy
+                    Emi Policy
                   </a>
                 </li>
               </ul>
@@ -69,7 +69,7 @@ const Footter = () => {
                 <li>
                   128 Horton Grange Road, Bradford, West Yorkshire, BD7 2DW
                 </li>
-                
+
               </ul>
 
               <h3 className="font-bold  text-[#00026E]  dark:text-white text-lg mt-2">FOLLOW US</h3>
@@ -82,19 +82,19 @@ const Footter = () => {
                   />
                 </a>
                 <a href="#" className="text-gray-400 hover:text-primary bg-gray-200 p-2 rounded-full shadow-lg">
-                <Icon
+                  <Icon
                     icon="ri:youtube-line"
                     className="font-bold text-2xl text-[#00026E]"
                   />
                 </a>
                 <a href="#" className="text-gray-400 hover:text-primary bg-gray-200 p-2 rounded-full shadow-lg">
-                <Icon
+                  <Icon
                     icon="iconoir:instagram"
                     className="font-bold text-2xl  text-[#00026E]"
                   />
                 </a>
                 <a href="#" className="text-gray-400 hover:text-primary bg-gray-200 p-2 rounded-full shadow-lg">
-                <Icon
+                  <Icon
                     icon="hugeicons:twitter"
                     className="font-bold text-2xl  text-blue-700"
                   />

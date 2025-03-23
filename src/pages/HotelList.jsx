@@ -48,9 +48,7 @@ export default function HotelList() {
   const [isSmallScreen, setIsSmallScreen] = useState(false);
   const [showSection, setShowSection] = useState(true);
 
-  const { data: hotels, isLoading, isError, error } = useGetHotelsQuery();
-
-  // const [hotelSearch, {data}] = useHotelSearchMutation(); 
+  const [hotelSearch, {data,isLoading,isError}] = useHotelSearchMutation(); 
 
   useEffect(() => {
     const handleResize = () => {
@@ -102,27 +100,18 @@ export default function HotelList() {
     });
   }, [adultCount, childCount, roomsCount]);
 
-  // useEffect(()=> {
-  // const data = {
-  //   check_in: "2025-04-01",
-  //   check_out: "2025-04-05",
-  //   category_id: "2",
-  //   city_id: "9",
-  //   country_id: "1",
-  //   capacity: 2
-  // }
-  // hotelSearch({
-  //   check_in: "2025-04-01",
-  //   check_out: "2025-04-05",
-  //   category_id: "2",
-  //   city_id: "9",
-  //   country_id: "1",
-  //   capacity: 2
-  // })
+  useEffect(()=> {
+  hotelSearch({
+    check_in: "2025-04-01",
+    check_out: "2025-04-05",
+    category_id: "2",
+    city_id: "9",
+    country_id: "1",
+    capacity: totalTravelers?.total
+  })
 
-  // },[searchParams])
+  },[totalTravelers?.total])
 
-  // console.log("hotelSearch:",data);
 
   const cleanDate = (dateString) => {
     return dateString ? dateString.replace(/[\d]$/g, "").trim() : null;
@@ -159,32 +148,51 @@ export default function HotelList() {
   };
 
   const handleSelectHotel = (slug) => {
-    navigate(`/hotelDetails/${slug}`);
+    navigate(`/hotelDetails/${slug}?checkin=${date?.from}&checkout=${date?.to}&guests=${totalTravelers?.total}`);
   };
 
   let content = null;
 
   if (isLoading) {
     content = (
-      <div className="flex items-center space-x-4 w-full">
-        <Skeleton className="h-[125px] w-[350px] rounded-xl" />
-        <div>
-          <Skeleton className="h-12 w-[350px]" />
-          <Skeleton className="h-8 w-[350px] mt-2" />
-          <Skeleton className="h-6 w-[350px] mt-2" />
+      <div className="flex flex-col py-4">
+        <div className="flex items-center space-x-4 w-full">
+          <Skeleton className="h-[125px] w-[350px] rounded-xl" />
+          <div>
+            <Skeleton className="h-12 w-[350px]" />
+            <Skeleton className="h-8 w-[350px] mt-2" />
+            <Skeleton className="h-6 w-[350px] mt-2" />
+          </div>
         </div>
+
+        <div className="flex items-center space-x-4 w-full mt-3">
+          <Skeleton className="h-[125px] w-[350px] rounded-xl" />
+          <div>
+            <Skeleton className="h-12 w-[350px]" />
+            <Skeleton className="h-8 w-[350px] mt-2" />
+            <Skeleton className="h-6 w-[350px] mt-2" />
+          </div>
+        </div>
+
+        <div className="flex items-center space-x-4 w-full mt-3">
+          <Skeleton className="h-[125px] w-[350px] rounded-xl" />
+          <div>
+            <Skeleton className="h-12 w-[350px]" />
+            <Skeleton className="h-8 w-[350px] mt-2" />
+            <Skeleton className="h-6 w-[350px] mt-2" />
+          </div>
+        </div>
+
       </div>
     );
   } else if (!isLoading && isError) {
     content = (
-      <li className="m-2 text-center">
-        <p>error</p>
-      </li>
+      <p>error</p>
     );
-  } else if (!isLoading && !isError && hotels?.length === 0) {
+  } else if (!isLoading && !isError && data?.rooms?.length === 0) {
     content = <li className="m-2 text-center">No hotel found!</li>;
-  } else if (!isLoading && !isError && hotels?.length > 0) {
-    content = hotels.map((hotel) => {
+  } else if (!isLoading && !isError && data?.rooms?.length > 0) {
+    content = data?.rooms?.map((hotel) => {
       return (
         <Card
           key={hotel.id}
@@ -193,10 +201,14 @@ export default function HotelList() {
           <CardContent className="flex justify-between sm:flex-row flex-col gap-4 w-full ">
             <div className="relative">
               <img
-              //  src={hotel?.thumbnail_image?.length ? hotel.thumbnail_image[0] : hotel1}
-                src={hotel1}
-                alt={hotel?.name}
+                src={hotel?.hotel?.thumbnail_image?.length
+                  ? `https://backend.dayfuna.com/storage/${hotel?.hotel?.thumbnail_image[0]}`
+                  : hotel1}
+
+                // src={hotel1}
+                alt={hotel?.hotel?.name}
                 className="rounded-lg smn:h-56 h-full sm:w-64 w-full object-cover"
+                loading="lazy"
               />
 
               <button className="absolute bottom-2 left-2 p-1.5 rounded-md bg-white hover:bg-white/20">
@@ -225,7 +237,7 @@ export default function HotelList() {
             </button>
 
             <div>
-              <h3 className="text-lg font-semibold">{hotel?.name}</h3>
+              <h3 className="text-lg font-semibold">{hotel?.hotel?.name}</h3>
               <div className="flex sm:space-x-2 space-x-0 mt-2 flex-col sm:flex-row">
                 <span className="flex border p-1 rounded-md  w-fit">
                   <Icon
@@ -233,7 +245,7 @@ export default function HotelList() {
                     className="font-bold text-xl text-[#FCCD00] "
                   />
                   <p className="text-sm text-gray-500 dark:text-gray-300">
-                   {hotel?.rating} Star
+                    {hotel?.hotel?.rating} Star
                   </p>
                 </span>
 
@@ -243,32 +255,32 @@ export default function HotelList() {
                     className="font-bold text-xl text-blue-950 dark:text-white "
                   />
                   <p className="text-sm text-gray-500 dark:text-gray-300">
-                    {hotel?.address},{hotel?.country?.name}
+                    {hotel?.hotel?.address},{hotel?.hotel?.country?.name}
                   </p>
                 </span>
               </div>
-             
+
 
               <p className="text-red-500 text-sm border border-red-500 rounded-3xl max-w-fit px-2 py-1 mt-3">
-                    6 Room Remaining
-                  </p>
+                6 Room Remaining
+              </p>
               <div className="flex sm:space-x-2 space-x-0 mt-4">
-                    {["Accessible Bathroom", "Air Conditioning","Garden"].map((item, index) => (
-                        <span key={index} className="flex">
-                          <Icon
-                            icon="mdi:success"
-                            className="font-bold text-xl text-gray-400 dark:text-gray-300 "
-                          />
-                          <p className="sm:text-sm text-[12px] text-gray-400 dark:text-gray-300">
-                            {item}
-                          </p>
-                        </span>
-                      ))}
-                  </div>
+                {["Accessible Bathroom", "Air Conditioning", "Garden"].map((item, index) => (
+                  <span key={index} className="flex">
+                    <Icon
+                      icon="mdi:success"
+                      className="font-bold text-xl text-gray-400 dark:text-gray-300 "
+                    />
+                    <p className="sm:text-sm text-[12px] text-gray-400 dark:text-gray-300">
+                      {item}
+                    </p>
+                  </span>
+                ))}
+              </div>
 
-                  <Button
+              <Button
                 className="bg-yellow-500 text-white mt-4"
-                onClick={() => handleSelectHotel(hotel?.name)}
+                onClick={() => handleSelectHotel(hotel?.hotel?.slug)}
               >
                 Select
               </Button>
@@ -375,7 +387,7 @@ export default function HotelList() {
                         <p>
                           {value
                             ? hotelArea.find((hotel) => hotel.value === value)
-                                ?.label
+                              ?.label
                             : "Select Destination..."}
                         </p>
                         <p className="flex text-[12px] text-gray-400">

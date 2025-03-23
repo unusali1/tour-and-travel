@@ -41,7 +41,6 @@ const Header = () => {
 
   const localAuth = localStorage?.getItem("auth");
   const auth = JSON.parse(localAuth);
-  console.log("auth:", auth?.user);
 
   useEffect(() => {
     const savedMode = localStorage.getItem("theme");
@@ -88,19 +87,18 @@ const Header = () => {
     setSelectedPhone(e.target.value);
   };
 
-   const logout = () => {
-      dispatch(userLoggedOut());
-      localStorage.clear();
-      window.location.reload();
-    };
+  const logout = () => {
+    dispatch(userLoggedOut());
+    localStorage.clear();
+    window.location.reload();
+  };
 
   return (
     <div
-      className={`w-full sm:px-12 px-4 shadow-sm dark:border-b sm:min-h-[80px] min-h-12 transition-opacity  top-0 left-0 z-[9999] ${
-        active
+      className={`w-full sm:px-12 px-4 shadow-sm dark:border-b sm:min-h-[80px] min-h-12 transition-opacity  top-0 left-0 z-[9999] ${active
           ? "bg-white text-black fixed dark:bg-black dark:text-white shadow-lg"
           : "text-black dark:text-white"
-      }`}
+        }`}
     >
       <div className="hidden md:w-[90%] mx-auto md:flex items-center justify-between mt-4">
         <div>
@@ -154,47 +152,45 @@ const Header = () => {
 
           <div className="flex relative">
             <div className="flex items-center p-2 ">
-            {auth?.user ? (
-                              <Menubar className="!bg-transparent !p-0 !m-0 !border-none shadow-none">
-                                <MenubarMenu className="!bg-transparent !p-0 !m-0 !border-none shadow-none">
-                                  <MenubarTrigger className="!bg-transparent !p-0 !m-0 !border-none shadow-none">
-                                    <Avatar>
-                                      <AvatarImage src={auth?.user?.img} alt="@shadcn" />
-                                      <AvatarFallback>
-                                        {auth?.user?.name?.[0]}
-                                      </AvatarFallback>
-                                    </Avatar>
-                                  </MenubarTrigger>
-                                  <MenubarContent className="mr-12">
-                                    <MenubarRadioGroup value="">
-                                      <MenubarRadioItem value="andy">
-                                        Profile
-                                      </MenubarRadioItem>
-                                      <MenubarRadioItem value="benoit">
-                                        My Order
-                                      </MenubarRadioItem>
-                                      <MenubarRadioItem value="Luis">Luis</MenubarRadioItem>
-                                    </MenubarRadioGroup>
-            
-                                    <MenubarSeparator />
-                                    <MenubarItem
-                                      inset
-                                      className="border items-center text-center bg-gray-500 text-white"
-                                      onClick={logout}
-                                    >
-                                      Logout
-                                    </MenubarItem>
-                                  </MenubarContent>
-                                </MenubarMenu>
-                              </Menubar>
-                            ) : (
-                              <Button
-                                className="bg-blue-700 text-white px-6 py-2 rounded-lg"
-                                onClick={() => navigate("/auth")}
-                              >
-                                Sign In
-                              </Button>
-                            )}
+              {auth?.user ? (
+                <Menubar className="!bg-transparent !p-0 !m-0 !border-none shadow-none">
+                  <MenubarMenu className="!bg-transparent !p-0 !m-0 !border-none shadow-none">
+                    <MenubarTrigger className="!bg-transparent !p-0 !m-0 !border-none shadow-none">
+                      <Avatar>
+                        <AvatarImage src={auth?.user?.img} alt="@shadcn" />
+                        <AvatarFallback>{auth?.user?.name?.[0]}</AvatarFallback>
+                      </Avatar>
+                    </MenubarTrigger>
+                    <MenubarContent className="mr-12">
+                      <MenubarRadioGroup value="">
+                        <MenubarRadioItem value="andy">
+                          Profile
+                        </MenubarRadioItem>
+                        <MenubarRadioItem value="benoit">
+                          My Order
+                        </MenubarRadioItem>
+                        <MenubarRadioItem value="Luis">Luis</MenubarRadioItem>
+                      </MenubarRadioGroup>
+
+                      <MenubarSeparator />
+                      <MenubarItem
+                        inset
+                        className="border items-center text-center bg-gray-500 text-white"
+                        onClick={logout}
+                      >
+                        Logout
+                      </MenubarItem>
+                    </MenubarContent>
+                  </MenubarMenu>
+                </Menubar>
+              ) : (
+                <Button
+                  className="bg-blue-700 text-white px-6 py-2 rounded-lg"
+                  onClick={() => navigate("/auth")}
+                >
+                  Sign In
+                </Button>
+              )}
             </div>
             <div>
               <button

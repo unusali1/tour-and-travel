@@ -44,7 +44,6 @@ const AuthPage = () => {
       setErrorMsg("Email or Password Incorrect")
     }
     if (dataLogin?.token && dataLogin?.user) {
-        console.log("Navigating to /");
         navigate("/");
     }
     if (data?.token && data?.user) {
@@ -80,7 +79,7 @@ const handleSubmit = (e) => {
       [field]: !prev[field],
     }));
   };
-console.log("responseErrorLogin:",responseErrorLogin);
+
 
   return (
     <>
