@@ -36,6 +36,20 @@ import Navigation from "../Navbar/Navigation";
 import SpecialOffer from "../Section/SpecialOffer";
 import HotDeals from "../Section/HotDeals";
 import { hotelArea } from "@/assets/data/HotelData";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+
+import {
+  Menubar,
+  MenubarContent,
+  MenubarItem,
+  MenubarMenu,
+  MenubarRadioGroup,
+  MenubarRadioItem,
+  MenubarSeparator,
+  MenubarTrigger,
+} from "@/components/ui/menubar";
+import { userLoggedOut } from "@/redux/auth/authSlice";
+import { useDispatch } from "react-redux";
 
 const countryName = [
   {
@@ -62,6 +76,7 @@ const countryName = [
 
 const HomePage = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [searchParams] = useSearchParams();
   const initialTab = searchParams.get("search") || "Hotel";
   const [activeTab, setActiveTab] = useState(initialTab);
@@ -77,6 +92,10 @@ const HomePage = () => {
   const [openn, setOpenn] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState("BDT");
+
+  const localAuth = localStorage?.getItem("auth");
+  const auth = JSON.parse(localAuth);
+  console.log("auth:", auth?.user);
 
   const [totalTravelers, setTotalTravelers] = useState({
     rooms: " ",
@@ -199,6 +218,12 @@ const HomePage = () => {
     }
   };
 
+  const logout = () => {
+    dispatch(userLoggedOut());
+    localStorage.clear();
+    window.location.reload();
+  };
+
   return (
     <>
       <div
@@ -264,12 +289,47 @@ const HomePage = () => {
 
             <div className=" flex relative">
               <div className="flex items-center p-2 ">
-                <Button
-                  className="bg-blue-700 text-white px-6 py-2 rounded-lg"
-                  onClick={() => navigate("/auth")}
-                >
-                  Sign In
-                </Button>
+                {auth?.user ? (
+                  <Menubar className="!bg-transparent !p-0 !m-0 !border-none shadow-none">
+                    <MenubarMenu className="!bg-transparent !p-0 !m-0 !border-none shadow-none">
+                      <MenubarTrigger className="!bg-transparent !p-0 !m-0 !border-none shadow-none">
+                        <Avatar>
+                          <AvatarImage src={auth?.user?.img} alt="@shadcn" />
+                          <AvatarFallback>
+                            {auth?.user?.name?.[0]}
+                          </AvatarFallback>
+                        </Avatar>
+                      </MenubarTrigger>
+                      <MenubarContent className="mr-12">
+                        <MenubarRadioGroup value="">
+                          <MenubarRadioItem value="andy">
+                            Profile
+                          </MenubarRadioItem>
+                          <MenubarRadioItem value="benoit">
+                            My Order
+                          </MenubarRadioItem>
+                          <MenubarRadioItem value="Luis">Luis</MenubarRadioItem>
+                        </MenubarRadioGroup>
+
+                        <MenubarSeparator />
+                        <MenubarItem
+                          inset
+                          className="border items-center text-center bg-gray-500 text-white"
+                          onClick={logout}
+                        >
+                          Logout
+                        </MenubarItem>
+                      </MenubarContent>
+                    </MenubarMenu>
+                  </Menubar>
+                ) : (
+                  <Button
+                    className="bg-blue-700 text-white px-6 py-2 rounded-lg"
+                    onClick={() => navigate("/auth")}
+                  >
+                    Sign In
+                  </Button>
+                )}
               </div>
 
               <div>

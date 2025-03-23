@@ -28,7 +28,7 @@ import {
   CommandList,
 } from "@/components/ui/command";
 import { useEffect, useState } from "react";
-import { useGetHotelsQuery } from "@/redux/hotels/hotelsApi";
+import { useGetHotelsQuery, useHotelSearchMutation } from "@/redux/hotels/hotelsApi";
 
 export default function HotelList() {
   const navigate = useNavigate();
@@ -49,6 +49,8 @@ export default function HotelList() {
   const [showSection, setShowSection] = useState(true);
 
   const { data: hotels, isLoading, isError, error } = useGetHotelsQuery();
+
+  // const [hotelSearch, {data}] = useHotelSearchMutation(); 
 
   useEffect(() => {
     const handleResize = () => {
@@ -99,6 +101,28 @@ export default function HotelList() {
       total: total,
     });
   }, [adultCount, childCount, roomsCount]);
+
+  // useEffect(()=> {
+  // const data = {
+  //   check_in: "2025-04-01",
+  //   check_out: "2025-04-05",
+  //   category_id: "2",
+  //   city_id: "9",
+  //   country_id: "1",
+  //   capacity: 2
+  // }
+  // hotelSearch({
+  //   check_in: "2025-04-01",
+  //   check_out: "2025-04-05",
+  //   category_id: "2",
+  //   city_id: "9",
+  //   country_id: "1",
+  //   capacity: 2
+  // })
+
+  // },[searchParams])
+
+  // console.log("hotelSearch:",data);
 
   const cleanDate = (dateString) => {
     return dateString ? dateString.replace(/[\d]$/g, "").trim() : null;
@@ -169,7 +193,7 @@ export default function HotelList() {
           <CardContent className="flex justify-between sm:flex-row flex-col gap-4 w-full ">
             <div className="relative">
               <img
-                // src={hotel?.thumbnail_image}
+              //  src={hotel?.thumbnail_image?.length ? hotel.thumbnail_image[0] : hotel1}
                 src={hotel1}
                 alt={hotel?.name}
                 className="rounded-lg smn:h-56 h-full sm:w-64 w-full object-cover"
@@ -209,7 +233,7 @@ export default function HotelList() {
                     className="font-bold text-xl text-[#FCCD00] "
                   />
                   <p className="text-sm text-gray-500 dark:text-gray-300">
-                    Star
+                   {hotel?.rating} Star
                   </p>
                 </span>
 
@@ -219,24 +243,17 @@ export default function HotelList() {
                     className="font-bold text-xl text-blue-950 dark:text-white "
                   />
                   <p className="text-sm text-gray-500 dark:text-gray-300">
-                    {hotel?.address} Cox bazar, Bangladesh
+                    {hotel?.address},{hotel?.country?.name}
                   </p>
                 </span>
               </div>
-              <Button
-                className="bg-yellow-500 text-white mt-4"
-                onClick={() => handleSelectHotel(hotel?.name)}
-              >
-                Select
-              </Button>
+             
 
-              {/* <p className="text-red-500 text-sm border border-red-500 rounded-3xl max-w-fit px-2 py-1 mt-3">
-                    {hotel.roomsRemaining} Room Remaining
-                  </p> */}
-              {/* <div className="flex sm:space-x-2 space-x-0 mt-4">
-                    {hotel.facilities[0]?.general
-                      ?.slice(0, 3)
-                      .map((item, index) => (
+              <p className="text-red-500 text-sm border border-red-500 rounded-3xl max-w-fit px-2 py-1 mt-3">
+                    6 Room Remaining
+                  </p>
+              <div className="flex sm:space-x-2 space-x-0 mt-4">
+                    {["Accessible Bathroom", "Air Conditioning","Garden"].map((item, index) => (
                         <span key={index} className="flex">
                           <Icon
                             icon="mdi:success"
@@ -247,7 +264,14 @@ export default function HotelList() {
                           </p>
                         </span>
                       ))}
-                  </div> */}
+                  </div>
+
+                  <Button
+                className="bg-yellow-500 text-white mt-4"
+                onClick={() => handleSelectHotel(hotel?.name)}
+              >
+                Select
+              </Button>
             </div>
             <div className="flex flex-col sm:items-end items-start space-y-1 sm:mt-10 mt-2">
               {/* <p className="bg-red-500 text-white rounded-2xl px-2 py-1 max-w-fit text-sm">
@@ -601,7 +625,7 @@ export default function HotelList() {
         )}
 
         <div className="bg-gray-100 grid grid-cols-12 sm:gap-4 pt-5  dark:bg-background sm:px-24 px-4 pb-24">
-          <aside className="hidden sm:block col-span-3 bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md">
+          <aside className="hidden sm:block col-span-4 bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md">
             <div className="mt-4 flex justify-between">
               <h3 className="font-semibold">Filters</h3>
               <Button variant="ghost" className="text-sm">
@@ -675,7 +699,7 @@ export default function HotelList() {
           </aside>
 
           {/* Main Content */}
-          <section className="col-span-12 sm:col-span-9 space-y-4">
+          <section className="col-span-12 sm:col-span-8 space-y-4">
             <div className="flex justify-between items-center">
               <h2 className="text-xl font-semibold">9 properties found</h2>
               <select className="border p-2 rounded-md dark:bg-gray-800">

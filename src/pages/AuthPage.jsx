@@ -1,27 +1,36 @@
 import Header from "@/components/Navbar/Header";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Icon } from "@iconify/react";
 import { Separator } from "@/components/ui/separator";
+import { useLoginMutation, useRegisterMutation } from "@/redux/auth/authApi";
+import { useNavigate } from "react-router-dom";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+
 
 const AuthPage = () => {
+  const navigate = useNavigate();
   const [isSignUp, setIsSignUp] = useState(false);
   const toggleForm = () => setIsSignUp(!isSignUp);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [phone, setPhone] = useState("");
+  const [name, setName] = useState("");
+  const [errorMsg,setErrorMsg] = useState("");
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState({
     password: false,
     confirmPassword: false,
   });
 
+  const [register, {data,isLoading,error:responseError}] = useRegisterMutation(); 
+  const [login, { data:dataLogin, isLoading:loadingLogin, error: responseErrorLogin }] =useLoginMutation();
+
   const validateForm = () => {
     const newErrors = {};
 
     if (!email.trim()) newErrors.email = "Email is required";
-    if (isSignUp && !phone.trim()) newErrors.phone = "Phone number is required";
+    if (isSignUp && !name.trim()) newErrors.name = "Name is required";
     if (!password.trim()) newErrors.password = "Password is required";
     if (isSignUp && password !== confirmPassword)
       newErrors.confirmPassword = "Passwords do not match";
@@ -30,28 +39,40 @@ const AuthPage = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!validateForm()) return;
-
-    if (isSignUp) {
-      const signUpData = {
-        name,
-        email,
-        phone,
-        password,
-        confirmPassword,
-      };
-      console.log("SignUp Data:", signUpData);
-    } else {
-      const signInData = {
-        email,
-        password,
-      };
-      console.log("SignIn Data:", signInData);
+  useEffect(() => {
+    if(responseErrorLogin?.data){
+      setErrorMsg("Email or Password Incorrect")
     }
-  };
+    if (dataLogin?.token && dataLogin?.user) {
+        console.log("Navigating to /");
+        navigate("/");
+    }
+    if (data?.token && data?.user) {
+      navigate("/");
+  }
+}, [dataLogin,data,responseErrorLogin,navigate]);
+
+
+const handleSubmit = (e) => {
+  setErrorMsg("");
+  e.preventDefault();
+  if (!validateForm()) return;
+  
+  if (isSignUp) {
+    register({
+      name: name,
+      email: email,
+      password: password,
+      password_confirmation: confirmPassword
+    });
+  } else {
+    login({
+      email,
+      password
+    });
+  }
+};
+
 
   const togglePasswordVisibility = (field) => {
     setShowPassword((prev) => ({
@@ -59,6 +80,7 @@ const AuthPage = () => {
       [field]: !prev[field],
     }));
   };
+console.log("responseErrorLogin:",responseErrorLogin);
 
   return (
     <>
@@ -68,7 +90,40 @@ const AuthPage = () => {
           <h2 className="text-3xl font-bold text-center mb-8 text-primary">
             {isSignUp ? "Create Account" : "Welcome Back"}
           </h2>
+         {
+          errorMsg && !isSignUp && (
+            <Alert variant="destructive" className="mb-4">
+            {/* <AlertCircle className="h-4 w-4" /> */}
+            {/* <AlertTitle>Error</AlertTitle> */}
+            <AlertDescription>
+              {errorMsg}
+            </AlertDescription>
+          </Alert>
+      
+          )
+         }
           <form className="space-y-6" onSubmit={handleSubmit}>
+
+          {isSignUp && (
+              <div className="relative">
+                <div className="absolute left-2.5 top-3.5 h-4 w-4 text-muted-foreground">
+                  <Icon
+                    icon="mingcute:phone-fill"
+                    className="font-bold text-2xl text-gray-400"
+                  />
+                </div>
+                <Input
+                  id="name"
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Your Name"
+                  className="w-full rounded-lg bg-background px-12 py-6"
+                />
+                 {errors.phone && <p className="text-red-500 text-sm">{errors.phone}</p>}
+              </div>
+            )}
+
             <div className="relative">
               <div className="absolute left-2.5 top-3.5 h-4 w-4 text-muted-foreground">
                 <Icon
@@ -87,25 +142,7 @@ const AuthPage = () => {
                {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
             </div>
 
-            {isSignUp && (
-              <div className="relative">
-                <div className="absolute left-2.5 top-3.5 h-4 w-4 text-muted-foreground">
-                  <Icon
-                    icon="mingcute:phone-fill"
-                    className="font-bold text-2xl text-gray-400"
-                  />
-                </div>
-                <Input
-                  id="phone"
-                  type="tel"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  placeholder="Phone Number"
-                  className="w-full rounded-lg bg-background px-12 py-6"
-                />
-                 {errors.phone && <p className="text-red-500 text-sm">{errors.phone}</p>}
-              </div>
-            )}
+            
 
             <div className="relative">
               <div className="absolute left-2.5 top-3.5 h-4 w-4 text-muted-foreground">
@@ -167,12 +204,25 @@ const AuthPage = () => {
               </div>
             )}
 
-            <button
-              type="submit"
-              className="w-full bg-[#00026E] dark:bg-gray-600 text-white p-3 rounded-lg font-semibold hover:bg-blue-600 transition duration-300"
-            >
-              {isSignUp ? "Sign Up" : "Sign In"}
-            </button>
+            {
+              loadingLogin ? (
+                <button
+                type="submit"
+                className="w-full bg-[#00026E] dark:bg-gray-600 text-white p-3 rounded-lg font-semibold hover:bg-blue-600 transition duration-300"
+              >
+               Loading....
+              </button>
+              ):(
+                <button
+                type="submit"
+                className="w-full bg-[#00026E] dark:bg-gray-600 text-white p-3 rounded-lg font-semibold hover:bg-blue-600 transition duration-300"
+              >
+                {isSignUp ? "Sign Up" : "Sign In"}
+              </button>
+              )
+            }
+
+           
 
             {!isSignUp && (
               <div className="flex justify-center items-center space-x-1">
