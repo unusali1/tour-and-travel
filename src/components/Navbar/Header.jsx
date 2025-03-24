@@ -91,18 +91,19 @@ const Header = () => {
     dispatch(userLoggedOut());
     localStorage.clear();
     window.location.reload();
+    navigate("/")
   };
 
   return (
     <div
       className={`w-full sm:px-12 px-4 shadow-sm dark:border-b sm:min-h-[80px] min-h-12 transition-opacity  top-0 left-0 z-[9999] ${active
-          ? "bg-white text-black fixed dark:bg-black dark:text-white shadow-lg"
-          : "text-black dark:text-white"
+        ? "bg-white text-black fixed dark:bg-black dark:text-white shadow-lg"
+        : "text-black dark:text-white"
         }`}
     >
       <div className="hidden md:w-[90%] mx-auto md:flex items-center justify-between mt-4">
         <div>
-          <div className="text-2xl font-extrabold text-blue-700">
+          <div className="text-2xl font-extrabold text-blue-700" onClick={()=> navigate("/")}>
             {isDarkMode ? (
               <img src={logoWhite} alt="logo" className="h-10 mb-2 w-24" />
             ) : (
@@ -164,22 +165,35 @@ const Header = () => {
                     <MenubarContent className="mr-12">
                       <MenubarRadioGroup value="">
                         <MenubarRadioItem value="andy">
-                          Profile
+                          <Icon
+                            icon="mdi:account-outline"
+                            className="font-bold text-2xl text-black dark:text-white "
+                          />
+                          <span className="ml-3">
+                            Profile
+                          </span>
+
                         </MenubarRadioItem>
-                        <MenubarRadioItem value="benoit">
-                          My Order
+                        <MenubarRadioItem value="benoit" onClick={() => navigate("/hotel/my-booking-room")}>
+                          <Icon
+                            icon="ic:round-hotel"
+                            className="font-bold text-xl text-black dark:text-white "
+                          />
+                          <span className="ml-3">
+                            My Order
+                          </span>
                         </MenubarRadioItem>
-                        <MenubarRadioItem value="Luis">Luis</MenubarRadioItem>
                       </MenubarRadioGroup>
 
                       <MenubarSeparator />
                       <MenubarItem
                         inset
-                        className="border items-center text-center bg-gray-500 text-white"
+                        className="border bg-gray-500 text-white text-center flex items-center justify-center px-4 py-2 rounded-md hover:bg-gray-600 transition-all"
                         onClick={logout}
                       >
                         Logout
                       </MenubarItem>
+
                     </MenubarContent>
                   </MenubarMenu>
                 </Menubar>

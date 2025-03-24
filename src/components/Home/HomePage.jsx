@@ -228,8 +228,8 @@ const HomePage = () => {
     <>
       <div
         className={`w-full sm:px-12 px-4 sm:min-h-[80px] min-h-12 transition-opacity fixed top-0 left-0 z-[9999] overflow-hidden ${active
-            ? "bg-white text-black dark:bg-black dark:text-white shadow-lg"
-            : " dark:text-white"
+          ? "bg-white text-black dark:bg-black dark:text-white shadow-lg"
+          : " dark:text-white"
           }`}
       >
         <div className="hidden md:w-[90%] mx-auto md:flex items-center justify-between mt-4">
@@ -301,23 +301,36 @@ const HomePage = () => {
                       </MenubarTrigger>
                       <MenubarContent className="mr-12">
                         <MenubarRadioGroup value="">
-                          <MenubarRadioItem value="andy">
-                            Profile
+                          <MenubarRadioItem >
+                            <Icon
+                              icon="mdi:account-outline"
+                              className="font-bold text-2xl text-black dark:text-white "
+                            />
+                            <span className="ml-3">
+                              Profile
+                            </span>
+
                           </MenubarRadioItem>
-                          <MenubarRadioItem value="benoit">
-                            My Order
+                          <MenubarRadioItem value="benoit" onClick={() => navigate("/hotel/my-booking-room")}>
+                            <Icon
+                              icon="ic:round-hotel"
+                              className="font-bold text-xl text-black dark:text-white "
+                            />
+                            <span className="ml-3">
+                              My Order
+                            </span>
                           </MenubarRadioItem>
-                          <MenubarRadioItem value="Luis">Luis</MenubarRadioItem>
                         </MenubarRadioGroup>
 
                         <MenubarSeparator />
                         <MenubarItem
                           inset
-                          className="border items-center text-center bg-gray-500 text-white"
+                          className="border bg-gray-500 text-white text-center flex items-center justify-center px-4 py-2 rounded-md hover:bg-gray-600 transition-all"
                           onClick={logout}
                         >
                           Logout
                         </MenubarItem>
+
                       </MenubarContent>
                     </MenubarMenu>
                   </Menubar>
@@ -489,8 +502,8 @@ const HomePage = () => {
                 <span
                   onClick={() => handleTabClick("Hotel")}
                   className={`cursor-pointer ${activeTab === "Hotel"
-                      ? "text-blue-600 dark:text-yellow-400 sm:font-semibold border-b-2 border-yellow-400 sm:pb-2 pb-1"
-                      : "text-primary sm:font-semibold"
+                    ? "text-blue-600 dark:text-yellow-400 sm:font-semibold border-b-2 border-yellow-400 sm:pb-2 pb-1"
+                    : "text-primary sm:font-semibold"
                     }`}
                 >
                   <span className="flex sm:space-x-2 sm:flex-row flex-col justify-center items-center">
@@ -505,8 +518,8 @@ const HomePage = () => {
                 <span
                   onClick={() => handleTabClick("House Rent")}
                   className={`cursor-pointer ${activeTab === "House Rent"
-                      ? "text-blue-600 dark:text-yellow-400 sm:font-semibold border-b-2 border-yellow-400 sm:pb-2 pb-1"
-                      : "text-primary sm:font-semibold"
+                    ? "text-blue-600 dark:text-yellow-400 sm:font-semibold border-b-2 border-yellow-400 sm:pb-2 pb-1"
+                    : "text-primary sm:font-semibold"
                     }`}
                 >
                   <span className="flex sm:space-x-2 sm:flex-row flex-col justify-center items-center">
@@ -524,8 +537,8 @@ const HomePage = () => {
                 <span
                   onClick={() => handleTabClick("Appartment")}
                   className={`cursor-pointer ${activeTab === "Appartment"
-                      ? "text-blue-600 dark:text-yellow-400 sm:font-semibold border-b-2 border-yellow-400 sm:pb-2 pb-1"
-                      : "text-primary sm:font-semibold"
+                    ? "text-blue-600 dark:text-yellow-400 sm:font-semibold border-b-2 border-yellow-400 sm:pb-2 pb-1"
+                    : "text-primary sm:font-semibold"
                     }`}
                 >
                   <span className="flex sm:space-x-2 sm:flex-row flex-col justify-center items-center">
@@ -541,8 +554,8 @@ const HomePage = () => {
                 <span
                   onClick={() => handleTabClick("Visa")}
                   className={`cursor-pointer ${activeTab === "Visa"
-                      ? "text-blue-600 dark:text-yellow-400 sm:font-semibold border-b-2 border-yellow-400 sm:pb-2 pb-1"
-                      : "text-primary sm:font-semibold"
+                    ? "text-blue-600 dark:text-yellow-400 sm:font-semibold border-b-2 border-yellow-400 sm:pb-2 pb-1"
+                    : "text-primary sm:font-semibold"
                     }`}
                 >
                   <span className="flex sm:space-x-2 sm:flex-row flex-col justify-center items-center">

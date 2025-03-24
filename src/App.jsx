@@ -8,6 +8,7 @@ import VisaDetails from './pages/VisaDetails'
 import HotelDetails from './pages/HotelDetails'
 import AuthPage from './pages/AuthPage'
 import BookingPage from './pages/BookingPage'
+import OrderListPage from './pages/OrderListPage'
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
       <Route path="/visa/country=" element={<VisaDetails />} />
       <Route path="/hotelDetails/:slug" element={<HotelDetails />} />
       <Route path="/hotel/booking" element={<BookingPage />} />
+      <Route path="/hotel/my-booking-room" element={<OrderListPage />} />
     </Routes>
     <Footter />
      

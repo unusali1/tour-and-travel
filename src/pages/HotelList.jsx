@@ -48,7 +48,7 @@ export default function HotelList() {
   const [isSmallScreen, setIsSmallScreen] = useState(false);
   const [showSection, setShowSection] = useState(true);
 
-  const [hotelSearch, {data,isLoading,isError}] = useHotelSearchMutation(); 
+  const [hotelSearch, { data, isLoading, isError }] = useHotelSearchMutation();
 
   useEffect(() => {
     const handleResize = () => {
@@ -100,17 +100,17 @@ export default function HotelList() {
     });
   }, [adultCount, childCount, roomsCount]);
 
-  useEffect(()=> {
-  hotelSearch({
-    check_in: "2025-04-01",
-    check_out: "2025-04-05",
-    category_id: "2",
-    city_id: "9",
-    country_id: "1",
-    capacity: totalTravelers?.total
-  })
+  useEffect(() => {
+    hotelSearch({
+      check_in: "2025-04-01",
+      check_out: "2025-04-05",
+      category_id: "2",
+      city_id: "9",
+      country_id: "1",
+      capacity: totalTravelers?.total
+    })
 
-  },[totalTravelers?.total])
+  }, [totalTravelers?.total])
 
 
   const cleanDate = (dateString) => {
