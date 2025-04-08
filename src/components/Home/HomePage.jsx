@@ -18,7 +18,6 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
@@ -35,7 +34,6 @@ import {
 import Navigation from "../Navbar/Navigation";
 import SpecialOffer from "../Section/SpecialOffer";
 import HotDeals from "../Section/HotDeals";
-import { hotelArea } from "@/assets/data/HotelData";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 import {
@@ -50,6 +48,22 @@ import {
 } from "@/components/ui/menubar";
 import { userLoggedOut } from "@/redux/auth/authSlice";
 import { useDispatch } from "react-redux";
+import { useGetCitiesQuery } from "@/redux/hotels/hotelsApi";
+
+const countries = [
+  {
+    id: 1,
+    name: "Bangladesh",
+    dollarRate: "120",
+    icon: "twemoji:flag-bangladesh",
+  },
+  {
+    id: 2,
+    name: "USA",
+    dollarRate: "0",
+    icon: "la:flag-usa",
+  },
+];
 
 const countryName = [
   {
@@ -85,17 +99,19 @@ const HomePage = () => {
   const [childCount, setChildCount] = useState(0);
   const [roomsCount, setRommsCount] = useState(1);
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState("Cox's Bazar");
   const [country, setCountry] = useState("");
   const [visaType, setVisaType] = useState("Tourist");
   const [active, setactive] = useState(false);
   const [openn, setOpenn] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const [selectedCountry, setSelectedCountry] = useState("BDT");
-
+  const [selectedCountry, setSelectedCountry] = useState(1);
+  const [value, setValue] = useState();
   const localAuth = localStorage?.getItem("auth");
   const auth = JSON.parse(localAuth);
+  const [categoryId, setCategoryId] = useState();
+  const [hotelId, setHotelId] = useState(null);
 
+  const { data: cities } = useGetCitiesQuery(selectedCountry);
 
   const [totalTravelers, setTotalTravelers] = useState({
     rooms: " ",
@@ -103,6 +119,29 @@ const HomePage = () => {
     child: " ",
     total: " ",
   });
+
+  useEffect(() => {
+    const saved = localStorage.getItem("selectedCountry");
+    if (saved) {
+      setSelectedCountry(parseInt(saved));
+    }
+  }, [selectedCountry]);
+
+  const handleCountryChange = (value) => {
+    localStorage.setItem("selectedCountry", value);
+    setSelectedCountry(parseInt(value));
+    window.location.reload();
+  };
+
+  useEffect(() => {
+    if (selectedCountry === 1) {
+      setValue("Cox bazar");
+      setHotelId(9);
+    } else {
+      setValue("New York");
+      setHotelId(11);
+    }
+  }, [selectedCountry]);
 
   useEffect(() => {
     const savedMode = localStorage.getItem("theme");
@@ -152,6 +191,17 @@ const HomePage = () => {
     const currentTab = searchParams.get("search") || "Hotel";
     setActiveTab(currentTab);
   }, [searchParams]);
+
+  useEffect(() => {
+    if (activeTab === "Hotel") {
+      setCategoryId(1);
+    } else if (activeTab === "House Rent") {
+      setCategoryId(2);
+    } else {
+      setCategoryId(3);
+    }
+  }, [activeTab])
+
 
   const handleAdultCountChange = (action) => {
     if (action === "increase") {
@@ -211,7 +261,7 @@ const HomePage = () => {
       activeTab === "Appartment"
     ) {
       navigate(
-        `/hotel/list?checkin=${date.from}0&checkout=${date.to}&location=${value}&rooms=${totalTravelers?.rooms}&adult=${totalTravelers?.adult}&child=${totalTravelers.child}&totalGuset=${totalTravelers.total}&sort=price`
+        `/hotel/list?checkin=${date.from}0&checkout=${date.to}&location=${value}&rooms=${totalTravelers?.rooms}&adult=${totalTravelers?.adult}&child=${totalTravelers.child}&totalGuset=${totalTravelers.total}&hotelId=${hotelId}&categoryId=${categoryId}&sort=price `
       );
     } else {
       navigate(`/visa/country=${country}`);
@@ -223,6 +273,10 @@ const HomePage = () => {
     localStorage.clear();
     window.location.reload();
   };
+
+  
+
+
 
   return (
     <>
@@ -252,35 +306,25 @@ const HomePage = () => {
           <div className="flex items-center ml-4">
             <div className="p-1 ml-2 mr-2">
               <Select
-                value={selectedCountry}
-                className="text-black bg-black border-none"
-                onValueChange={(value) => {
-                  setSelectedCountry(value);
-                }}
+                value={String(selectedCountry)}
+                onValueChange={handleCountryChange}
               >
-                <SelectTrigger className="w-[100px] border-none bg-gray-300 dark:bg-gray-700 shadow-none dark:text-white">
+                <SelectTrigger className="w-[150px] border-none bg-gray-300 dark:bg-gray-700 shadow-none dark:text-white">
                   <SelectValue placeholder="Select Country" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
-                    <SelectItem value="BDT">
-                      <span className="flex space-x-2">
-                        <Icon
-                          icon="twemoji:flag-bangladesh"
-                          className="font-bold text-xl text-black dark:text-white "
-                        />
-                        <span className="font-bold">BDT</span>
-                      </span>
-                    </SelectItem>
-                    <SelectItem value="USA">
-                      <span className="flex space-x-2">
-                        <Icon
-                          icon="la:flag-usa"
-                          className="font-bold text-xl text-black dark:text-white "
-                        />{" "}
-                        <span className="font-bold">USA</span>
-                      </span>
-                    </SelectItem>
+                    {countries.map((item) => (
+                      <SelectItem value={String(item.id)} key={item.id}>
+                        <span className="flex space-x-2">
+                          <Icon
+                            icon={item.icon}
+                            className="font-bold text-xl text-black dark:text-white"
+                          />
+                          <span className="font-bold">{item.name}</span>
+                        </span>
+                      </SelectItem>
+                    ))}
                   </SelectGroup>
                 </SelectContent>
               </Select>
@@ -301,24 +345,22 @@ const HomePage = () => {
                       </MenubarTrigger>
                       <MenubarContent className="mr-12">
                         <MenubarRadioGroup value="">
-                          <MenubarRadioItem >
+                          <MenubarRadioItem>
                             <Icon
                               icon="mdi:account-outline"
                               className="font-bold text-2xl text-black dark:text-white "
                             />
-                            <span className="ml-3">
-                              Profile
-                            </span>
-
+                            <span className="ml-3">Profile</span>
                           </MenubarRadioItem>
-                          <MenubarRadioItem value="benoit" onClick={() => navigate("/hotel/my-booking-room")}>
+                          <MenubarRadioItem
+                            value="benoit"
+                            onClick={() => navigate("/hotel/my-booking-room")}
+                          >
                             <Icon
                               icon="ic:round-hotel"
                               className="font-bold text-xl text-black dark:text-white "
                             />
-                            <span className="ml-3">
-                              My Order
-                            </span>
+                            <span className="ml-3">My Order</span>
                           </MenubarRadioItem>
                         </MenubarRadioGroup>
 
@@ -330,7 +372,6 @@ const HomePage = () => {
                         >
                           Logout
                         </MenubarItem>
-
                       </MenubarContent>
                     </MenubarMenu>
                   </Menubar>
@@ -587,13 +628,13 @@ const HomePage = () => {
                             <span>
                               <p>
                                 {value
-                                  ? hotelArea.find(
-                                    (hotel) => hotel.value === value
-                                  )?.label
+                                  ? cities?.find(
+                                    (hotel) => hotel.name === value
+                                  )?.name
                                   : "Select Destination..."}
                               </p>
                               <p className="flex text-[12px] text-gray-400">
-                                Bangladesh
+                                {selectedCountry === 1 ? "Bangladesh" : "USA"}
                               </p>
                             </span>
                           </Button>
@@ -604,16 +645,14 @@ const HomePage = () => {
                             <CommandList>
                               <CommandEmpty>No Destination found.</CommandEmpty>
                               <CommandGroup>
-                                {hotelArea.map((hotel) => (
+                                {cities?.map((hotel) => (
                                   <CommandItem
-                                    key={hotel.value}
-                                    value={hotel.value}
+                                    key={hotel.id}
+                                    value={hotel.name}
                                     onSelect={(currentValue) => {
-                                      setValue(
-                                        currentValue === value
-                                          ? ""
-                                          : currentValue
-                                      );
+                                      const selectedHotel = cities?.find(h => h.name === currentValue);
+                                      setValue(currentValue === value ? "" : currentValue);
+                                      setHotelId(selectedHotel?.id || null);
                                       setOpen(false);
                                     }}
                                   >
@@ -625,10 +664,12 @@ const HomePage = () => {
                                       <span>
                                         <p className="font-semibold ">
                                           {" "}
-                                          {hotel.label}
+                                          {hotel.name}
                                         </p>
                                         <p className="text-[12px] text-gray-400">
-                                          {hotel.country}
+                                          {hotel?.country_id === 1
+                                            ? "Bangladesh"
+                                            : "USA"}
                                         </p>
                                       </span>
                                     </span>
@@ -636,7 +677,7 @@ const HomePage = () => {
                                     <Check
                                       className={cn(
                                         "ml-auto",
-                                        value === hotel.value
+                                        value === hotel.name
                                           ? "opacity-100"
                                           : "opacity-0"
                                       )}
@@ -868,13 +909,13 @@ const HomePage = () => {
                             <span>
                               <p>
                                 {value
-                                  ? hotelArea.find(
-                                    (hotel) => hotel.value === value
-                                  )?.label
+                                  ? cities?.find(
+                                    (hotel) => hotel.name === value
+                                  )?.name
                                   : "Select Destination..."}
                               </p>
                               <p className="flex text-[12px] text-gray-400">
-                                Bangladesh
+                                {selectedCountry === 1 ? "Bangladesh" : "USA"}
                               </p>
                             </span>
                           </Button>
@@ -885,16 +926,14 @@ const HomePage = () => {
                             <CommandList>
                               <CommandEmpty>No Destination found.</CommandEmpty>
                               <CommandGroup>
-                                {hotelArea.map((hotel) => (
+                                {cities?.map((hotel) => (
                                   <CommandItem
-                                    key={hotel.value}
-                                    value={hotel.value}
+                                    key={hotel.id}
+                                    value={hotel.name}
                                     onSelect={(currentValue) => {
-                                      setValue(
-                                        currentValue === value
-                                          ? ""
-                                          : currentValue
-                                      );
+                                      const selectedHotel = cities?.find(h => h.name === currentValue);
+                                      setValue(currentValue === value ? "" : currentValue);
+                                      setHotelId(selectedHotel?.id || null);
                                       setOpen(false);
                                     }}
                                   >
@@ -906,10 +945,12 @@ const HomePage = () => {
                                       <span>
                                         <p className="font-semibold ">
                                           {" "}
-                                          {hotel.label}
+                                          {hotel.name}
                                         </p>
                                         <p className="text-[12px] text-gray-400">
-                                          {hotel.country}
+                                          {hotel?.country_id === 1
+                                            ? "Bangladesh"
+                                            : "USA"}
                                         </p>
                                       </span>
                                     </span>
@@ -917,7 +958,7 @@ const HomePage = () => {
                                     <Check
                                       className={cn(
                                         "ml-auto",
-                                        value === hotel.value
+                                        value === hotel.name
                                           ? "opacity-100"
                                           : "opacity-0"
                                       )}
@@ -1149,13 +1190,13 @@ const HomePage = () => {
                             <span>
                               <p>
                                 {value
-                                  ? hotelArea.find(
-                                    (hotel) => hotel.value === value
-                                  )?.label
+                                  ? cities?.find(
+                                    (hotel) => hotel.name === value
+                                  )?.name
                                   : "Select Destination..."}
                               </p>
                               <p className="flex text-[12px] text-gray-400">
-                                Bangladesh
+                                {selectedCountry === 1 ? "Bangladesh" : "USA"}
                               </p>
                             </span>
                           </Button>
@@ -1166,16 +1207,14 @@ const HomePage = () => {
                             <CommandList>
                               <CommandEmpty>No Destination found.</CommandEmpty>
                               <CommandGroup>
-                                {hotelArea.map((hotel) => (
+                                {cities?.map((hotel) => (
                                   <CommandItem
-                                    key={hotel.value}
-                                    value={hotel.value}
+                                    key={hotel.id}
+                                    value={hotel.name}
                                     onSelect={(currentValue) => {
-                                      setValue(
-                                        currentValue === value
-                                          ? ""
-                                          : currentValue
-                                      );
+                                      const selectedHotel = cities?.find(h => h.name === currentValue);
+                                      setValue(currentValue === value ? "" : currentValue);
+                                      setHotelId(selectedHotel?.id || null);
                                       setOpen(false);
                                     }}
                                   >
@@ -1187,10 +1226,12 @@ const HomePage = () => {
                                       <span>
                                         <p className="font-semibold ">
                                           {" "}
-                                          {hotel.label}
+                                          {hotel.name}
                                         </p>
                                         <p className="text-[12px] text-gray-400">
-                                          {hotel.country}
+                                          {hotel?.country_id === 1
+                                            ? "Bangladesh"
+                                            : "USA"}
                                         </p>
                                       </span>
                                     </span>
@@ -1198,7 +1239,7 @@ const HomePage = () => {
                                     <Check
                                       className={cn(
                                         "ml-auto",
-                                        value === hotel.value
+                                        value === hotel.name
                                           ? "opacity-100"
                                           : "opacity-0"
                                       )}
@@ -1507,8 +1548,8 @@ const HomePage = () => {
           </div>
         </div>
 
-        <HotDeals />
-        <SpecialOffer />
+        <HotDeals date={date}  />
+        {/* <SpecialOffer /> */}
       </div>
     </>
   );

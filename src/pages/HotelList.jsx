@@ -6,7 +6,6 @@ import { Icon } from "@iconify/react";
 import { Separator } from "@/components/ui/separator";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
-import { hotelArea, hotelLists } from "@/assets/data/HotelData";
 import { addDays, format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { Calendar } from "@/components/ui/calendar";
@@ -28,7 +27,7 @@ import {
   CommandList,
 } from "@/components/ui/command";
 import { useEffect, useState } from "react";
-import { useGetHotelsQuery, useHotelSearchMutation } from "@/redux/hotels/hotelsApi";
+import { useGetCitiesQuery, useHotelSearchMutation } from "@/redux/hotels/hotelsApi";
 
 export default function HotelList() {
   const navigate = useNavigate();
@@ -37,6 +36,8 @@ export default function HotelList() {
   const [adultCount, setAdultCount] = useState(searchParams.get("adult"));
   const [childCount, setChildCount] = useState(searchParams.get("child"));
   const [roomsCount, setRommsCount] = useState(searchParams.get("rooms"));
+  const [categoryId, setCategoryId] = useState(searchParams.get("categoryId"));
+  const [hotelId, setHotelId] = useState(searchParams.get("hotelId"));
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(searchParams.get("location"));
   const [totalTravelers, setTotalTravelers] = useState({
@@ -47,8 +48,38 @@ export default function HotelList() {
   });
   const [isSmallScreen, setIsSmallScreen] = useState(false);
   const [showSection, setShowSection] = useState(true);
+  const countryId = localStorage.getItem("selectedCountry");
+  
+  const cleanDate = (dateString) => {
+    return dateString ? dateString.replace(/[\d]$/g, "").trim() : null;
+  };
 
+  const checkin = cleanDate(searchParams.get("checkin"));
+  const checkout = cleanDate(searchParams.get("checkout"));
+
+  const isValidDate = (dateString) => {
+    const date = new Date(dateString);
+    return !isNaN(date.getTime());
+  };
+
+
+  const fromDate = isValidDate(checkin)
+    ? addDays(new Date(checkin), 0)
+    : addDays(new Date(), 5);
+  const toDate = isValidDate(checkout)
+    ? addDays(new Date(checkout), 0)
+    : addDays(new Date(), 6);
+
+  const formatDate = (date) => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+
+  const { data: cities } = useGetCitiesQuery(countryId);
   const [hotelSearch, { data, isLoading, isError }] = useHotelSearchMutation();
+
 
   useEffect(() => {
     const handleResize = () => {
@@ -101,36 +132,19 @@ export default function HotelList() {
   }, [adultCount, childCount, roomsCount]);
 
   useEffect(() => {
+   if(hotelId && categoryId && countryId){
     hotelSearch({
-      check_in: "2025-04-01",
-      check_out: "2025-04-05",
-      category_id: "2",
-      city_id: "9",
-      country_id: "1",
+      check_in: formatDate(fromDate),
+      check_out: formatDate(toDate),
+      category_id: String(categoryId),
+      city_id: String(hotelId),
+      country_id: countryId,
       capacity: totalTravelers?.total
     })
+   }
 
-  }, [totalTravelers?.total])
+  }, [totalTravelers?.total, countryId, hotelId, categoryId])
 
-
-  const cleanDate = (dateString) => {
-    return dateString ? dateString.replace(/[\d]$/g, "").trim() : null;
-  };
-
-  const checkin = cleanDate(searchParams.get("checkin"));
-  const checkout = cleanDate(searchParams.get("checkout"));
-
-  const isValidDate = (dateString) => {
-    const date = new Date(dateString);
-    return !isNaN(date.getTime());
-  };
-
-  const fromDate = isValidDate(checkin)
-    ? addDays(new Date(checkin), 0)
-    : addDays(new Date(), 5);
-  const toDate = isValidDate(checkout)
-    ? addDays(new Date(checkout), 0)
-    : addDays(new Date(), 6);
 
   const [date, setDate] = useState({
     from: fromDate,
@@ -150,6 +164,17 @@ export default function HotelList() {
   const handleSelectHotel = (slug) => {
     navigate(`/hotelDetails/${slug}?checkin=${date?.from}&checkout=${date?.to}&guests=${totalTravelers?.total}`);
   };
+
+  const handleModifySearch = () => {
+    hotelSearch({
+      check_in: formatDate(fromDate),
+      check_out: formatDate(toDate),
+      category_id: String(categoryId),
+      city_id: String(hotelId),
+      country_id: countryId,
+      capacity: totalTravelers?.total
+    })
+  }
 
   let content = null;
 
@@ -187,10 +212,19 @@ export default function HotelList() {
     );
   } else if (!isLoading && isError) {
     content = (
-      <p>error</p>
+      <div className="flex flex-col items-center justify-center w-full h-64 bg-red-50 dark:bg-red-900 rounded-xl dark:border-red-700 shadow-sm">
+        <h3 className="text-lg font-semibold text-red-700 dark:text-red-200">
+          Something went wrong, Please try again
+        </h3>
+
+      </div>
     );
   } else if (!isLoading && !isError && data?.rooms?.length === 0) {
-    content = <li className="m-2 text-center">No hotel found!</li>;
+    content = <div className="flex flex-col items-center justify-center h-64 text-center text-gray-500 dark:text-gray-400">
+      <Icon icon="si:alert-duotone" className="font-bold text-2xl" />
+      <h2 className="text-xl font-semibold">No Data Found</h2>
+      <p className="text-sm mt-2">We couldn't find any results to display. Please modify search</p>
+    </div>;
   } else if (!isLoading && !isError && data?.rooms?.length > 0) {
     content = data?.rooms?.map((hotel) => {
       return (
@@ -384,14 +418,18 @@ export default function HotelList() {
                         CITY/HOTEL/RESORT/AREA
                       </label>
                       <span>
+
                         <p>
                           {value
-                            ? hotelArea.find((hotel) => hotel.value === value)
-                              ?.label
+                            ? cities?.find(
+                              (hotel) => hotel.name === value
+                            )?.name
                             : "Select Destination..."}
                         </p>
+
+
                         <p className="flex text-[12px] text-gray-400">
-                          Bangladesh
+                          {countryId === 1 ? "Bangladesh" : "USA"}
                         </p>
                       </span>
                     </Button>
@@ -402,14 +440,14 @@ export default function HotelList() {
                       <CommandList>
                         <CommandEmpty>No Destination found.</CommandEmpty>
                         <CommandGroup>
-                          {hotelArea.map((hotel) => (
+                          {cities?.map((hotel) => (
                             <CommandItem
-                              key={hotel.value}
-                              value={hotel.value}
+                              key={hotel.id}
+                              value={hotel.name}
                               onSelect={(currentValue) => {
-                                setValue(
-                                  currentValue === value ? "" : currentValue
-                                );
+                                const selectedHotel = cities?.find(h => h.name === currentValue);
+                                setValue(currentValue === value ? "" : currentValue);
+                                setHotelId(selectedHotel?.id || null);
                                 setOpen(false);
                               }}
                             >
@@ -421,17 +459,19 @@ export default function HotelList() {
                                 <span>
                                   <p className="font-semibold ">
                                     {" "}
-                                    {hotel.label}
+                                    {hotel.name}
                                   </p>
                                   <p className="text-[12px] text-gray-400">
-                                    {hotel.country}
+                                    {hotel?.country_id === 1
+                                      ? "Bangladesh"
+                                      : "USA"}
                                   </p>
                                 </span>
                               </span>
                               <Check
                                 className={cn(
                                   "ml-auto",
-                                  value === hotel.value
+                                  value === hotel.name
                                     ? "opacity-100"
                                     : "opacity-0"
                                 )}
@@ -628,7 +668,9 @@ export default function HotelList() {
               </div>
 
               <div className="flex justify-center shadow-sm sm:h-20 h-12 mt-4">
-                <button className="bg-yellow-400 hover:bg-yellow-500 text-[#00026E] dark:text-primary dark:bg-gray-800  font-bold px-4 rounded-lg w-full">
+                <button className="bg-yellow-400 hover:bg-yellow-500 text-[#00026E] dark:text-primary dark:bg-gray-800  font-bold px-4 rounded-lg w-full"
+                  onClick={() => handleModifySearch()}
+                >
                   Modify Search
                 </button>
               </div>
@@ -713,119 +755,13 @@ export default function HotelList() {
           {/* Main Content */}
           <section className="col-span-12 sm:col-span-8 space-y-4">
             <div className="flex justify-between items-center">
-              <h2 className="text-xl font-semibold">9 properties found</h2>
-              <select className="border p-2 rounded-md dark:bg-gray-800">
+              <h2 className="text-xl font-semibold">{data?.rooms?.length} Hotels found</h2>
+              {/* <select className="border p-2 rounded-md dark:bg-gray-800">
                 <option>Popularity</option>
                 <option>Price</option>
-              </select>
+              </select> */}
             </div>
             {content}
-            {/* {hotelLists.map((hotel, index) => (
-              <Card key={index} className="flex sm:p-4 py-4 px-2 relative dark:bg-gray-800">
-                <CardContent className="flex justify-between sm:flex-row flex-col gap-4 w-full ">
-                  <div className="relative">
-                    <img
-                      src={hotel.images[0]}
-                      alt={hotel.name}
-                      className="rounded-lg smn:h-56 h-full sm:w-64 w-full object-cover"
-                    />
-
-                    <button className="absolute bottom-2 left-2 p-1.5 rounded-md bg-white hover:bg-white/20">
-                      <Icon
-                        icon="mdi:heart-outline"
-                        className="font-bold text-sm"
-                      />
-                    </button>
-
-                    <button className="flex absolute bottom-2 right-2 p-1.5 rounded-md bg-white/40  hover:bg-white/20">
-                      <Icon
-                        icon="mdi:bird"
-                        className="font-bold text-xl text-red-500 "
-                      />
-                      <p className="text-[12px] text-white font-semibold">
-                        Get Points
-                      </p>
-                    </button>
-                  </div>
-
-                  <button className="flex absolute top-8 left-2 p-1.5 rounded-md bg-[#EEF8FB] border border-blue-400">
-                    <Icon
-                      icon="flowbite:award-outline"
-                      className="font-bold text-xl text-blue-950 "
-                    />
-                    <p className="text-[12px] text-[#00026E] font-semibold">
-                      Top Selling
-                    </p>
-                  </button>
-
-                  <div>
-                    <h3 className="text-lg font-semibold">{hotel.name}</h3>
-                    <div className="flex sm:space-x-2 space-x-0 mt-2 flex-col sm:flex-row">
-                      <span className="flex border p-1 rounded-md  w-fit">
-                        <Icon
-                          icon="material-symbols-light:star-rounded"
-                          className="font-bold text-xl text-[#FCCD00] "
-                        />
-                        <p className="text-sm text-gray-500 dark:text-gray-300">
-                          Star
-                        </p>
-                      </span>
-
-                      <span className="flex p-1 sm:mt-0 mt-2">
-                        <Icon
-                          icon="mdi:location"
-                          className="font-bold text-xl text-blue-950 dark:text-white "
-                        />
-                        <p className="text-sm text-gray-500 dark:text-gray-300">
-                          {hotel.location}
-                        </p>
-                      </span>
-                    </div>
-
-                    <p className="text-red-500 text-sm border border-red-500 rounded-3xl max-w-fit px-2 py-1 mt-3">
-                      {hotel.roomsRemaining} Room Remaining
-                    </p>
-                    <div className="flex sm:space-x-2 space-x-0 mt-4">
-                      {hotel.facilities[0]?.general
-                        ?.slice(0, 3)
-                        .map((item, index) => (
-                          <span key={index} className="flex">
-                            <Icon
-                              icon="mdi:success"
-                              className="font-bold text-xl text-gray-400 dark:text-gray-300 "
-                            />
-                            <p className="sm:text-sm text-[12px] text-gray-400 dark:text-gray-300">
-                              {item}
-                            </p>
-                          </span>
-                        ))}
-                    </div>
-                  </div>
-                  <div className="flex flex-col sm:items-end items-start space-y-1 sm:mt-10 mt-2">
-                    <p className="bg-red-500 text-white rounded-2xl px-2 py-1 max-w-fit text-sm">
-                      {hotel.discount} off
-                    </p>
-                    <p className="text-green-500 text-sm">
-                      Extra 5% discount for Bkash
-                    </p>
-                    <p className="text-gray-400 line-through">
-                      BDT {hotel.oldPrice}
-                    </p>
-                    <p className="text-lg font-bold">{hotel.newprice}</p>
-                    <p className="text-[12px] text-gray-400 ">
-                      for 1 night, per room
-                    </p>
-
-                    <Button
-                      className="bg-yellow-500 text-white"
-                      onClick={handleSelectHotel}
-                    >
-                      Select
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            ))} */}
           </section>
         </div>
       </div>

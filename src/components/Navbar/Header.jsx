@@ -2,14 +2,13 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import Navigation from "./Navigation";
-import { useSearchParams, useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import {
   Select,
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
@@ -31,16 +30,42 @@ import {
 import { useDispatch } from "react-redux";
 import { userLoggedOut } from "@/redux/auth/authSlice";
 
+const countries = [
+  {
+    id: 1,
+    name: "Bangladesh",
+    dollarRate: "120",
+    icon: "twemoji:flag-bangladesh",
+  },
+  {
+    id: 2,
+    name: "USA",
+    dollarRate: "0",
+    icon: "la:flag-usa",
+  },
+];
+
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [active, setactive] = useState(false);
   const [openn, setOpenn] = useState(false);
-  const [selectedCountry, setSelectedCountry] = useState("BDT");
+  const [selectedCountry, setSelectedCountry] = useState(1);
   const [isDarkMode, setIsDarkMode] = useState(false);
-
   const localAuth = localStorage?.getItem("auth");
   const auth = JSON.parse(localAuth);
+
+  useEffect(() => {
+    const saved = localStorage.getItem("selectedCountry");
+    if (saved) {
+      setSelectedCountry(parseInt(saved));
+    }
+  }, []);
+
+  const handleCountryChange = (value) => {
+    localStorage.setItem("selectedCountry", value);
+    setSelectedCountry(parseInt(value));
+  };
 
   useEffect(() => {
     const savedMode = localStorage.getItem("theme");
@@ -83,10 +108,6 @@ const Header = () => {
     }
   }, []);
 
-  const handlePhoneChange = (e) => {
-    setSelectedPhone(e.target.value);
-  };
-
   const logout = () => {
     dispatch(userLoggedOut());
     localStorage.clear();
@@ -103,7 +124,7 @@ const Header = () => {
     >
       <div className="hidden md:w-[90%] mx-auto md:flex items-center justify-between mt-4">
         <div>
-          <div className="text-2xl font-extrabold text-blue-700" onClick={()=> navigate("/")}>
+          <div className="text-2xl font-extrabold text-blue-700" onClick={() => navigate("/")}>
             {isDarkMode ? (
               <img src={logoWhite} alt="logo" className="h-10 mb-2 w-24" />
             ) : (
@@ -115,41 +136,31 @@ const Header = () => {
           <Navigation activeItem={0} />
         </div>
         <div className="flex items-center ml-4">
-          <div className="p-1 ml-2 mr-2">
+          {/* <div className="p-1 ml-2 mr-2">
             <Select
-              value={selectedCountry}
-              className="text-black bg-black border-none"
-              onValueChange={(value) => {
-                setSelectedCountry(value);
-              }}
+              value={String(selectedCountry)}
+              onValueChange={handleCountryChange}
             >
-              <SelectTrigger className="w-[100px] border-none bg-gray-300 dark:bg-gray-700 shadow-none dark:text-white">
+              <SelectTrigger className="w-[150px] border-none bg-gray-300 dark:bg-gray-700 shadow-none dark:text-white">
                 <SelectValue placeholder="Select Country" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectItem value="BDT">
-                    <span className="flex space-x-2">
-                      <Icon
-                        icon="twemoji:flag-bangladesh"
-                        className="font-bold text-xl text-black dark:text-white "
-                      />
-                      <span className="font-bold">BDT</span>
-                    </span>
-                  </SelectItem>
-                  <SelectItem value="USA">
-                    <span className="flex space-x-2">
-                      <Icon
-                        icon="la:flag-usa"
-                        className="font-bold text-xl text-black dark:text-white "
-                      />{" "}
-                      <span className="font-bold">USA</span>
-                    </span>
-                  </SelectItem>
+                  {countries.map((item) => (
+                    <SelectItem value={String(item.id)} key={item.id}>
+                      <span className="flex space-x-2">
+                        <Icon
+                          icon={item.icon}
+                          className="font-bold text-xl text-black dark:text-white"
+                        />
+                        <span className="font-bold">{item.name}</span>
+                      </span>
+                    </SelectItem>
+                  ))}
                 </SelectGroup>
               </SelectContent>
             </Select>
-          </div>
+          </div> */}
 
           <div className="flex relative">
             <div className="flex items-center p-2 ">

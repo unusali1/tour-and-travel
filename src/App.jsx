@@ -1,7 +1,6 @@
 import { Route, Routes } from 'react-router-dom'
 import './App.css'
 import HomePage from './components/Home/HomePage'
-import Header from './components/Navbar/Header'
 import HotelList from './pages/HotelList'
 import Footter from './components/Section/Footter'
 import VisaDetails from './pages/VisaDetails'

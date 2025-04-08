@@ -2,6 +2,15 @@ import { apiSlice } from "../api/apiSlice";
 
 export const hotelsApi = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
+        getCountries: builder.query({
+            query: () => ({
+                url: "/countries",
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${JSON.parse(localStorage.getItem("auth"))?.token || ""}`,
+                },
+            }),
+        }),
         getHotels: builder.query({
             query: () => ({
                 url: "/hotels",
@@ -57,13 +66,24 @@ export const hotelsApi = apiSlice.injectEndpoints({
                 };
             },
         }),
+        getCities: builder.query({
+            query: (id) => ({
+                url: `/get-citie-list/${id}`,
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${JSON.parse(localStorage.getItem("auth"))?.token || ""}`,
+                },
+            }),
+        }),
     }),
 });
 
 export const { 
+    useGetCountriesQuery,
     useGetHotelsQuery,
     useGetHotelDetailQuery,
     useHotelSearchMutation,
     useHotelBookMutation,
-    useMyBookingQuery
+    useMyBookingQuery,
+    useGetCitiesQuery
 } = hotelsApi;
