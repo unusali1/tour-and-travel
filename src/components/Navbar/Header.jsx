@@ -240,132 +240,124 @@ const Header = () => {
       </div>
 
       {/* for mobile screen */}
-      <div className="w-full md:hidden flex items-center justify-between -top-2 overflow-hidden">
-        <div className="mt-2 ml-2">
-          <Link href="/">
-            <h1>
-              <Link href={"/"}>
-                <div className="text-2xl font-extrabold text-blue-700">
-                  {isDarkMode ? (
-                    <img src={logoWhite} alt="logo" className="h-6 mb-2 w-16" />
-                  ) : (
-                    <img src={logo} alt="logo" className="h-6 mb-2 w-16" />
-                  )}
-                </div>
-              </Link>
-            </h1>
-          </Link>
-        </div>
-        <div className="flex ">
-          <div className="mt-[2px]">
-            <Select
-              value={selectedCountry}
-              className="text-black bg-black border-none"
-              onValueChange={(value) => {
-                setSelectedCountry(value);
-              }}
-            >
-              <SelectTrigger className="w-[100px] border-none shadow-none dark:text-white">
-                <SelectValue placeholder="Select Country" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectItem value="BDT">
-                    <span className="flex space-x-2">
-                      <Icon
-                        icon="twemoji:flag-bangladesh"
-                        className="font-bold text-xl text-black dark:text-white "
+      <div className="md:hidden flex  justify-between overflow-hidden">
+          <div className="mt-2 ">
+          <div className="text-2xl font-extrabold text-blue-700" onClick={() => navigate("/")}>
+                    {active && isDarkMode ? (
+                      <img
+                        src={logoWhite}
+                        alt="logo"
+                        className="h-6 mb-2 w-16"
                       />
-                      <span>BDT</span>
-                    </span>
-                  </SelectItem>
-                  <SelectItem value="USA">
-                    <span className="flex space-x-2">
-                      <Icon
-                        icon="la:flag-usa"
-                        className="font-bold text-xl text-black dark:text-white "
-                      />{" "}
-                      <span>USA</span>
-                    </span>
-                  </SelectItem>
-                </SelectGroup>
-              </SelectContent>
-            </Select>
+                    ) : (
+                      <img src={logo} alt="logo" className="h-6 mb-2 w-16" />
+                    )}
+                  </div>
           </div>
+          <div className="flex ">
+            <div className="mt-[2px]">
+              {/* <Select
+                value={selectedCountry}
+                className="text-black bg-black border-none"
+                onValueChange={(value) => {
+                  setSelectedCountry(value);
+                }}
+              >
+                <SelectTrigger className="w-[100px] border-none shadow-none dark:text-white">
+                  <SelectValue placeholder="Select Country" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectItem value="BDT">
+                      <span className="flex space-x-2">
+                        <Icon
+                          icon="twemoji:flag-bangladesh"
+                          className="font-bold text-xl text-black dark:text-white "
+                        />
+                        <span>BDT</span>
+                      </span>
+                    </SelectItem>
+                    <SelectItem value="USA">
+                      <span className="flex space-x-2">
+                        <Icon
+                          icon="la:flag-usa"
+                          className="font-bold text-xl text-black dark:text-white "
+                        />{" "}
+                        <span>USA</span>
+                      </span>
+                    </SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select> */}
+            </div>
 
-          <div>
-            <button
-              onClick={toggleDarkMode}
-              className="px-2 py-1  rounded-full mt-1"
-            >
-              {isDarkMode ? (
+            <div>
+              <button
+                onClick={toggleDarkMode}
+                className="px-2 py-1  rounded-full mt-1"
+              >
+                {isDarkMode ? (
+                  <Icon
+                    icon="material-symbols-light:dark-mode-rounded"
+                    className="font-bold text-xl text-white"
+                  />
+                ) : (
+                  <Icon
+                    icon="uil:sun"
+                    className="font-bold text-xl text-black"
+                  />
+                )}
+              </button>
+            </div>
+
+            <div className="mt-1" onClick={handleClose}>
+              {openn ? (
                 <Icon
-                  icon="material-symbols-light:dark-mode-rounded"
-                  className="font-bold text-2xl text-white"
+                  onClick={() => setOpenn(!openn)}
+                  icon="mingcute:close-fill"
+                  className="font-bold text-3xl text-black dark:text-white"
                 />
               ) : (
                 <Icon
-                  icon="uil:sun"
-                  className="font-bold text-2xl text-black"
+                  onClick={() => setOpenn(!openn)}
+                  icon="ion:menu"
+                  className="font-bold text-3xl text-black dark:text-white"
                 />
               )}
-            </button>
+            </div>
           </div>
 
-          <div className="mt-1" onClick={handleClose}>
-            {openn ? (
-              <Icon
-                onClick={() => setOpenn(!openn)}
-                icon="mingcute:close-fill"
-                className="font-bold text-3xl text-black dark:text-white"
-              />
-            ) : (
-              <Icon
-                onClick={() => setOpenn(!openn)}
-                icon="ion:menu"
-                className="font-bold text-3xl text-black dark:text-white"
-              />
-            )}
-          </div>
-        </div>
-
-        {openn && (
-          <div
-            className="fixed md:hidden w-full text-black h-screen top-0 right-0 z-[99999] bg-[unset]"
-            onClick={handleClose}
-            id="screen"
-          >
-            <div className="fixed bg-white h-screen top-0 left-0 w-[60%] z-[9999]">
-              <div className="mt-0 p-5">
-                <div>
-                  <Link href={"/"}>
-                    <div className="flex justify-between text-2xl font-extrabold text-blue-700">
-                      <img src={logo} alt="logo" className="h-10 mb-2 w-24" />
-                      <Icon
-                        onClick={() => setOpenn(!openn)}
-                        icon="mingcute:close-fill"
-                        className="font-bold text-3xl text-black dark:text-white"
-                      />
-                    </div>
-                  </Link>
-                  <Separator className="my-2" />
-                </div>
-                <Navigation activeItem={0} />
-                <div className="flex items-center p-2 ">
+          {openn && (
+            <div
+              className="fixed md:hidden w-full text-black h-screen top-0 right-0 z-[99999] bg-[unset]"
+              onClick={handleClose}
+              id="screen"
+            >
+              <div className="fixed bg-white h-screen top-0 left-0 w-[60%] z-[9999]">
+                <div className="mt-0 p-5">
                   <div>
-                    <Button
-                      className="bg-blue-700 text-white px-5 py-2 rounded-md"
-                      onClick={() => navigate("/auth")}
-                    >
-                      Sign In
-                    </Button>
+                     <div className="flex justify-between text-2xl font-extrabold text-blue-700" onClick={() => navigate("/")}>
+                        <img src={logo} alt="logo" className="h-10 mb-2 w-24" />
+                      </div>
+                   
+                    <Separator className="my-2" />
+                  </div>
+                  <Navigation activeItem={0} />
+                  <div className="flex items-center p-2 ">
+                    <div>
+                      <Button
+                        className="bg-blue-700 text-white px-5 py-2 rounded-md"
+                        onClick={() => navigate("/auth")}
+                      >
+                        Sign In
+                      </Button>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        )}
-      </div>
+          )}
+        </div>
     </div>
   );
 };

@@ -130,7 +130,6 @@ const HomePage = () => {
   const handleCountryChange = (value) => {
     localStorage.setItem("selectedCountry", value);
     setSelectedCountry(parseInt(value));
-    window.location.reload();
   };
 
   useEffect(() => {
@@ -319,7 +318,7 @@ const HomePage = () => {
                         <span className="flex space-x-2">
                           <Icon
                             icon={item.icon}
-                            className="font-bold text-xl text-black dark:text-white"
+                            className="font-bold text-xl text-red-800 dark:text-white"
                           />
                           <span className="font-bold">{item.name}</span>
                         </span>
@@ -429,37 +428,27 @@ const HomePage = () => {
             </Link>
           </div>
           <div className="flex ">
-            <div className="mt-[2px]">
-              <Select
-                value={selectedCountry}
-                className="text-black bg-black border-none"
-                onValueChange={(value) => {
-                  setSelectedCountry(value);
-                }}
+            <div className="mt-[5px]">
+            <Select
+                value={String(selectedCountry)}
+                onValueChange={handleCountryChange}
               >
-                <SelectTrigger className="w-[100px] border-none shadow-none dark:text-white">
+                <SelectTrigger className="w-[120px] border-none bg-gray-300 dark:bg-gray-700 shadow-none dark:text-white">
                   <SelectValue placeholder="Select Country" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
-                    <SelectItem value="BDT">
-                      <span className="flex space-x-2">
-                        <Icon
-                          icon="twemoji:flag-bangladesh"
-                          className="font-bold text-xl text-black dark:text-white "
-                        />
-                        <span>BDT</span>
-                      </span>
-                    </SelectItem>
-                    <SelectItem value="USA">
-                      <span className="flex space-x-2">
-                        <Icon
-                          icon="la:flag-usa"
-                          className="font-bold text-xl text-black dark:text-white "
-                        />{" "}
-                        <span>USA</span>
-                      </span>
-                    </SelectItem>
+                    {countries.map((item) => (
+                      <SelectItem value={String(item.id)} key={item.id}>
+                        <span className="flex space-x-2">
+                          <Icon
+                            icon={item.icon}
+                            className="font-bold text-lg dark:text-white text-red-800"
+                          />
+                          <span className="text-[10px]">{item.name}</span>
+                        </span>
+                      </SelectItem>
+                    ))}
                   </SelectGroup>
                 </SelectContent>
               </Select>
@@ -510,11 +499,11 @@ const HomePage = () => {
               <div className="fixed bg-white h-screen top-0 left-0 w-[60%] z-[9999]">
                 <div className="mt-0 p-5">
                   <div>
-                    <Link href={"/"}>
-                      <div className="flex justify-between text-2xl font-extrabold text-blue-700">
+                   
+                      <div className="flex justify-between text-2xl font-extrabold text-blue-700" onClick={() => navigate("/")}>
                         <img src={logo} alt="logo" className="h-10 mb-2 w-24" />
                       </div>
-                    </Link>
+                  
                     <Separator className="my-2" />
                   </div>
                   <Navigation activeItem={0} />
@@ -1548,7 +1537,7 @@ const HomePage = () => {
           </div>
         </div>
 
-        <HotDeals date={date}  />
+        <HotDeals date={date} guest={totalTravelers?.total} />
         {/* <SpecialOffer /> */}
       </div>
     </>

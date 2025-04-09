@@ -78,7 +78,7 @@ export const hotelsApi = apiSlice.injectEndpoints({
     }),
 });
 
-export const { 
+export const {
     useGetCountriesQuery,
     useGetHotelsQuery,
     useGetHotelDetailQuery,

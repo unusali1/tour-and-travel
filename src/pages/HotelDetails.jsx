@@ -122,12 +122,19 @@ const HotelDetails = () => {
     );
   } else if (!isLoading && isError) {
     content = (
-      <li className="m-2 text-center">
-        <p>error</p>
-      </li>
+      <div className="flex flex-col items-center justify-center w-full h-64 bg-red-50 dark:bg-red-900 rounded-xl dark:border-red-700 shadow-sm">
+        <h3 className="text-lg font-semibold text-red-700 dark:text-red-200">
+          Something went wrong, Please try again
+        </h3>
+
+      </div>
     );
   } else if (!isLoading && !isError && hotelDetail?.length === 0) {
-    content = <li className="m-2 text-center">No hotel found!</li>;
+    content = <div className="flex flex-col items-center justify-center h-64 text-center text-gray-500 dark:text-gray-400">
+    <Icon icon="si:alert-duotone" className="font-bold text-2xl" />
+    <h2 className="text-xl font-semibold">No Data Found</h2>
+    <p className="text-sm mt-2">We couldn't find any results to display. Please modify search</p>
+  </div>;
   } else if (!isLoading && !isError && hotelDetail?.length > 0) {
     content = <> <div className="bg-gray-100 dark:bg-background text-gray-900 pb-16">
       {/* {content} */}
@@ -277,7 +284,7 @@ const HotelDetails = () => {
                   <div className="flex flex-col md:flex-row bg-white dark:bg-gray-800 rounded-2xl shadow-md p-6 gap-6">
                     <div className="md:w-96">
                       <div >
-                        <p>room images slider</p>
+                       
                         <Swiper
                           spaceBetween={20}
                           slidesPerView={1}
@@ -341,7 +348,7 @@ const HotelDetails = () => {
                           Hurry Up! Only 5 Rooms Left
                         </p>
                         <div className="flex space-x-2 mt-2">
-                          <p>this is room facilities section</p>
+                         
                           {hotel?.services?.map((item, index) => (
                             <span key={index} className="flex">
                               <Icon
@@ -477,7 +484,7 @@ const HotelDetails = () => {
                 </div>
               ) : (
                 <div className="flex items-center justify-center h-52 text-center">
-                  <p>Add Rooms to Continue</p>
+                  <p className="text-primary">Add Rooms to Continue</p>
                 </div>
               )}
             </div>
