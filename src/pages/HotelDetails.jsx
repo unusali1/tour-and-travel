@@ -23,6 +23,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 const HotelDetails = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const [categoryName, setCategoryName] = useState(searchParams.get("categoryName"));
   const { slug } = useParams();
   const [dialogOpen, setDialogOpen] = useState(false);
   const [cart, setCart] = useState({
@@ -130,11 +131,11 @@ const HotelDetails = () => {
       </div>
     );
   } else if (!isLoading && !isError && hotelDetail?.length === 0) {
-    content = <div className="flex flex-col items-center justify-center h-64 text-center text-gray-500 dark:text-gray-400">
-    <Icon icon="si:alert-duotone" className="font-bold text-2xl" />
-    <h2 className="text-xl font-semibold">No Data Found</h2>
-    <p className="text-sm mt-2">We couldn't find any results to display. Please modify search</p>
-  </div>;
+    content = <div className="flex flex-col items-center justify-center h-[80vh] text-center text-gray-500 dark:text-gray-400">
+      <Icon icon="si:alert-duotone" className="font-bold text-2xl" />
+      <h2 className="text-xl font-semibold">No Data Found</h2>
+      <p className="text-sm mt-2">We couldn't find any results to display. Please modify search</p>
+    </div>;
   } else if (!isLoading && !isError && hotelDetail?.length > 0) {
     content = <> <div className="bg-gray-100 dark:bg-background text-gray-900 pb-16">
       {/* {content} */}
@@ -258,7 +259,7 @@ const HotelDetails = () => {
           hotelDetail?.length > 0 && (
             <div className="mt-8 bg-white dark:bg-gray-800 rounded-lg p-4">
               <h2 className="text-xl dark:text-white font-bold">
-                Hotel Description
+                {categoryName} Description
               </h2>
               {/* <p className="text-sm font-semibold flex space-x-3 mt-2 text-[#3A4856]  dark:text-white">
          <span>Number of Rooms: {hotel.rooms}</span>
@@ -284,7 +285,7 @@ const HotelDetails = () => {
                   <div className="flex flex-col md:flex-row bg-white dark:bg-gray-800 rounded-2xl shadow-md p-6 gap-6">
                     <div className="md:w-96">
                       <div >
-                       
+
                         <Swiper
                           spaceBetween={20}
                           slidesPerView={1}
@@ -348,7 +349,7 @@ const HotelDetails = () => {
                           Hurry Up! Only 5 Rooms Left
                         </p>
                         <div className="flex space-x-2 mt-2">
-                         
+
                           {hotel?.services?.map((item, index) => (
                             <span key={index} className="flex">
                               <Icon

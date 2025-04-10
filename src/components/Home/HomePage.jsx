@@ -32,7 +32,6 @@ import {
   CommandList,
 } from "@/components/ui/command";
 import Navigation from "../Navbar/Navigation";
-import SpecialOffer from "../Section/SpecialOffer";
 import HotDeals from "../Section/HotDeals";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
@@ -109,6 +108,7 @@ const HomePage = () => {
   const localAuth = localStorage?.getItem("auth");
   const auth = JSON.parse(localAuth);
   const [categoryId, setCategoryId] = useState();
+  const [categoryName, setCategoryName] = useState();
   const [hotelId, setHotelId] = useState(null);
 
   const { data: cities } = useGetCitiesQuery(selectedCountry);
@@ -194,10 +194,13 @@ const HomePage = () => {
   useEffect(() => {
     if (activeTab === "Hotel") {
       setCategoryId(1);
+      setCategoryName("Hotel")
     } else if (activeTab === "House Rent") {
       setCategoryId(2);
+      setCategoryName("House")
     } else {
       setCategoryId(3);
+      setCategoryName("Apartment")
     }
   }, [activeTab])
 
@@ -257,10 +260,10 @@ const HomePage = () => {
     if (
       activeTab === "Hotel" ||
       activeTab === "House Rent" ||
-      activeTab === "Appartment"
+      activeTab === "Apartment"
     ) {
       navigate(
-        `/hotel/list?checkin=${date.from}0&checkout=${date.to}&location=${value}&rooms=${totalTravelers?.rooms}&adult=${totalTravelers?.adult}&child=${totalTravelers.child}&totalGuset=${totalTravelers.total}&hotelId=${hotelId}&categoryId=${categoryId}&sort=price `
+        `/hotel/list?checkin=${date.from}0&checkout=${date.to}&location=${value}&rooms=${totalTravelers?.rooms}&adult=${totalTravelers?.adult}&child=${totalTravelers.child}&totalGuset=${totalTravelers.total}&hotelId=${hotelId}&categoryId=${categoryId}&categoryName=${categoryName}&sort=price `
       );
     } else {
       navigate(`/visa/country=${country}`);
@@ -565,8 +568,8 @@ const HomePage = () => {
                 </span>
 
                 <span
-                  onClick={() => handleTabClick("Appartment")}
-                  className={`cursor-pointer ${activeTab === "Appartment"
+                  onClick={() => handleTabClick("Apartment")}
+                  className={`cursor-pointer ${activeTab === "Apartment"
                     ? "text-blue-600 dark:text-yellow-400 sm:font-semibold border-b-2 border-yellow-400 sm:pb-2 pb-1"
                     : "text-primary sm:font-semibold"
                     }`}
@@ -577,7 +580,7 @@ const HomePage = () => {
                       className="font-bold sm:text-lg text-lg"
                       style={{ color: "rgb(255, 0, 0)" }}
                     />
-                    <span className="sm:text-md text-[14px]">Appartment</span>
+                    <span className="sm:text-md text-[14px]">Apartment</span>
                   </span>
                 </span>
 
@@ -1163,7 +1166,7 @@ const HomePage = () => {
                 </>
               )}
 
-              {activeTab === "Appartment" && (
+              {activeTab === "Apartment" && (
                 <>
                   <div className="flex sm:mt-8 sm:mb-8 mt-14 mb-14 justify-between flex-col sm:flex-row">
                     <div className="mt-2 sm:mt-0 flex flex-col  p-2 rounded-md sm:ml-4">

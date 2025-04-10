@@ -4,8 +4,6 @@ import React from "react";
 
 const OrderListPage = () => {
   const { data, isError, isLoading } = useMyBookingQuery();
-  console.log("data:", data);
-
   let content = null;
 
   if (isLoading) {

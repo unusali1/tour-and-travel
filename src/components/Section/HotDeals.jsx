@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Icon } from "@iconify/react";
@@ -12,6 +12,8 @@ import { Skeleton } from "../ui/skeleton";
 
 const HotDeals = ({date,guest}) => {
   const navigate = useNavigate();
+  const [hotelList,setHotelList] = useState([]);
+  const countryId = localStorage.getItem("selectedCountry");
   const { data: hotels, isLoading, isError } = useGetHotelsQuery();
 
   const handleSelectHotel = (slug) => {
@@ -19,6 +21,15 @@ const HotDeals = ({date,guest}) => {
       `/hotelDetails/${slug}?checkin=${date?.from}&checkout=${date?.to}&guests=${guest}`
     );
   };
+
+  useEffect(() => {
+    if (!isLoading && hotels && countryId) {
+      const filteredHotels = hotels.filter(hotel => hotel.country_id === countryId);
+      setHotelList(filteredHotels);
+    }
+  }, [hotels, isLoading, countryId]);
+
+
   
   let content = null 
 
@@ -70,7 +81,7 @@ const HotDeals = ({date,guest}) => {
       <p className="text-sm mt-2">We couldn't find any results to display. Please modify search</p>
     </div>;
   } else if (!isLoading && !isError && hotels?.length > 0) {
-    content = hotels.map((offer, index)=>{
+    content = hotelList.map((offer, index)=>{
       return(
         <SwiperSlide key={index} className="sm:pl-8 pl-4 sm:pr-0 pr-4">
         <Card

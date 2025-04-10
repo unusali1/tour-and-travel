@@ -37,6 +37,7 @@ export default function HotelList() {
   const [childCount, setChildCount] = useState(searchParams.get("child"));
   const [roomsCount, setRommsCount] = useState(searchParams.get("rooms"));
   const [categoryId, setCategoryId] = useState(searchParams.get("categoryId"));
+  const [categoryName, setCategoryName] = useState(searchParams.get("categoryName"));
   const [hotelId, setHotelId] = useState(searchParams.get("hotelId"));
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState(searchParams.get("location"));
@@ -162,7 +163,7 @@ export default function HotelList() {
   };
 
   const handleSelectHotel = (slug) => {
-    navigate(`/hotelDetails/${slug}?checkin=${date?.from}&checkout=${date?.to}&guests=${totalTravelers?.total}`);
+    navigate(`/hotelDetails/${slug}?checkin=${date?.from}&checkout=${date?.to}&guests=${totalTravelers?.total}&categoryName=${categoryName}`);
   };
 
   const handleModifySearch = () => {
@@ -755,7 +756,7 @@ export default function HotelList() {
           {/* Main Content */}
           <section className="col-span-12 sm:col-span-8 space-y-4">
             <div className="flex justify-between items-center">
-              <h2 className="text-xl font-semibold">{data?.rooms?.length} Hotels found</h2>
+              <h2 className="text-xl font-semibold">{data?.rooms?.length} {categoryName} found</h2>
               {/* <select className="border p-2 rounded-md dark:bg-gray-800">
                 <option>Popularity</option>
                 <option>Price</option>
