@@ -1,7 +1,8 @@
 import Header from "@/components/Navbar/Header";
 import React from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
+import { ToastContainer, toast } from "react-toastify";
 import {
   Dialog,
   DialogContent,
@@ -10,29 +11,30 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
+} from "@/components/ui/dialog";
 
 import { Input } from "@/components/ui/input";
 import { useEffect, useState } from "react";
 import { Icon } from "@iconify/react";
 import { Separator } from "@/components/ui/separator";
 import { useLoginMutation, useRegisterMutation } from "@/redux/auth/authApi";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { useHotelBookMutation } from "@/redux/hotels/hotelsApi";
 
 const BookingPage = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const price = searchParams.get("price");
-  const check_in = searchParams.get("checkin")
-  const check_out = searchParams.get("checkout")
-  const totalGuest = searchParams.get("guests")
+  const check_in = searchParams.get("checkin");
+  const check_out = searchParams.get("checkout");
+  const totalGuest = searchParams.get("guests");
   const hotelName = searchParams.get("hotelName");
   const roomName = searchParams.get("roomName");
-  const city_id = 9
-  const category_id = 2
-  const country_id = 1
-  const capacity = 2
+
+  const city_id = 9;
+  const category_id = 2;
+  const country_id = 1;
+  const capacity = 2;
 
   const checkInDate = check_in ? new Date(check_in) : null;
   const checkOutDate = check_out ? new Date(check_out) : null;
@@ -56,13 +58,23 @@ const BookingPage = () => {
     confirmPassword: false,
   });
 
-
   const localAuth = localStorage?.getItem("auth");
   const auth = JSON.parse(localAuth);
 
-  const [register, { data, isLoading, error: responseError }] = useRegisterMutation();
-  const [login, { data: dataLogin, isLoading: loadingLogin, error: responseErrorLogin }] = useLoginMutation();
-  const [hotelBook, { data: hotelBookData, isLoading: loadingHotelBook, error: responseErrorHotelBook }] = useHotelBookMutation();
+  const [register, { data, isLoading, error: responseError }] =
+    useRegisterMutation();
+  const [
+    login,
+    { data: dataLogin, isLoading: loadingLogin, error: responseErrorLogin },
+  ] = useLoginMutation();
+  const [
+    hotelBook,
+    {
+      data: hotelBookData,
+      isLoading: loadingHotelBook,
+      error: responseErrorHotelBook,
+    },
+  ] = useHotelBookMutation();
 
   const validateForm = () => {
     const newErrors = {};
@@ -79,10 +91,9 @@ const BookingPage = () => {
 
   useEffect(() => {
     if (responseErrorLogin?.data) {
-      setErrorMsg("Email or Password Incorrect")
+      setErrorMsg("Email or Password Incorrect");
     }
   }, [dataLogin, data, responseErrorLogin, navigate]);
-
 
   const handleSubmit = (e) => {
     setErrorMsg("");
@@ -94,17 +105,16 @@ const BookingPage = () => {
         name: name,
         email: email,
         password: password,
-        password_confirmation: confirmPassword
+        password_confirmation: confirmPassword,
       });
     } else {
       login({
         email,
-        password
+        password,
       });
       setOpen(false);
     }
   };
-
 
   const togglePasswordVisibility = (field) => {
     setShowPassword((prev) => ({
@@ -112,7 +122,6 @@ const BookingPage = () => {
       [field]: !prev[field],
     }));
   };
-
 
   // Format time (e.g., "02:16 PM")
   const formatTime = (date) =>
@@ -130,9 +139,12 @@ const BookingPage = () => {
       year: "numeric",
     }) || "N/A";
 
-
   const handleConfimation = () => {
-    if ((dataLogin?.token && dataLogin?.user) || (data?.token && data?.user) || auth?.user?.name) {
+    if (
+      (dataLogin?.token && dataLogin?.user) ||
+      (data?.token && data?.user) ||
+      auth?.user?.name
+    ) {
       const checkIn = formatDate(checkInDate);
       const checkOut = formatDate(checkOutDate);
       hotelBook({
@@ -142,97 +154,118 @@ const BookingPage = () => {
         check_out: checkOut,
         number_of_guests: totalGuest,
         note: note,
-        phone: phone
-      })
+        phone: phone,
+      });
       setProccedToPayment(true);
     } else {
       setOpen(true);
     }
-  }
+  };
 
+  const notify = () => {
+    toast("Booking Confirmed !");
+    setTimeout(() => {
+      navigate("/");
+    }, 1000);
+  };
 
   return (
     <>
       <Header />
-      {
-        proccedToPayment ?  (
-          <div className="min-h-screen bg-gray-100 p-6 flex justify-center">
-            <div className="flex w-full max-w-6xl bg-white shadow-lg rounded-lg overflow-hidden">
-              {/* Sidebar */}
-              <div className="w-1/4 bg-gray-50 p-4 border-r">
-                <ul className="space-y-2">
-                  {[
-                    "Credit/Debit Card",
-                    "bKash",
-                    "upay",
-                    "Nagad",
-                    "Tap",
-                    "Rocket",
-                    "Net Banking",
-                    "EMI on credit card",
-                    "International Payment",
-                  ].map((method, index) => (
+      {proccedToPayment ? (
+        <div className="min-h-screen bg-gray-100 p-6 flex justify-center">
+          <div className="flex w-full max-w-6xl bg-white shadow-lg rounded-lg overflow-hidden">
+            {/* Sidebar */}
+            <div className="w-1/4 bg-gray-50 p-4 border-r">
+              <ul className="space-y-2">
+                {["Credit/Debit Card", "Pay Letter", "Pay Now"].map(
+                  (method, index) => (
                     <li
                       key={index}
-                      className={`p-2 text-sm rounded-lg cursor-pointer ${method === "bKash" ? "bg-blue-100 text-blue-600 font-semibold border-l-4 border-blue-500" : "hover:bg-gray-200"
-                        }`}
+                      className={`p-2 text-sm rounded-lg cursor-pointer ${
+                        method === "Pay Letter"
+                          ? "bg-blue-100 text-blue-600 font-semibold border-l-4 border-blue-500"
+                          : "hover:bg-gray-200"
+                      }`}
                     >
                       {method}
                     </li>
-                  ))}
-                </ul>
-              </div>
+                  )
+                )}
+              </ul>
+            </div>
 
-              {/* Payment Section */}
-              <div className="w-1/2 p-6 text-center">
-                <h2 className="text-lg font-semibold mb-4">
-                  You will be directed to the bKash platform where you can complete your
-                  purchase.
-                </h2>
-                <div className="flex justify-center my-4">
-                  {/* <img src="/gozayaan-bkash.png" alt="GoZayaan to bKash" className="h-12" /> */}
-                </div>
-                <p className="text-sm text-gray-600">
-                  By continuing to pay, I understand and agree with the
-                  <a href="#" className="text-blue-500"> privacy policy</a> and
-                  <a href="#" className="text-blue-500"> terms of service</a> of Dayfuna.
-                </p>
-                <button className="bg-yellow-500 text-white px-6 py-3 rounded-lg font-semibold mt-6">
-                  Proceed to Payment
-                </button>
-                <p className="mt-2 text-gray-700 font-semibold">You Pay: {price}</p>
+            {/* Payment Section */}
+            <div className="w-1/2 p-6 text-center">
+              <h2 className="text-lg font-semibold mb-4">
+                You have chosen the Pay Later option. Our team will contact you
+                shortly to complete your purchase.
+              </h2>
+              <div className="flex justify-center my-4">
+                {/* <img src="/gozayaan-bkash.png" alt="GoZayaan to bKash" className="h-12" /> */}
               </div>
+              <p className="text-sm text-gray-600">
+                By continuing to pay, I understand and agree with the
+                <a href="#" className="text-blue-500">
+                  {" "}
+                  privacy policy
+                </a>{" "}
+                and
+                <a href="#" className="text-blue-500">
+                  {" "}
+                  terms of service
+                </a>{" "}
+                of Dayfuna.
+              </p>
+              <Button
+                className="bg-yellow-500 text-white px-6 py-3 rounded-lg font-semibold mt-6"
+                onClick={notify}
+              >
+                Confirm Booking
+              </Button>
+              <ToastContainer />
+            </div>
 
-              {/* Summary Section */}
-              <div className="w-1/4 p-4 bg-gray-50 border-l">
-                <div className="p-3 bg-blue-100 rounded-md text-blue-700 text-sm mb-4">
-                  Booking confirmed. Complete payment before timeout.
-                  <div className="font-semibold text-lg mt-2">⏳ 19:18 min</div>
+            {/* Summary Section */}
+            <div className="w-1/4 p-4 bg-gray-50 border-l">
+              <div className="p-3 bg-blue-100 rounded-md text-blue-700 text-sm mb-4">
+                After booking confirmed. Please pay before the deadline to avoid
+                cancellation.
+                {/* <div className="font-semibold text-lg mt-2">⏳ 19:18 min</div> */}
+              </div>
+              <div className="bg-white shadow rounded-lg p-4">
+                <h3 className="text-blue-600 font-semibold">{hotelName}</h3>
+                <p className="text-sm text-gray-500">{roomName}</p>
+                <div className="mt-4 border-t pt-2">
+                  <p className="text-gray-700 text-sm">
+                    {formatDate(checkInDate)}
+                  </p>
+                  <p className="text-gray-700 text-sm">
+                    {formatDate(checkOutDate)}
+                  </p>
+                  <p className="text-gray-700 text-sm">
+                    Superior King Hill/ Garden View {totalGuest} Adults
+                  </p>
                 </div>
-                <div className="bg-white shadow rounded-lg p-4">
-                  <h3 className="text-blue-600 font-semibold">{hotelName}</h3>
-                  <p className="text-sm text-gray-500">{roomName}</p>
-                  <div className="mt-4 border-t pt-2">
-                    <p className="text-gray-700 text-sm">{formatDate(checkInDate)}</p>
-                    <p className="text-gray-700 text-sm">{formatDate(checkOutDate)}</p>
-                    <p className="text-gray-700 text-sm">Superior King Hill/ Garden View {totalGuest} Adults</p>
-                  </div>
-                
-                  <div className="mt-4 border-t pt-2">
-                    {/* <p className="text-sm text-gray-700">Rack Rate: BDT 14,230</p>
+
+                <div className="mt-4 border-t pt-2">
+                  {/* <p className="text-sm text-gray-700">Rack Rate: BDT 14,230</p>
                     <p className="text-sm text-green-600">Hotel Offer (62% Off): BDT 8,854</p> */}
-                    <p className="text-sm text-gray-700">Room Rate: BDT {price}</p>
-                    <p className="text-sm text-gray-700">Taxes & Fees: BDT 0</p>
-                    {/* <p className="text-sm text-green-600">Hot Deals (STAYB0325): BDT 268</p> */}
-                  </div>
-                  <button className="bg-blue-600 text-white w-full py-3 mt-4 rounded-lg font-semibold">
-                    Pay Now BDT {price}
-                  </button>
+                  <p className="text-sm text-gray-700">
+                    Room Rate: BDT {price}
+                  </p>
+                  <p className="text-sm text-gray-700">Taxes & Fees: BDT 0</p>
+                  {/* <p className="text-sm text-green-600">Hot Deals (STAYB0325): BDT 268</p> */}
                 </div>
+                <button className="bg-blue-600 text-white w-full py-3 mt-4 rounded-lg font-semibold">
+                  Amount {price}
+                </button>
               </div>
             </div>
           </div>
-        ):(<div>
+        </div>
+      ) : (
+        <div>
           <div className="bg-gray-100 dark:bg-background min-h-screen p-4 md:p-8">
             <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
               <div className="lg:col-span-2 bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8">
@@ -241,11 +274,13 @@ const BookingPage = () => {
                   <h3 className="text-lg font-semibold">
                     {hotelName} - {roomName} Room
                   </h3>
-                  <p className="text-gray-600 dark:text-gray-400">{totalGuest} Guests</p>
+                  <p className="text-gray-600 dark:text-gray-400">
+                    {totalGuest} Guests
+                  </p>
 
                   <div className="flex justify-between my-4 text-md">
                     <div>
-                      <p >
+                      <p>
                         Check In: <strong>{formatTime(checkInDate)}</strong>
                       </p>
                       <p className="font-medium">{formatDate(checkInDate)}</p>
@@ -262,7 +297,9 @@ const BookingPage = () => {
                   </div>
 
                   <div className="bg-blue-50  dark:bg-gray-600 p-4 rounded-lg">
-                    <p className="font-medium">Superior King Hill / Garden View</p>
+                    <p className="font-medium">
+                      Superior King Hill / Garden View
+                    </p>
                     <p className="text-gray-600 dark:text-gray-300">
                       Room Only • No breakfast included • Non-refundable
                     </p>
@@ -273,23 +310,26 @@ const BookingPage = () => {
                   Have a coupon?
                 </a>
 
-                <h3 className="text-xl font-semibold mt-8 mb-4">Guest Details</h3>
+                <h3 className="text-xl font-semibold mt-8 mb-4">
+                  Guest Details
+                </h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {Array.from({ length: totalGuest }, (_, i) => i + 1).map((guest, index) => (
-                    <div key={guest}>
-                      <p className="font-medium">Guest {index + 1} (Adult)</p>
-                      <input
-                        type="text"
-                        placeholder="Given Name"
-                        className="border  dark:bg-gray-600 rounded-lg w-full p-3 mt-1"
-                      />
-                    </div>
-                  ))}
+                  {Array.from({ length: totalGuest }, (_, i) => i + 1).map(
+                    (guest, index) => (
+                      <div key={guest}>
+                        <p className="font-medium">Guest {index + 1} (Adult)</p>
+                        <input
+                          type="text"
+                          placeholder="Given Name"
+                          className="border  dark:bg-gray-600 rounded-lg w-full p-3 mt-1"
+                        />
+                      </div>
+                    )
+                  )}
                 </div>
 
                 <h3 className="text-xl font-semibold mt-8 mb-4">Contact</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-
                   <input
                     type="text"
                     placeholder="+880 1XXX XXXXXXX"
@@ -329,7 +369,8 @@ const BookingPage = () => {
                 <h4 className="text-lg font-medium mt-4">Room Preference</h4>
                 <div className="flex space-x-4">
                   <label className="flex items-center">
-                    <input type="radio" name="room" className="mr-2" /> Non-Smoking
+                    <input type="radio" name="room" className="mr-2" />{" "}
+                    Non-Smoking
                   </label>
                   <label className="flex items-center">
                     <input type="radio" name="room" className="mr-2" /> Smoking
@@ -344,7 +385,10 @@ const BookingPage = () => {
                   required
                 />
 
-                <button className="bg-yellow-400 text-white w-full py-4 rounded-lg mt-6 font-medium" onClick={() => handleConfimation()}>
+                <button
+                  className="bg-yellow-400 text-white w-full py-4 rounded-lg mt-6 font-medium"
+                  onClick={() => handleConfimation()}
+                >
                   Confirm Booking
                 </button>
               </div>
@@ -371,34 +415,26 @@ const BookingPage = () => {
             </div>
           </div>
 
-
           <Dialog open={open} onOpenChange={setOpen}>
             {/* <DialogTrigger >
       <Button variant="outline">Edit Profile</Button>
     </DialogTrigger> */}
             <DialogContent className="sm:max-w-[525px]">
-              <DialogHeader>
-              </DialogHeader>
+              <DialogHeader></DialogHeader>
               <div className="grid gap-4 py-4 ">
                 <div className="flex sm:px-0 px-2 dark:bg-background">
                   <div className="bg-white sm:w-full w-full dark:bg-gray-800 p-8 rounded-2xl shadow-2xl">
                     <h2 className="text-3xl font-bold text-center mb-8 text-primary">
                       {isSignUp ? "Create Account" : "Welcome Back"}
                     </h2>
-                    {
-                      errorMsg && !isSignUp && (
-                        <Alert variant="destructive" className="mb-4">
-                          {/* <AlertCircle className="h-4 w-4" /> */}
-                          {/* <AlertTitle>Error</AlertTitle> */}
-                          <AlertDescription>
-                            {errorMsg}
-                          </AlertDescription>
-                        </Alert>
-
-                      )
-                    }
+                    {errorMsg && !isSignUp && (
+                      <Alert variant="destructive" className="mb-4">
+                        {/* <AlertCircle className="h-4 w-4" /> */}
+                        {/* <AlertTitle>Error</AlertTitle> */}
+                        <AlertDescription>{errorMsg}</AlertDescription>
+                      </Alert>
+                    )}
                     <form className="space-y-6" onSubmit={handleSubmit}>
-
                       {isSignUp && (
                         <div className="relative">
                           <div className="absolute left-2.5 top-3.5 h-4 w-4 text-muted-foreground">
@@ -415,7 +451,11 @@ const BookingPage = () => {
                             placeholder="Your Name"
                             className="w-full rounded-lg bg-background px-12 py-6"
                           />
-                          {errors.phone && <p className="text-red-500 text-sm">{errors.phone}</p>}
+                          {errors.phone && (
+                            <p className="text-red-500 text-sm">
+                              {errors.phone}
+                            </p>
+                          )}
                         </div>
                       )}
 
@@ -434,10 +474,10 @@ const BookingPage = () => {
                           onChange={(e) => setEmail(e.target.value)}
                           className="w-full rounded-lg bg-background px-12 py-6"
                         />
-                        {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
+                        {errors.email && (
+                          <p className="text-red-500 text-sm">{errors.email}</p>
+                        )}
                       </div>
-
-
 
                       <div className="relative">
                         <div className="absolute left-2.5 top-3.5 h-4 w-4 text-muted-foreground">
@@ -458,12 +498,18 @@ const BookingPage = () => {
                           <Icon
                             onClick={() => togglePasswordVisibility("password")}
                             icon={
-                              showPassword.password ? "eva:eye-fill" : "eva:eye-off-fill"
+                              showPassword.password
+                                ? "eva:eye-fill"
+                                : "eva:eye-off-fill"
                             }
                             className="font-bold text-2xl text-gray-400 cursor-pointer"
                           />
                         </div>
-                        {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
+                        {errors.password && (
+                          <p className="text-red-500 text-sm">
+                            {errors.password}
+                          </p>
+                        )}
                       </div>
 
                       {isSignUp && (
@@ -476,7 +522,9 @@ const BookingPage = () => {
                           </div>
                           <Input
                             id="confirm-password"
-                            type={showPassword.confirmPassword ? "text" : "password"}
+                            type={
+                              showPassword.confirmPassword ? "text" : "password"
+                            }
                             placeholder="Confirm Password"
                             value={confirmPassword}
                             onChange={(e) => setConfirmPassword(e.target.value)}
@@ -484,7 +532,9 @@ const BookingPage = () => {
                           />
                           <div className="absolute right-4 top-3.5 h-4 w-4 text-muted-foreground">
                             <Icon
-                              onClick={() => togglePasswordVisibility("confirmPassword")}
+                              onClick={() =>
+                                togglePasswordVisibility("confirmPassword")
+                              }
                               icon={
                                 showPassword.confirmPassword
                                   ? "eva:eye-fill"
@@ -494,30 +544,28 @@ const BookingPage = () => {
                             />
                           </div>
                           {errors.confirmPassword && (
-                            <p className="text-red-500 text-sm">{errors.confirmPassword}</p>
+                            <p className="text-red-500 text-sm">
+                              {errors.confirmPassword}
+                            </p>
                           )}
                         </div>
                       )}
 
-                      {
-                        loadingLogin ? (
-                          <button
-                            type="submit"
-                            className="w-full bg-[#00026E] dark:bg-gray-600 text-white p-3 rounded-lg font-semibold hover:bg-blue-600 transition duration-300"
-                          >
-                            Loading....
-                          </button>
-                        ) : (
-                          <button
-                            type="submit"
-                            className="w-full bg-[#00026E] dark:bg-gray-600 text-white p-3 rounded-lg font-semibold hover:bg-blue-600 transition duration-300"
-                          >
-                            {isSignUp ? "Sign Up" : "Sign In"}
-                          </button>
-                        )
-                      }
-
-
+                      {loadingLogin ? (
+                        <button
+                          type="submit"
+                          className="w-full bg-[#00026E] dark:bg-gray-600 text-white p-3 rounded-lg font-semibold hover:bg-blue-600 transition duration-300"
+                        >
+                          Loading....
+                        </button>
+                      ) : (
+                        <button
+                          type="submit"
+                          className="w-full bg-[#00026E] dark:bg-gray-600 text-white p-3 rounded-lg font-semibold hover:bg-blue-600 transition duration-300"
+                        >
+                          {isSignUp ? "Sign Up" : "Sign In"}
+                        </button>
+                      )}
 
                       {!isSignUp && (
                         <div className="flex justify-center items-center space-x-1">
@@ -536,13 +584,17 @@ const BookingPage = () => {
                             icon="devicon:google"
                             className="font-bold text-2xl text-gray-400"
                           />
-                          <p className="dark:text-white text-sm">Login With Google</p>
+                          <p className="dark:text-white text-sm">
+                            Login With Google
+                          </p>
                         </button>
                       )}
                     </form>
 
                     <p className="text-center text-gray-600 dark:text-gray-400 mt-6">
-                      {isSignUp ? "Already have an account?" : "Don't have an account?"}{" "}
+                      {isSignUp
+                        ? "Already have an account?"
+                        : "Don't have an account?"}{" "}
                       <span
                         onClick={toggleForm}
                         className="text-blue-500 dark:text-yellow-400 ml-2 cursor-pointer hover:underline"
@@ -553,13 +605,10 @@ const BookingPage = () => {
                   </div>
                 </div>
               </div>
-
             </DialogContent>
           </Dialog>
         </div>
-        )
-      }
-
+      )}
     </>
   );
 };

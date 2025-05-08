@@ -10,7 +10,7 @@ import { useGetHotelsQuery } from "@/redux/hotels/hotelsApi";
 import { useNavigate } from "react-router-dom";
 import { Skeleton } from "../ui/skeleton";
 
-const HotDeals = ({date,guest}) => {
+const HotDeals = ({date,guest,categoryId}) => {
   const navigate = useNavigate();
   const [hotelList,setHotelList] = useState([]);
   const countryId = localStorage.getItem("selectedCountry");
@@ -22,12 +22,17 @@ const HotDeals = ({date,guest}) => {
     );
   };
 
+
   useEffect(() => {
     if (!isLoading && hotels && countryId) {
-      const filteredHotels = hotels.filter(hotel => hotel.country_id === countryId);
+      const filteredHotels = hotels.filter(
+        (hotel) =>
+          hotel.country_id === countryId 
+      );
       setHotelList(filteredHotels);
     }
   }, [hotels, isLoading, countryId]);
+  
 
 
   

@@ -75,6 +75,34 @@ export const hotelsApi = apiSlice.injectEndpoints({
                 },
             }),
         }),
+
+        visaBook: builder.mutation({
+            query: (data) => {
+                const localAuth = localStorage.getItem("auth");
+                const auth = localAuth ? JSON.parse(localAuth) : null;
+                return {
+                    url: "/apply-for-visa",
+                    method: "POST",
+                    body: data,
+                    headers: {
+                        Authorization: `Bearer ${auth?.token || ""}`,
+                    },
+                };
+            },
+        }),
+        myVisa: builder.query({
+            query: (data) => {
+                const localAuth = localStorage.getItem("auth");
+                const auth = localAuth ? JSON.parse(localAuth) : null;
+                return {
+                    url: "/visa-applications",
+                    method: "GET",
+                    headers: {
+                        Authorization: `Bearer ${auth?.token || ""}`,
+                    },
+                };
+            },
+        }),
     }),
 });
 
@@ -85,5 +113,7 @@ export const {
     useHotelSearchMutation,
     useHotelBookMutation,
     useMyBookingQuery,
-    useGetCitiesQuery
+    useGetCitiesQuery,
+    useVisaBookMutation,
+    useMyVisaQuery,
 } = hotelsApi;

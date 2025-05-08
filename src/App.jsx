@@ -8,6 +8,7 @@ import HotelDetails from './pages/HotelDetails'
 import AuthPage from './pages/AuthPage'
 import BookingPage from './pages/BookingPage'
 import OrderListPage from './pages/OrderListPage'
+import VisaBooking from './pages/VisaBooking'
 
 
 function App() {
@@ -20,7 +21,8 @@ function App() {
       <Route path="/" element={<HomePage />} />
       <Route path="/auth" element={<AuthPage />} />
       <Route path="/hotel/list" element={<HotelList />} />
-      <Route path="/visa/country=" element={<VisaDetails />} />
+      <Route path="/visa/:slug" element={<VisaDetails />} />
+      <Route path="/visaBooking" element={<VisaBooking />} />
       <Route path="/hotelDetails/:slug" element={<HotelDetails />} />
       <Route path="/hotel/booking" element={<BookingPage />} />
       <Route path="/hotel/my-booking-room" element={<OrderListPage />} />

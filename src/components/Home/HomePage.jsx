@@ -66,24 +66,33 @@ const countries = [
 
 const countryName = [
   {
-    value: "Sri Lanka",
-    label: "Sri Lanka",
+    value: "USA",
+    label: "USA",
   },
   {
-    value: "Saudi Arabia",
-    label: "Saudi Arabia",
+    value: "Bangladesh",
+    label: "Bangladesh",
+  },
+];
+
+const visaTypes = [
+  {
+    value: "Tourist",
+    label: "Tourist",
   },
   {
-    value: "Philippines",
-    label: "Philippines",
+    value: "Visit",
+    label: "Visit",
   },
+
   {
-    value: "Malaysia",
-    label: "Malaysia",
+    value: "Business",
+    label: "Business",
   },
+
   {
-    value: "Singapore",
-    label: "Singapore",
+    value: "Student",
+    label: "Student",
   },
 ];
 
@@ -98,8 +107,9 @@ const HomePage = () => {
   const [childCount, setChildCount] = useState(0);
   const [roomsCount, setRommsCount] = useState(1);
   const [open, setOpen] = useState(false);
-  const [country, setCountry] = useState("");
+  const [country, setCountry] = useState("USA");
   const [visaType, setVisaType] = useState("Tourist");
+  const [openVisaType, setOpenVisaType] = useState(false);
   const [active, setactive] = useState(false);
   const [openn, setOpenn] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -140,7 +150,7 @@ const HomePage = () => {
       setValue("New York");
       setHotelId(11);
     }
-  }, [selectedCountry]);
+  }, [selectedCountry,setValue]);
 
   useEffect(() => {
     const savedMode = localStorage.getItem("theme");
@@ -194,16 +204,15 @@ const HomePage = () => {
   useEffect(() => {
     if (activeTab === "Hotel") {
       setCategoryId(1);
-      setCategoryName("Hotel")
+      setCategoryName("Hotel");
     } else if (activeTab === "House Rent") {
       setCategoryId(2);
-      setCategoryName("House")
+      setCategoryName("House");
     } else {
       setCategoryId(3);
-      setCategoryName("Apartment")
+      setCategoryName("Apartment");
     }
-  }, [activeTab])
-
+  }, [activeTab]);
 
   const handleAdultCountChange = (action) => {
     if (action === "increase") {
@@ -266,7 +275,7 @@ const HomePage = () => {
         `/hotel/list?checkin=${date.from}0&checkout=${date.to}&location=${value}&rooms=${totalTravelers?.rooms}&adult=${totalTravelers?.adult}&child=${totalTravelers.child}&totalGuset=${totalTravelers.total}&hotelId=${hotelId}&categoryId=${categoryId}&categoryName=${categoryName}&sort=price `
       );
     } else {
-      navigate(`/visa/country=${country}`);
+      navigate(`/visa/${country}?visaType=${visaType}`);
     }
   };
 
@@ -276,17 +285,14 @@ const HomePage = () => {
     window.location.reload();
   };
 
-  
-
-
-
   return (
     <>
       <div
-        className={`w-full sm:px-12 px-4 sm:min-h-[80px] min-h-12 transition-opacity fixed top-0 left-0 z-[9999] overflow-hidden ${active
-          ? "bg-white text-black dark:bg-black dark:text-white shadow-lg"
-          : " dark:text-white"
-          }`}
+        className={`w-full sm:px-12 px-4 sm:min-h-[80px] min-h-12 transition-opacity fixed top-0 left-0 z-[9999] overflow-hidden ${
+          active
+            ? "bg-white text-black dark:bg-black dark:text-white shadow-lg"
+            : " dark:text-white"
+        }`}
       >
         <div className="hidden md:w-[90%] mx-auto md:flex items-center justify-between mt-4">
           <div>
@@ -432,7 +438,7 @@ const HomePage = () => {
           </div>
           <div className="flex ">
             <div className="mt-[5px]">
-            <Select
+              <Select
                 value={String(selectedCountry)}
                 onValueChange={handleCountryChange}
               >
@@ -502,11 +508,13 @@ const HomePage = () => {
               <div className="fixed bg-white h-screen top-0 left-0 w-[60%] z-[9999]">
                 <div className="mt-0 p-5">
                   <div>
-                   
-                      <div className="flex justify-between text-2xl font-extrabold text-blue-700" onClick={() => navigate("/")}>
-                        <img src={logo} alt="logo" className="h-10 mb-2 w-24" />
-                      </div>
-                  
+                    <div
+                      className="flex justify-between text-2xl font-extrabold text-blue-700"
+                      onClick={() => navigate("/")}
+                    >
+                      <img src={logo} alt="logo" className="h-10 mb-2 w-24" />
+                    </div>
+
                     <Separator className="my-2" />
                   </div>
                   <Navigation activeItem={0} />
@@ -534,10 +542,11 @@ const HomePage = () => {
               <div className="flex gap-6">
                 <span
                   onClick={() => handleTabClick("Hotel")}
-                  className={`cursor-pointer ${activeTab === "Hotel"
-                    ? "text-blue-600 dark:text-yellow-400 sm:font-semibold border-b-2 border-yellow-400 sm:pb-2 pb-1"
-                    : "text-primary sm:font-semibold"
-                    }`}
+                  className={`cursor-pointer ${
+                    activeTab === "Hotel"
+                      ? "text-blue-600 dark:text-yellow-400 sm:font-semibold border-b-2 border-yellow-400 sm:pb-2 pb-1"
+                      : "text-primary sm:font-semibold"
+                  }`}
                 >
                   <span className="flex sm:space-x-2 sm:flex-row flex-col justify-center items-center">
                     <Icon
@@ -550,10 +559,11 @@ const HomePage = () => {
 
                 <span
                   onClick={() => handleTabClick("House Rent")}
-                  className={`cursor-pointer ${activeTab === "House Rent"
-                    ? "text-blue-600 dark:text-yellow-400 sm:font-semibold border-b-2 border-yellow-400 sm:pb-2 pb-1"
-                    : "text-primary sm:font-semibold"
-                    }`}
+                  className={`cursor-pointer ${
+                    activeTab === "House Rent"
+                      ? "text-blue-600 dark:text-yellow-400 sm:font-semibold border-b-2 border-yellow-400 sm:pb-2 pb-1"
+                      : "text-primary sm:font-semibold"
+                  }`}
                 >
                   <span className="flex sm:space-x-2 sm:flex-row flex-col justify-center items-center">
                     <Icon
@@ -569,10 +579,11 @@ const HomePage = () => {
 
                 <span
                   onClick={() => handleTabClick("Apartment")}
-                  className={`cursor-pointer ${activeTab === "Apartment"
-                    ? "text-blue-600 dark:text-yellow-400 sm:font-semibold border-b-2 border-yellow-400 sm:pb-2 pb-1"
-                    : "text-primary sm:font-semibold"
-                    }`}
+                  className={`cursor-pointer ${
+                    activeTab === "Apartment"
+                      ? "text-blue-600 dark:text-yellow-400 sm:font-semibold border-b-2 border-yellow-400 sm:pb-2 pb-1"
+                      : "text-primary sm:font-semibold"
+                  }`}
                 >
                   <span className="flex sm:space-x-2 sm:flex-row flex-col justify-center items-center">
                     <Icon
@@ -586,10 +597,11 @@ const HomePage = () => {
 
                 <span
                   onClick={() => handleTabClick("Visa")}
-                  className={`cursor-pointer ${activeTab === "Visa"
-                    ? "text-blue-600 dark:text-yellow-400 sm:font-semibold border-b-2 border-yellow-400 sm:pb-2 pb-1"
-                    : "text-primary sm:font-semibold"
-                    }`}
+                  className={`cursor-pointer ${
+                    activeTab === "Visa"
+                      ? "text-blue-600 dark:text-yellow-400 sm:font-semibold border-b-2 border-yellow-400 sm:pb-2 pb-1"
+                      : "text-primary sm:font-semibold"
+                  }`}
                 >
                   <span className="flex sm:space-x-2 sm:flex-row flex-col justify-center items-center">
                     <Icon
@@ -621,8 +633,8 @@ const HomePage = () => {
                               <p>
                                 {value
                                   ? cities?.find(
-                                    (hotel) => hotel.name === value
-                                  )?.name
+                                      (hotel) => hotel.name === value
+                                    )?.name
                                   : "Select Destination..."}
                               </p>
                               <p className="flex text-[12px] text-gray-400">
@@ -642,8 +654,14 @@ const HomePage = () => {
                                     key={hotel.id}
                                     value={hotel.name}
                                     onSelect={(currentValue) => {
-                                      const selectedHotel = cities?.find(h => h.name === currentValue);
-                                      setValue(currentValue === value ? "" : currentValue);
+                                      const selectedHotel = cities?.find(
+                                        (h) => h.name === currentValue
+                                      );
+                                      setValue(
+                                        currentValue === value
+                                          ? ""
+                                          : currentValue
+                                      );
                                       setHotelId(selectedHotel?.id || null);
                                       setOpen(false);
                                     }}
@@ -902,8 +920,8 @@ const HomePage = () => {
                               <p>
                                 {value
                                   ? cities?.find(
-                                    (hotel) => hotel.name === value
-                                  )?.name
+                                      (hotel) => hotel.name === value
+                                    )?.name
                                   : "Select Destination..."}
                               </p>
                               <p className="flex text-[12px] text-gray-400">
@@ -923,8 +941,14 @@ const HomePage = () => {
                                     key={hotel.id}
                                     value={hotel.name}
                                     onSelect={(currentValue) => {
-                                      const selectedHotel = cities?.find(h => h.name === currentValue);
-                                      setValue(currentValue === value ? "" : currentValue);
+                                      const selectedHotel = cities?.find(
+                                        (h) => h.name === currentValue
+                                      );
+                                      setValue(
+                                        currentValue === value
+                                          ? ""
+                                          : currentValue
+                                      );
                                       setHotelId(selectedHotel?.id || null);
                                       setOpen(false);
                                     }}
@@ -1183,8 +1207,8 @@ const HomePage = () => {
                               <p>
                                 {value
                                   ? cities?.find(
-                                    (hotel) => hotel.name === value
-                                  )?.name
+                                      (hotel) => hotel.name === value
+                                    )?.name
                                   : "Select Destination..."}
                               </p>
                               <p className="flex text-[12px] text-gray-400">
@@ -1204,8 +1228,14 @@ const HomePage = () => {
                                     key={hotel.id}
                                     value={hotel.name}
                                     onSelect={(currentValue) => {
-                                      const selectedHotel = cities?.find(h => h.name === currentValue);
-                                      setValue(currentValue === value ? "" : currentValue);
+                                      const selectedHotel = cities?.find(
+                                        (h) => h.name === currentValue
+                                      );
+                                      setValue(
+                                        currentValue === value
+                                          ? ""
+                                          : currentValue
+                                      );
                                       setHotelId(selectedHotel?.id || null);
                                       setOpen(false);
                                     }}
@@ -1464,9 +1494,9 @@ const HomePage = () => {
                               <p className="text-blue-900 font-semibold text-lg">
                                 {country
                                   ? countryName.find(
-                                    (countryName) =>
-                                      countryName.value === country
-                                  )?.label
+                                      (countryName) =>
+                                        countryName.value === country
+                                    )?.label
                                   : "Select Destination..."}
                               </p>
                             </span>
@@ -1509,20 +1539,65 @@ const HomePage = () => {
                       </Popover>
                     </div>
 
-                    <div className=" mt-2 sm:mt-0 flex flex-col p-2 rounded-md sm:ml-4">
-                      <Button
-                        variant={"ghost"}
-                        className="flex flex-col text-left items-start sm:w-[500px] w-full font-normal py-10 border border-gray-400 rounded-lg"
+                    <div className="mt-2  sm:mt-0 flex flex-col  p-2 rounded-md sm:ml-4">
+                      <Popover
+                        open={openVisaType}
+                        onOpenChange={setOpenVisaType}
                       >
-                        <label className="text-[12px] text-blue-500 ">
-                          VISA TYPE
-                        </label>
-                        <span>
-                          <p className="text-blue-900 font-semibold text-lg">
-                            {visaType}
-                          </p>
-                        </span>
-                      </Button>
+                        <PopoverTrigger asChild>
+                          <Button
+                            variant={"ghost"}
+                            className="flex flex-col text-left items-start sm:w-[500px] w-full font-normal py-10 border border-gray-400"
+                          >
+                            <label className="text-[12px] text-blue-500">
+                              Visa Type
+                            </label>
+                            <span>
+                              <p className="text-blue-900 font-semibold text-lg">
+                                {visaType
+                                  ? visaTypes.find(
+                                      (visa) => visa.value === visaType
+                                    )?.label
+                                  : "Select visa type..."}
+                              </p>
+                            </span>
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-[500px] p-0">
+                          <Command>
+                            <CommandInput placeholder="Search Destination..." />
+                            <CommandList>
+                              <CommandEmpty>No Destination found.</CommandEmpty>
+                              <CommandGroup>
+                                {visaTypes.map((visa) => (
+                                  <CommandItem
+                                    key={visa.value}
+                                    value={visa.value}
+                                    onSelect={(currentValue) => {
+                                      setVisaType(
+                                        currentValue === value
+                                          ? ""
+                                          : currentValue
+                                      );
+                                      setOpenVisaType(false);
+                                    }}
+                                  >
+                                    {visa.label}
+                                    <Check
+                                      className={cn(
+                                        "ml-auto",
+                                        value === visa.value
+                                          ? "opacity-100"
+                                          : "opacity-0"
+                                      )}
+                                    />
+                                  </CommandItem>
+                                ))}
+                              </CommandGroup>
+                            </CommandList>
+                          </Command>
+                        </PopoverContent>
+                      </Popover>
                     </div>
                   </div>
                 </>
@@ -1540,7 +1615,11 @@ const HomePage = () => {
           </div>
         </div>
 
-        <HotDeals date={date} guest={totalTravelers?.total} />
+        <HotDeals
+          date={date}
+          guest={totalTravelers?.total}
+          categoryId={categoryId}
+        />
         {/* <SpecialOffer /> */}
       </div>
     </>

@@ -168,9 +168,9 @@ const Header = () => {
                 <Menubar className="!bg-transparent !p-0 !m-0 !border-none shadow-none">
                   <MenubarMenu className="!bg-transparent !p-0 !m-0 !border-none shadow-none">
                     <MenubarTrigger className="!bg-transparent !p-0 !m-0 !border-none shadow-none">
-                      <Avatar>
-                        <AvatarImage src={auth?.user?.img} alt="@shadcn" />
-                        <AvatarFallback>{auth?.user?.name?.[0]}</AvatarFallback>
+                      <Avatar >
+                        <AvatarImage src={auth?.user?.img} alt="@shadcn"/>
+                        <AvatarFallback >{auth?.user?.name?.[0]} </AvatarFallback>
                       </Avatar>
                     </MenubarTrigger>
                     <MenubarContent className="mr-12">
@@ -192,6 +192,16 @@ const Header = () => {
                           />
                           <span className="ml-3">
                             My Order
+                          </span>
+                        </MenubarRadioItem>
+
+                        <MenubarRadioItem value="benoit" onClick={() => navigate("/visaBooking")}>
+                          <Icon
+                            icon="ic:round-hotel"
+                            className="font-bold text-xl text-black dark:text-white "
+                          />
+                          <span className="ml-3">
+                            Visa Applications
                           </span>
                         </MenubarRadioItem>
                       </MenubarRadioGroup>
