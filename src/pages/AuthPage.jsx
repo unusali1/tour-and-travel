@@ -225,22 +225,22 @@ const handleSubmit = (e) => {
 
             {!isSignUp && (
               <div className="flex justify-center items-center space-x-1">
-                <Separator className="my-2 w-48 dark:bg-gray-400" />
-                <p className="text-gray-400 text-sm">OR</p>
-                <Separator className="my-2 w-48 dark:bg-gray-400" />
+                <Separator className="my-2 w-36 dark:bg-gray-400" />
+                <p className="text-gray-400 text-sm">If want to a host</p>
+                <Separator className="my-2 w-36 dark:bg-gray-400" />
               </div>
             )}
 
             {!isSignUp && (
               <button
                 type="button"
-                className="flex space-x-3 justify-center w-full bg-white dark:bg-gray-600 text-gray-500 border p-3 rounded-lg font-semibold transition duration-300"
+                className="flex space-x-3 justify-center w-full bg-yellow-700 dark:bg-gray-600 text-gray-200 border p-3 rounded-lg font-semibold transition duration-300"
+                onClick={() =>
+                  window.open("https://backend.dayfuna.com/login", "_blank")
+                }
               >
-                <Icon
-                  icon="devicon:google"
-                  className="font-bold text-2xl text-gray-400"
-                />
-                <p className="dark:text-white text-sm">Login With Google</p>
+                
+                <p className="dark:text-white text-sm">Become a host</p>
               </button>
             )}
           </form>

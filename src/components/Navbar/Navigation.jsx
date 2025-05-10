@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 const navItems = [
     { title: "🏨 Hotel", to: "/?search=Hotel" },
     { title: "🏨 House Rent", to: "/?search=House%20Rent" },
-    { title: "🏨 Apartment", to: "/?search=Appartment" },
+    { title: "🏨 Apartment", to: "/?search=Apartment" },
     { title: "🛂 Visa", to: "/?search=Visa" },
   ];
   

@@ -112,19 +112,23 @@ const Header = () => {
     dispatch(userLoggedOut());
     localStorage.clear();
     window.location.reload();
-    navigate("/")
+    navigate("/");
   };
 
   return (
     <div
-      className={`w-full sm:px-12 px-4 shadow-sm dark:border-b sm:min-h-[80px] min-h-12 transition-opacity  top-0 left-0 z-[9999] ${active
-        ? "bg-white text-black fixed dark:bg-black dark:text-white shadow-lg"
-        : "text-black dark:text-white"
-        }`}
+      className={`w-full sm:px-12 px-4 shadow-sm dark:border-b sm:min-h-[80px] min-h-12 transition-opacity  top-0 left-0 z-[9999] ${
+        active
+          ? "bg-white text-black fixed dark:bg-black dark:text-white shadow-lg"
+          : "text-black dark:text-white"
+      }`}
     >
       <div className="hidden md:w-[90%] mx-auto md:flex items-center justify-between mt-4">
         <div>
-          <div className="text-2xl font-extrabold text-blue-700" onClick={() => navigate("/")}>
+          <div
+            className="text-2xl font-extrabold text-blue-700"
+            onClick={() => navigate("/")}
+          >
             {isDarkMode ? (
               <img src={logoWhite} alt="logo" className="h-10 mb-2 w-24" />
             ) : (
@@ -168,9 +172,11 @@ const Header = () => {
                 <Menubar className="!bg-transparent !p-0 !m-0 !border-none shadow-none">
                   <MenubarMenu className="!bg-transparent !p-0 !m-0 !border-none shadow-none">
                     <MenubarTrigger className="!bg-transparent !p-0 !m-0 !border-none shadow-none">
-                      <Avatar >
-                        <AvatarImage src={auth?.user?.img} alt="@shadcn"/>
-                        <AvatarFallback >{auth?.user?.name?.[0]} </AvatarFallback>
+                      <Avatar>
+                        <AvatarImage src={auth?.user?.img} alt="@shadcn" />
+                        <AvatarFallback>
+                          {auth?.user?.name?.[0]}{" "}
+                        </AvatarFallback>
                       </Avatar>
                     </MenubarTrigger>
                     <MenubarContent className="mr-12">
@@ -180,29 +186,28 @@ const Header = () => {
                             icon="mdi:account-outline"
                             className="font-bold text-2xl text-black dark:text-white "
                           />
-                          <span className="ml-3">
-                            Profile
-                          </span>
-
+                          <span className="ml-3">Profile</span>
                         </MenubarRadioItem>
-                        <MenubarRadioItem value="benoit" onClick={() => navigate("/hotel/my-booking-room")}>
+                        <MenubarRadioItem
+                          value="benoit"
+                          onClick={() => navigate("/hotel/my-booking-room")}
+                        >
                           <Icon
                             icon="ic:round-hotel"
                             className="font-bold text-xl text-black dark:text-white "
                           />
-                          <span className="ml-3">
-                            My Order
-                          </span>
+                          <span className="ml-3">My Order</span>
                         </MenubarRadioItem>
 
-                        <MenubarRadioItem value="benoit" onClick={() => navigate("/visaBooking")}>
+                        <MenubarRadioItem
+                          value="benoit"
+                          onClick={() => navigate("/visaBooking")}
+                        >
                           <Icon
                             icon="ic:round-hotel"
                             className="font-bold text-xl text-black dark:text-white "
                           />
-                          <span className="ml-3">
-                            Visa Applications
-                          </span>
+                          <span className="ml-3">Visa Applications</span>
                         </MenubarRadioItem>
                       </MenubarRadioGroup>
 
@@ -214,17 +219,27 @@ const Header = () => {
                       >
                         Logout
                       </MenubarItem>
-
                     </MenubarContent>
                   </MenubarMenu>
                 </Menubar>
               ) : (
-                <Button
-                  className="bg-blue-700 text-white px-6 py-2 rounded-lg"
-                  onClick={() => navigate("/auth")}
-                >
-                  Sign In
-                </Button>
+                <>
+                  <Button
+                    className="bg-blue-700 text-white px-6 py-2 rounded-lg"
+                    onClick={() => navigate("/auth")}
+                  >
+                    Sign In
+                  </Button>
+
+                  <Button
+                    className="bg-yellow-700 text-white px-6 py-2 rounded-lg ml-3"
+                    onClick={() =>
+                      window.open("https://backend.dayfuna.com/login", "_blank")
+                    }
+                  >
+                    Become a host
+                  </Button>
+                </>
               )}
             </div>
             <div>
@@ -251,22 +266,21 @@ const Header = () => {
 
       {/* for mobile screen */}
       <div className="md:hidden flex  justify-between overflow-hidden">
-          <div className="mt-2 ">
-          <div className="text-2xl font-extrabold text-blue-700" onClick={() => navigate("/")}>
-                    {active && isDarkMode ? (
-                      <img
-                        src={logoWhite}
-                        alt="logo"
-                        className="h-6 mb-2 w-16"
-                      />
-                    ) : (
-                      <img src={logo} alt="logo" className="h-6 mb-2 w-16" />
-                    )}
-                  </div>
+        <div className="mt-2 ">
+          <div
+            className="text-2xl font-extrabold text-blue-700"
+            onClick={() => navigate("/")}
+          >
+            {active && isDarkMode ? (
+              <img src={logoWhite} alt="logo" className="h-6 mb-2 w-16" />
+            ) : (
+              <img src={logo} alt="logo" className="h-6 mb-2 w-16" />
+            )}
           </div>
-          <div className="flex ">
-            <div className="mt-[2px]">
-              {/* <Select
+        </div>
+        <div className="flex ">
+          <div className="mt-[2px]">
+            {/* <Select
                 value={selectedCountry}
                 className="text-black bg-black border-none"
                 onValueChange={(value) => {
@@ -299,75 +313,75 @@ const Header = () => {
                   </SelectGroup>
                 </SelectContent>
               </Select> */}
-            </div>
-
-            <div>
-              <button
-                onClick={toggleDarkMode}
-                className="px-2 py-1  rounded-full mt-1"
-              >
-                {isDarkMode ? (
-                  <Icon
-                    icon="material-symbols-light:dark-mode-rounded"
-                    className="font-bold text-xl text-white"
-                  />
-                ) : (
-                  <Icon
-                    icon="uil:sun"
-                    className="font-bold text-xl text-black"
-                  />
-                )}
-              </button>
-            </div>
-
-            <div className="mt-1" onClick={handleClose}>
-              {openn ? (
-                <Icon
-                  onClick={() => setOpenn(!openn)}
-                  icon="mingcute:close-fill"
-                  className="font-bold text-3xl text-black dark:text-white"
-                />
-              ) : (
-                <Icon
-                  onClick={() => setOpenn(!openn)}
-                  icon="ion:menu"
-                  className="font-bold text-3xl text-black dark:text-white"
-                />
-              )}
-            </div>
           </div>
 
-          {openn && (
-            <div
-              className="fixed md:hidden w-full text-black h-screen top-0 right-0 z-[99999] bg-[unset]"
-              onClick={handleClose}
-              id="screen"
+          <div>
+            <button
+              onClick={toggleDarkMode}
+              className="px-2 py-1  rounded-full mt-1"
             >
-              <div className="fixed bg-white h-screen top-0 left-0 w-[60%] z-[9999]">
-                <div className="mt-0 p-5">
-                  <div>
-                     <div className="flex justify-between text-2xl font-extrabold text-blue-700" onClick={() => navigate("/")}>
-                        <img src={logo} alt="logo" className="h-10 mb-2 w-24" />
-                      </div>
-                   
-                    <Separator className="my-2" />
+              {isDarkMode ? (
+                <Icon
+                  icon="material-symbols-light:dark-mode-rounded"
+                  className="font-bold text-xl text-white"
+                />
+              ) : (
+                <Icon icon="uil:sun" className="font-bold text-xl text-black" />
+              )}
+            </button>
+          </div>
+
+          <div className="mt-1" onClick={handleClose}>
+            {openn ? (
+              <Icon
+                onClick={() => setOpenn(!openn)}
+                icon="mingcute:close-fill"
+                className="font-bold text-3xl text-black dark:text-white"
+              />
+            ) : (
+              <Icon
+                onClick={() => setOpenn(!openn)}
+                icon="ion:menu"
+                className="font-bold text-3xl text-black dark:text-white"
+              />
+            )}
+          </div>
+        </div>
+
+        {openn && (
+          <div
+            className="fixed md:hidden w-full text-black h-screen top-0 right-0 z-[99999] bg-[unset]"
+            onClick={handleClose}
+            id="screen"
+          >
+            <div className="fixed bg-white h-screen top-0 left-0 w-[60%] z-[9999]">
+              <div className="mt-0 p-5">
+                <div>
+                  <div
+                    className="flex justify-between text-2xl font-extrabold text-blue-700"
+                    onClick={() => navigate("/")}
+                  >
+                    <img src={logo} alt="logo" className="h-10 mb-2 w-24" />
                   </div>
-                  <Navigation activeItem={0} />
-                  <div className="flex items-center p-2 ">
-                    <div>
-                      <Button
-                        className="bg-blue-700 text-white px-5 py-2 rounded-md"
-                        onClick={() => navigate("/auth")}
-                      >
-                        Sign In
-                      </Button>
-                    </div>
+
+                  <Separator className="my-2" />
+                </div>
+                <Navigation activeItem={0} />
+                <div className="flex items-center p-2 ">
+                  <div>
+                    <Button
+                      className="bg-blue-700 text-white px-5 py-2 rounded-md"
+                      onClick={() => navigate("/auth")}
+                    >
+                      Sign In
+                    </Button>
                   </div>
                 </div>
               </div>
             </div>
-          )}
-        </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

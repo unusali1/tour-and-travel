@@ -53,6 +53,7 @@ const VisaDetails = () => {
   const [nationality, setNationality] = useState("");
   const [address, setAddress] = useState("");
   const [showSucess, setShowSuccess] = useState(false);
+  
 
   const [visaBook, { data, isLoading, isError }] = useVisaBookMutation();
 
@@ -87,6 +88,13 @@ const VisaDetails = () => {
     }
   },[showSucess,data])
 
+  const handleCheck = () =>{
+    setLoading(true);
+    setCounty_to_visit(country);
+    setTimeout(()=>{
+     setLoading(false);
+    },1000)
+  }
 
 
   return (
@@ -149,13 +157,15 @@ const VisaDetails = () => {
                     </PopoverContent>
                   </Popover>
                 </div>
-                <button className="bg-blue-600 text-white px-4 py-2 rounded">
+                <button className="bg-blue-600 text-white px-4 py-2 rounded"
+                onClick={handleCheck}
+                >
                   Check
                 </button>
               </div>
             </div>
 
-            {isLoading ? (
+            {loading ? (
               <div className="flex flex-col space-y-3">
                 <Skeleton className="h-[20vh] w-full rounded-xl" />
                 <div className="space-y-2">
@@ -169,7 +179,7 @@ const VisaDetails = () => {
                   <div className="mb-6 p-4">
                     <h3 className="text-lg font-semibold">Summary</h3>
                     <p>
-                      <strong>Visa Type:</strong> Tourist Visa (E-Visa)
+                      <strong>Visa Type:</strong> {visa_type} (E-Visa)
                     </p>
                     <p>
                       <strong>Processing Time:</strong> 5-7 business days

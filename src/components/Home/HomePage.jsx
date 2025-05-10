@@ -134,8 +134,11 @@ const HomePage = () => {
     const saved = localStorage.getItem("selectedCountry");
     if (saved) {
       setSelectedCountry(parseInt(saved));
+    } else {
+      localStorage.setItem("selectedCountry", "1");
+      setSelectedCountry(1);
     }
-  }, [selectedCountry]);
+  }, []);
 
   const handleCountryChange = (value) => {
     localStorage.setItem("selectedCountry", value);
@@ -150,7 +153,7 @@ const HomePage = () => {
       setValue("New York");
       setHotelId(11);
     }
-  }, [selectedCountry,setValue]);
+  }, [selectedCountry, setValue]);
 
   useEffect(() => {
     const savedMode = localStorage.getItem("theme");
@@ -384,12 +387,23 @@ const HomePage = () => {
                     </MenubarMenu>
                   </Menubar>
                 ) : (
-                  <Button
-                    className="bg-blue-700 text-white px-6 py-2 rounded-lg"
-                    onClick={() => navigate("/auth")}
-                  >
-                    Sign In
-                  </Button>
+                  <>
+                    <Button
+                      className="bg-blue-700 text-white px-6 py-2 rounded-lg"
+                      onClick={() => navigate("/auth")}
+                    >
+                      Sign In
+                    </Button>
+
+                    <Button
+                      className="bg-yellow-700 text-white px-6 py-2 rounded-lg ml-3"
+                      onClick={() =>
+                        window.open("https://backend.dayfuna.com/login", "_blank")
+                      }
+                    >
+                      Become a host
+                    </Button>
+                  </>
                 )}
               </div>
 

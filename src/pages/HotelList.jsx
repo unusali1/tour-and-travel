@@ -49,7 +49,7 @@ export default function HotelList() {
   });
   const [isSmallScreen, setIsSmallScreen] = useState(false);
   const [showSection, setShowSection] = useState(true);
-  const countryId = localStorage.getItem("selectedCountry");
+  const countryId = parseInt(localStorage.getItem("selectedCountry"));
   
   const cleanDate = (dateString) => {
     return dateString ? dateString.replace(/[\d]$/g, "").trim() : null;
@@ -139,7 +139,7 @@ export default function HotelList() {
       check_out: formatDate(toDate),
       category_id: String(categoryId),
       city_id: String(hotelId),
-      country_id: countryId,
+      country_id: String(countryId),
       capacity: totalTravelers?.total
     })
    }
@@ -432,6 +432,7 @@ export default function HotelList() {
                         <p className="flex text-[12px] text-gray-400">
                           {countryId === 1 ? "Bangladesh" : "USA"}
                         </p>
+
                       </span>
                     </Button>
                   </PopoverTrigger>

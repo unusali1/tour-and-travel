@@ -34,6 +34,7 @@ const HotDeals = ({date,guest,categoryId}) => {
   }, [hotels, isLoading, countryId]);
   
 
+  
 
   
   let content = null 
