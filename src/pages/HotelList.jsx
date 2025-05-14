@@ -33,13 +33,14 @@ export default function HotelList() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
-  const [adultCount, setAdultCount] = useState(searchParams.get("adult"));
-  const [childCount, setChildCount] = useState(searchParams.get("child"));
-  const [roomsCount, setRommsCount] = useState(searchParams.get("rooms"));
+  const [adultCount, setAdultCount] = useState(0);
+  const [childCount, setChildCount] = useState(0);
+  const [roomsCount, setRommsCount] = useState(1);
   const [categoryId, setCategoryId] = useState(searchParams.get("categoryId"));
   const [categoryName, setCategoryName] = useState(searchParams.get("categoryName"));
   const [hotelId, setHotelId] = useState(searchParams.get("hotelId"));
   const [open, setOpen] = useState(false);
+  const [openRooms, setOpenRooms] = useState(false);
   const [value, setValue] = useState(searchParams.get("location"));
   const [totalTravelers, setTotalTravelers] = useState({
     rooms: " ",
@@ -81,7 +82,12 @@ export default function HotelList() {
   const { data: cities } = useGetCitiesQuery(countryId);
   const [hotelSearch, { data, isLoading, isError }] = useHotelSearchMutation();
 
-
+  useEffect(() => {
+    setAdultCount(Number(searchParams.get("adult")) || 0);
+    setChildCount(Number(searchParams.get("child")) || 0);
+    setRommsCount(Number(searchParams.get("rooms")) || 1); 
+  }, []);
+  
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 768) {
@@ -101,24 +107,25 @@ export default function HotelList() {
 
   const handleAdultCountChange = (action) => {
     if (action === "increase") {
-      setAdultCount(adultCount + 1);
+      setAdultCount((prev) => prev + 1);
     } else if (action === "decrease" && adultCount > 0) {
-      setAdultCount(adultCount - 1);
+      setAdultCount((prev) => prev - 1);
     }
   };
-
+  
   const handleChildCountChange = (action) => {
     if (action === "increase") {
-      setChildCount(childCount + 1);
+      setChildCount((prev) => prev + 1);
     } else if (action === "decrease" && childCount > 0) {
-      setChildCount(childCount - 1);
+      setChildCount((prev) => prev - 1);
     }
   };
+  
   const handleRommsCountChange = (action) => {
     if (action === "increase") {
-      setRommsCount(roomsCount + 1);
+      setRommsCount((prev) => prev + 1);
     } else if (action === "decrease" && roomsCount > 1) {
-      setRommsCount(roomsCount - 1);
+      setRommsCount((prev) => prev - 1);
     }
   };
 
@@ -172,7 +179,7 @@ export default function HotelList() {
       check_out: formatDate(toDate),
       category_id: String(categoryId),
       city_id: String(hotelId),
-      country_id: countryId,
+      country_id: String(countryId),
       capacity: totalTravelers?.total
     })
   }
@@ -560,11 +567,12 @@ export default function HotelList() {
               </div>
 
               <div className="sm:mt-0 flex flex-col rounded-md sm:ml-4">
-                <Popover>
+                <Popover open={openRooms} onOpenChange={setOpenRooms}>
                   <PopoverTrigger asChild>
                     <Button
                       variant="outline"
                       className="flex  dark:bg-gray-800 flex-col text-left items-start sm:w-[240px] w-full font-normal py-10 border border-gray-400 rounded-lg"
+                      onClick={() => setOpenRooms(true)}
                     >
                       <label className="text-[12px] text-blue-500  dark:text-white">
                         ROOMS & GUESTS
@@ -584,6 +592,7 @@ export default function HotelList() {
                       </span>
                     </Button>
                   </PopoverTrigger>
+
                   <PopoverContent className="w-80">
                     <div className="flex ml-4 justify-between">
                       <div>
@@ -662,7 +671,9 @@ export default function HotelList() {
                     </div>
                     <Separator className="my-4" />
 
-                    <div className="mt-4 flex justify-end">
+                    <div className="mt-4 flex justify-end"
+                    onClick={() => setOpenRooms(false)}
+                    >
                       <Button color="primary">OK</Button>
                     </div>
                   </PopoverContent>

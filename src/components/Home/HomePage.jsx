@@ -120,7 +120,7 @@ const HomePage = () => {
   const [categoryId, setCategoryId] = useState();
   const [categoryName, setCategoryName] = useState();
   const [hotelId, setHotelId] = useState(null);
-
+  const [openRooms, setOpenRooms] = useState(false);
   const { data: cities } = useGetCitiesQuery(selectedCountry);
 
   const [totalTravelers, setTotalTravelers] = useState({
@@ -793,11 +793,12 @@ const HomePage = () => {
                     </div>
 
                     <div className=" mt-2 sm:mt-0 flex flex-col p-2 rounded-md sm:ml-4">
-                      <Popover>
+                      <Popover open={openRooms} onOpenChange={setOpenRooms}>
                         <PopoverTrigger asChild>
                           <Button
                             variant={"ghost"}
                             className="flex flex-col text-left items-start sm:w-[240px] w-full font-normal py-10 border border-gray-400 rounded-lg"
+                            onClick={()=>setOpenRooms(true)}
                           >
                             <label className="text-[12px] text-blue-500  dark:text-white">
                               ROOMS & GUESTS
@@ -907,7 +908,9 @@ const HomePage = () => {
                           </div>
                           <Separator className="my-4" />
 
-                          <div className="mt-4 flex justify-end">
+                          <div className="mt-4 flex justify-end"
+                          onClick={()=>setOpenRooms(false)}
+                          >
                             <Button color="primary">OK</Button>
                           </div>
                         </PopoverContent>
@@ -1080,11 +1083,12 @@ const HomePage = () => {
                     </div>
 
                     <div className=" mt-2 sm:mt-0 flex flex-col p-2 rounded-md sm:ml-4">
-                      <Popover>
+                      <Popover open={openRooms} onOpenChange={setOpenRooms}>
                         <PopoverTrigger asChild>
                           <Button
                             variant={"ghost"}
                             className="flex flex-col text-left items-start sm:w-[240px] w-full font-normal py-10 border border-gray-400 rounded-lg"
+                            onClick={()=>setOpenRooms(true)}
                           >
                             <label className="text-[12px] text-blue-500  dark:text-white">
                               ROOMS & GUESTS
@@ -1194,7 +1198,9 @@ const HomePage = () => {
                           </div>
                           <Separator className="my-4" />
 
-                          <div className="mt-4 flex justify-end">
+                          <div className="mt-4 flex justify-end"
+                          onClick={()=>setOpenRooms(false)}
+                          >
                             <Button color="primary">OK</Button>
                           </div>
                         </PopoverContent>
@@ -1367,11 +1373,12 @@ const HomePage = () => {
                     </div>
 
                     <div className=" mt-2 sm:mt-0 flex flex-col p-2 rounded-md sm:ml-4">
-                      <Popover>
+                      <Popover open={openRooms} onOpenChange={setOpenRooms}>
                         <PopoverTrigger asChild>
                           <Button
                             variant={"ghost"}
                             className="flex flex-col text-left items-start sm:w-[240px] w-full font-normal py-10 border border-gray-400 rounded-lg"
+                            onClick={()=> setOpenRooms(true)}
                           >
                             <label className="text-[12px] text-blue-500  dark:text-white">
                               ROOMS & GUESTS
@@ -1481,7 +1488,9 @@ const HomePage = () => {
                           </div>
                           <Separator className="my-4" />
 
-                          <div className="mt-4 flex justify-end">
+                          <div className="mt-4 flex justify-end"
+                          onClick={()=>setOpenRooms(false)}
+                          >
                             <Button color="primary">OK</Button>
                           </div>
                         </PopoverContent>
